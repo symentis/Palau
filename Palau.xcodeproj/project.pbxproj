@@ -8,6 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		285899541CCF85AB0086096D /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 285899531CCF85AB0086096D /* Fixtures */; };
+		286A50BC1CCFB7D400F02082 /* UserDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340C1CCF58400055A4BA /* UserDefaultable.swift */; };
+		286A50C01CCFB7DB00F02082 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340E1CCF584F0055A4BA /* UserDefaults.swift */; };
+		286A50C41CCFB7E100F02082 /* UserDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34101CCF589B0055A4BA /* UserDefaultsEntry.swift */; };
+		286A50C51CCFB7E100F02082 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34131CCF5AF20055A4BA /* Utils.swift */; };
+		286A51371CCFBC5900F02082 /* PalauTV.h in Headers */ = {isa = PBXBuildFile; fileRef = 286A51361CCFBC5900F02082 /* PalauTV.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		286A513E1CCFBC5900F02082 /* Palau.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 286A51341CCFBC5900F02082 /* Palau.framework */; };
+		286A51511CCFBC8900F02082 /* PalauTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34011CCF58120055A4BA /* PalauTests.swift */; };
+		286A51551CCFBC8F00F02082 /* UserDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340C1CCF58400055A4BA /* UserDefaultable.swift */; };
+		286A51561CCFBC8F00F02082 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340E1CCF584F0055A4BA /* UserDefaults.swift */; };
+		286A51571CCFBC8F00F02082 /* UserDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34101CCF589B0055A4BA /* UserDefaultsEntry.swift */; };
+		286A51581CCFBC8F00F02082 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34131CCF5AF20055A4BA /* Utils.swift */; };
+		286A516A1CCFBD6700F02082 /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 285899531CCF85AB0086096D /* Fixtures */; };
 		C59F33FD1CCF58120055A4BA /* Palau.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C59F33F21CCF58110055A4BA /* Palau.framework */; };
 		C59F34021CCF58120055A4BA /* PalauTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34011CCF58120055A4BA /* PalauTests.swift */; };
 		C59F340D1CCF58400055A4BA /* UserDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340C1CCF58400055A4BA /* UserDefaultable.swift */; };
@@ -17,6 +29,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		286A513F1CCFBC5900F02082 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C59F33E91CCF58110055A4BA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 286A51331CCFBC5900F02082;
+			remoteInfo = PalauTV;
+		};
 		C59F33FE1CCF58120055A4BA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C59F33E91CCF58110055A4BA /* Project object */;
@@ -28,6 +47,14 @@
 
 /* Begin PBXFileReference section */
 		285899531CCF85AB0086096D /* Fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fixtures; sourceTree = SOURCE_ROOT; };
+		286A50AE1CCFB7AB00F02082 /* Palau.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Palau.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		286A50B21CCFB7AB00F02082 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		286A511C1CCFBAF400F02082 /* PalauTests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PalauTests copy-Info.plist"; path = "/Users/maja/Desktop/dev/madhava/Palau/PalauTests copy-Info.plist"; sourceTree = "<absolute>"; };
+		286A51341CCFBC5900F02082 /* Palau.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Palau.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		286A51361CCFBC5900F02082 /* PalauTV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PalauTV.h; sourceTree = "<group>"; };
+		286A51381CCFBC5900F02082 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		286A513D1CCFBC5900F02082 /* PalauTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PalauTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		286A51441CCFBC5900F02082 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C59F33F21CCF58110055A4BA /* Palau.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Palau.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C59F33F71CCF58110055A4BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C59F33FC1CCF58120055A4BA /* PalauTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PalauTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -40,6 +67,28 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		286A50AA1CCFB7AB00F02082 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		286A51301CCFBC5900F02082 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		286A513A1CCFBC5900F02082 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				286A513E1CCFBC5900F02082 /* Palau.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C59F33EE1CCF58110055A4BA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -58,12 +107,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		286A50AF1CCFB7AB00F02082 /* PalauWatch */ = {
+			isa = PBXGroup;
+			children = (
+				286A50B21CCFB7AB00F02082 /* Info.plist */,
+			);
+			path = PalauWatch;
+			sourceTree = "<group>";
+		};
+		286A51351CCFBC5900F02082 /* PalauTV */ = {
+			isa = PBXGroup;
+			children = (
+				286A51361CCFBC5900F02082 /* PalauTV.h */,
+				286A51381CCFBC5900F02082 /* Info.plist */,
+			);
+			path = PalauTV;
+			sourceTree = "<group>";
+		};
+		286A51411CCFBC5900F02082 /* PalauTVTests */ = {
+			isa = PBXGroup;
+			children = (
+				286A51441CCFBC5900F02082 /* Info.plist */,
+			);
+			path = PalauTVTests;
+			sourceTree = "<group>";
+		};
 		C59F33E81CCF58110055A4BA = {
 			isa = PBXGroup;
 			children = (
+				285899531CCF85AB0086096D /* Fixtures */,
 				C59F33F41CCF58110055A4BA /* Palau */,
 				C59F34001CCF58120055A4BA /* PalauTests */,
+				286A50AF1CCFB7AB00F02082 /* PalauWatch */,
+				286A51351CCFBC5900F02082 /* PalauTV */,
+				286A51411CCFBC5900F02082 /* PalauTVTests */,
 				C59F33F31CCF58110055A4BA /* Products */,
+				286A511C1CCFBAF400F02082 /* PalauTests copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,6 +151,9 @@
 			children = (
 				C59F33F21CCF58110055A4BA /* Palau.framework */,
 				C59F33FC1CCF58120055A4BA /* PalauTests.xctest */,
+				286A50AE1CCFB7AB00F02082 /* Palau.framework */,
+				286A51341CCFBC5900F02082 /* Palau.framework */,
+				286A513D1CCFBC5900F02082 /* PalauTVTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,7 +173,6 @@
 		C59F34001CCF58120055A4BA /* PalauTests */ = {
 			isa = PBXGroup;
 			children = (
-				285899531CCF85AB0086096D /* Fixtures */,
 				C59F34011CCF58120055A4BA /* PalauTests.swift */,
 				C59F34031CCF58120055A4BA /* Info.plist */,
 			);
@@ -101,6 +182,21 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		286A50AB1CCFB7AB00F02082 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		286A51311CCFBC5900F02082 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				286A51371CCFBC5900F02082 /* PalauTV.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C59F33EF1CCF58110055A4BA /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -111,6 +207,60 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		286A50AD1CCFB7AB00F02082 /* PalauWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 286A50B51CCFB7AB00F02082 /* Build configuration list for PBXNativeTarget "PalauWatch" */;
+			buildPhases = (
+				286A50A91CCFB7AB00F02082 /* Sources */,
+				286A50AA1CCFB7AB00F02082 /* Frameworks */,
+				286A50AB1CCFB7AB00F02082 /* Headers */,
+				286A50AC1CCFB7AB00F02082 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PalauWatch;
+			productName = PalauWatch;
+			productReference = 286A50AE1CCFB7AB00F02082 /* Palau.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		286A51331CCFBC5900F02082 /* PalauTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 286A51451CCFBC5900F02082 /* Build configuration list for PBXNativeTarget "PalauTV" */;
+			buildPhases = (
+				286A512F1CCFBC5900F02082 /* Sources */,
+				286A51301CCFBC5900F02082 /* Frameworks */,
+				286A51311CCFBC5900F02082 /* Headers */,
+				286A51321CCFBC5900F02082 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PalauTV;
+			productName = PalauTV;
+			productReference = 286A51341CCFBC5900F02082 /* Palau.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		286A513C1CCFBC5900F02082 /* PalauTVTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 286A51481CCFBC5900F02082 /* Build configuration list for PBXNativeTarget "PalauTVTests" */;
+			buildPhases = (
+				286A51391CCFBC5900F02082 /* Sources */,
+				286A513A1CCFBC5900F02082 /* Frameworks */,
+				286A513B1CCFBC5900F02082 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				286A51401CCFBC5900F02082 /* PBXTargetDependency */,
+			);
+			name = PalauTVTests;
+			productName = PalauTVTests;
+			productReference = 286A513D1CCFBC5900F02082 /* PalauTVTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C59F33F11CCF58110055A4BA /* Palau */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C59F34061CCF58120055A4BA /* Build configuration list for PBXNativeTarget "Palau" */;
@@ -158,6 +308,15 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "symentis GmbH";
 				TargetAttributes = {
+					286A50AD1CCFB7AB00F02082 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					286A51331CCFBC5900F02082 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					286A513C1CCFBC5900F02082 = {
+						CreatedOnToolsVersion = 7.3;
+					};
 					C59F33F11CCF58110055A4BA = {
 						CreatedOnToolsVersion = 7.3;
 					};
@@ -180,11 +339,36 @@
 			targets = (
 				C59F33F11CCF58110055A4BA /* Palau */,
 				C59F33FB1CCF58120055A4BA /* PalauTests */,
+				286A50AD1CCFB7AB00F02082 /* PalauWatch */,
+				286A51331CCFBC5900F02082 /* PalauTV */,
+				286A513C1CCFBC5900F02082 /* PalauTVTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		286A50AC1CCFB7AB00F02082 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		286A51321CCFBC5900F02082 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		286A513B1CCFBC5900F02082 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				286A516A1CCFBD6700F02082 /* Fixtures in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C59F33F01CCF58110055A4BA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -220,6 +404,36 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		286A50A91CCFB7AB00F02082 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				286A50C01CCFB7DB00F02082 /* UserDefaults.swift in Sources */,
+				286A50BC1CCFB7D400F02082 /* UserDefaultable.swift in Sources */,
+				286A50C41CCFB7E100F02082 /* UserDefaultsEntry.swift in Sources */,
+				286A50C51CCFB7E100F02082 /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		286A512F1CCFBC5900F02082 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				286A51561CCFBC8F00F02082 /* UserDefaults.swift in Sources */,
+				286A51551CCFBC8F00F02082 /* UserDefaultable.swift in Sources */,
+				286A51571CCFBC8F00F02082 /* UserDefaultsEntry.swift in Sources */,
+				286A51581CCFBC8F00F02082 /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		286A51391CCFBC5900F02082 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				286A51511CCFBC8900F02082 /* PalauTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C59F33ED1CCF58110055A4BA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -242,6 +456,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		286A51401CCFBC5900F02082 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 286A51331CCFBC5900F02082 /* PalauTV */;
+			targetProxy = 286A513F1CCFBC5900F02082 /* PBXContainerItemProxy */;
+		};
 		C59F33FF1CCF58120055A4BA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C59F33F11CCF58110055A4BA /* Palau */;
@@ -250,6 +469,112 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		286A50B31CCFB7AB00F02082 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = PalauWatch/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.symentis.PalauWatch;
+				PRODUCT_NAME = Palau;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		286A50B41CCFB7AB00F02082 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = PalauWatch/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.symentis.PalauWatch;
+				PRODUCT_NAME = Palau;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		286A51461CCFBC5900F02082 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = PalauTV/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.symentis.PalauTV;
+				PRODUCT_NAME = Palau;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		286A51471CCFBC5900F02082 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = PalauTV/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.symentis.PalauTV;
+				PRODUCT_NAME = Palau;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Release;
+		};
+		286A51491CCFBC5900F02082 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = PalauTVTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.symentis.PalauTVTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		286A514A1CCFBC5900F02082 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = PalauTVTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.symentis.PalauTVTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Release;
+		};
 		C59F34041CCF58120055A4BA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -352,6 +677,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Palau/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.symentis.Palau;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -371,6 +697,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Palau/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.symentis.Palau;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -401,6 +728,30 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		286A50B51CCFB7AB00F02082 /* Build configuration list for PBXNativeTarget "PalauWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				286A50B31CCFB7AB00F02082 /* Debug */,
+				286A50B41CCFB7AB00F02082 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		286A51451CCFBC5900F02082 /* Build configuration list for PBXNativeTarget "PalauTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				286A51461CCFBC5900F02082 /* Debug */,
+				286A51471CCFBC5900F02082 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		286A51481CCFBC5900F02082 /* Build configuration list for PBXNativeTarget "PalauTVTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				286A51491CCFBC5900F02082 /* Debug */,
+				286A514A1CCFBC5900F02082 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		C59F33EC1CCF58110055A4BA /* Build configuration list for PBXProject "Palau" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

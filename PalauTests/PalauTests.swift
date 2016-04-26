@@ -24,9 +24,9 @@ class PalauTests: XCTestCase {
     super.tearDown()
   }
 
-  // ----------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------
   // MARK: - Internal Helper
-  // ----------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------
 
   /// Helper for checking values
   /// - parameter entry: UserDefaultsEntry
@@ -62,9 +62,9 @@ class PalauTests: XCTestCase {
     print("Done")
   }
 
-  // ----------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------
   // MARK: - Test Types
-  // ----------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------------------------
 
   func getFixtureFile(name: String, ext: String) -> String? {
     // lets get some files from the test bundle
@@ -115,11 +115,8 @@ class PalauTests: XCTestCase {
     checkValue(&UserDefaults.boolValue, value: BooleanLiteralType(false))
   }
 
-  func testIntValue() {
-    // test some vanilla ints
-    for i in [1, 2, 3, 4, 5, 6, 100, -44] {
-      checkValue(&UserDefaults.intValue, value: i)
-    }
+  #if __LP64__
+  func test64bitOnly () {
 
     // test max 64 bit unsigned int nine quintillion
     let reallyBigInt = 9_223_372_036_854_775_807
@@ -129,6 +126,21 @@ class PalauTests: XCTestCase {
     let reallyNegativeBigInt = -9_223_372_036_854_775_808
     checkValue(&UserDefaults.intValue, value: reallyNegativeBigInt)
 
+    let reallyBitUnsignedInt: UInt = 9_223_372_036_854_775_807
+    checkValue(&UserDefaults.uIntValue, value: reallyBitUnsignedInt)
+
+    // really big int as NSNumber
+    let reallyBigNSNumber: NSNumber = NSNumber(integer: 9_223_372_036_854_775_807)
+    checkValue(&UserDefaults.nsNumberValue, value: reallyBigNSNumber)
+  }
+  #endif
+
+  func testIntValue() {
+    // test some vanilla ints
+    for i in [1, 2, 3, 4, 5, 6, 100, -44] {
+      checkValue(&UserDefaults.intValue, value: i)
+    }
+
     let binaryInteger = 0b10001       // 17 in binary notation
     checkValue(&UserDefaults.intValue, value: binaryInteger)
 
@@ -137,9 +149,6 @@ class PalauTests: XCTestCase {
 
     let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
     checkValue(&UserDefaults.intValue, value: hexadecimalInteger)
-
-    let reallyBitUnsignedInt: UInt = 9_223_372_036_854_775_807
-    checkValue(&UserDefaults.uIntValue, value: reallyBitUnsignedInt)
   }
 
   func testNSNumberValue() {
@@ -147,10 +156,6 @@ class PalauTests: XCTestCase {
       let testNumber: NSNumber = NSNumber(integer: i)
       checkValue(&UserDefaults.nsNumberValue, value: testNumber)
     }
-
-    // really big int as NSNumber
-    let reallyBigNSNumber: NSNumber = NSNumber(integer: 9_223_372_036_854_775_807)
-    checkValue(&UserDefaults.nsNumberValue, value: reallyBigNSNumber)
 
     let nsDecimalNumber = NSDecimalNumber(integer: 1)
     checkValue(&UserDefaults.nsNumberValue, value: nsDecimalNumber)
@@ -254,7 +259,9 @@ class PalauTests: XCTestCase {
     let dictionary = NSDictionary(dictionary: ["key": "value", NSDate(): NSNumber(integer: 1)])
     checkValue(&UserDefaults.nsDictionaryValue, value: dictionary)
 
-    let mutableDictionary = NSMutableDictionary(dictionary: ["key": "value", NSDate(): NSNumber(integer: 1)])
+    let mutableDictionary = NSMutableDictionary(
+      dictionary: ["key": "value", NSDate(): NSNumber(integer: 1)]
+    )
     checkValue(&UserDefaults.nsDictionaryValue, value: mutableDictionary)
   }
 
@@ -281,9 +288,9 @@ class PalauTests: XCTestCase {
 
 }
 
-// ----------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // MARK: - Test Related Helpers
-// ----------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 
 let isEmpty: Int? -> Bool = {
   return $0 == nil
@@ -386,7 +393,6 @@ extension UserDefaults {
     get { return value("testEnumValue") }
     set { }
   }
-
 }
 
 public enum TestEnum: Int {
