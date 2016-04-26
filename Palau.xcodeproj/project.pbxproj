@@ -11,21 +11,18 @@
 		286A50BC1CCFB7D400F02082 /* UserDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340C1CCF58400055A4BA /* UserDefaultable.swift */; };
 		286A50C01CCFB7DB00F02082 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340E1CCF584F0055A4BA /* UserDefaults.swift */; };
 		286A50C41CCFB7E100F02082 /* UserDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34101CCF589B0055A4BA /* UserDefaultsEntry.swift */; };
-		286A50C51CCFB7E100F02082 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34131CCF5AF20055A4BA /* Utils.swift */; };
 		286A51371CCFBC5900F02082 /* PalauTV.h in Headers */ = {isa = PBXBuildFile; fileRef = 286A51361CCFBC5900F02082 /* PalauTV.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		286A513E1CCFBC5900F02082 /* Palau.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 286A51341CCFBC5900F02082 /* Palau.framework */; };
 		286A51511CCFBC8900F02082 /* PalauTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34011CCF58120055A4BA /* PalauTests.swift */; };
 		286A51551CCFBC8F00F02082 /* UserDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340C1CCF58400055A4BA /* UserDefaultable.swift */; };
 		286A51561CCFBC8F00F02082 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340E1CCF584F0055A4BA /* UserDefaults.swift */; };
 		286A51571CCFBC8F00F02082 /* UserDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34101CCF589B0055A4BA /* UserDefaultsEntry.swift */; };
-		286A51581CCFBC8F00F02082 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34131CCF5AF20055A4BA /* Utils.swift */; };
 		286A516A1CCFBD6700F02082 /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 285899531CCF85AB0086096D /* Fixtures */; };
 		C59F33FD1CCF58120055A4BA /* Palau.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C59F33F21CCF58110055A4BA /* Palau.framework */; };
 		C59F34021CCF58120055A4BA /* PalauTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34011CCF58120055A4BA /* PalauTests.swift */; };
 		C59F340D1CCF58400055A4BA /* UserDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340C1CCF58400055A4BA /* UserDefaultable.swift */; };
 		C59F340F1CCF584F0055A4BA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340E1CCF584F0055A4BA /* UserDefaults.swift */; };
 		C59F34111CCF589B0055A4BA /* UserDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34101CCF589B0055A4BA /* UserDefaultsEntry.swift */; };
-		C59F34141CCF5AF20055A4BA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34131CCF5AF20055A4BA /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +60,6 @@
 		C59F340C1CCF58400055A4BA /* UserDefaultable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultable.swift; sourceTree = "<group>"; };
 		C59F340E1CCF584F0055A4BA /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		C59F34101CCF589B0055A4BA /* UserDefaultsEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsEntry.swift; sourceTree = "<group>"; };
-		C59F34131CCF5AF20055A4BA /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,7 +161,6 @@
 				C59F340C1CCF58400055A4BA /* UserDefaultable.swift */,
 				C59F340E1CCF584F0055A4BA /* UserDefaults.swift */,
 				C59F34101CCF589B0055A4BA /* UserDefaultsEntry.swift */,
-				C59F34131CCF5AF20055A4BA /* Utils.swift */,
 			);
 			path = Palau;
 			sourceTree = "<group>";
@@ -411,7 +406,6 @@
 				286A50C01CCFB7DB00F02082 /* UserDefaults.swift in Sources */,
 				286A50BC1CCFB7D400F02082 /* UserDefaultable.swift in Sources */,
 				286A50C41CCFB7E100F02082 /* UserDefaultsEntry.swift in Sources */,
-				286A50C51CCFB7E100F02082 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,7 +416,6 @@
 				286A51561CCFBC8F00F02082 /* UserDefaults.swift in Sources */,
 				286A51551CCFBC8F00F02082 /* UserDefaultable.swift in Sources */,
 				286A51571CCFBC8F00F02082 /* UserDefaultsEntry.swift in Sources */,
-				286A51581CCFBC8F00F02082 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,7 +434,6 @@
 				C59F340F1CCF584F0055A4BA /* UserDefaults.swift in Sources */,
 				C59F340D1CCF58400055A4BA /* UserDefaultable.swift in Sources */,
 				C59F34111CCF589B0055A4BA /* UserDefaultsEntry.swift in Sources */,
-				C59F34141CCF5AF20055A4BA /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
