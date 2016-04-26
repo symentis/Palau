@@ -12,6 +12,8 @@ import Foundation
 // MARK: - UserDefaultable
 // ------------------------------------------------------------------------------------------------
 
+public typealias NSUD = NSUserDefaults
+
 /// UserDefaultable Protocol
 /// Types that can be written to defaults should implement this
 public protocol UserDefaultable {
@@ -19,10 +21,10 @@ public protocol UserDefaultable {
   associatedtype ValueType
 
   /// Obviously: Get the value
-  static func get(key: String, fromDefaults defaults: NSUserDefaults) -> ValueType?
+  static func get(key: String, from defaults: NSUD) -> ValueType?
 
   /// Obviously: Set the value
-  static func set(value: ValueType?, forKey key: String, inDefaults defaults: NSUserDefaults) -> Void
+  static func set(value: ValueType?, forKey key: String, in defaults: NSUD) -> Void
 }
 
 
@@ -32,11 +34,11 @@ public protocol UserDefaultable {
 
 extension UserDefaultable {
 
-  public static func get(key: String, fromDefaults defaults: NSUserDefaults) -> ValueType? {
+  public static func get(key: String, from defaults: NSUD) -> ValueType? {
     return defaults.objectForKey(key) as? ValueType
   }
 
-  public static func set(value: ValueType?, forKey key: String, inDefaults defaults: NSUserDefaults) -> Void {
+  public static func set(value: ValueType?, forKey key: String, in defaults: NSUD) -> Void {
     guard let value = value as? AnyObject else { return defaults.removeObjectForKey(key) }
     defaults.setObject(value, forKey: key)
   }
@@ -48,12 +50,12 @@ extension UserDefaultable {
 
 extension UserDefaultable where ValueType: RawRepresentable {
 
-  public static func get(key: String, fromDefaults defaults: NSUserDefaults) -> ValueType? {
+  public static func get(key: String, from defaults: NSUD) -> ValueType? {
     guard let val = defaults.objectForKey(key) as? ValueType.RawValue else { return nil }
     return ValueType(rawValue: val)
   }
 
-  public static func set(value: ValueType?, forKey key: String, inDefaults defaults: NSUserDefaults) -> Void {
+  public static func set(value: ValueType?, forKey key: String, in defaults: NSUD) -> Void {
     guard let value = value?.rawValue as? AnyObject else { return defaults.removeObjectForKey(key) }
     defaults.setObject(value, forKey: key)
   }
@@ -65,13 +67,13 @@ extension UserDefaultable where ValueType: RawRepresentable {
 
 extension UserDefaultable where ValueType: NSCoding {
 
-  public static func get(key: String, fromDefaults defaults: NSUserDefaults) -> ValueType? {
+  public static func get(key: String, from defaults: NSUD) -> ValueType? {
     guard let data = defaults.objectForKey(key) as? NSData,
       let value = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? ValueType else { return nil }
     return value
   }
 
-  public static func set(value: ValueType?, forKey key: String, inDefaults defaults: NSUserDefaults) -> Void {
+  public static func set(value: ValueType?, forKey key: String, in defaults: NSUD) -> Void {
     guard let value = value as? AnyObject else { return defaults.removeObjectForKey(key) }
     let data = NSKeyedArchiver.archivedDataWithRootObject(value)
     defaults.setObject(data, forKey: key)

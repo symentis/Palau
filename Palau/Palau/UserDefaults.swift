@@ -14,7 +14,7 @@ import Foundation
 public struct UserDefaults {
 
   /// Pure - will always return the provided value
-  /// - parameter id: T
+  /// - parameter value: T
   /// - returns: T
   public static func pure<T>(value: T) -> T {
     return value

@@ -22,8 +22,13 @@ class PalauTests: XCTestCase {
     super.tearDown()
   }
 
+  // ----------------------------------------------------------------------------------------------
+  // MARK: - Internal Helper
+  // ----------------------------------------------------------------------------------------------
 
   /// Helper for checking values
+  /// - parameter entry: UserDefaultsEntry
+  /// - parameter value: T.ValueType
   func checkValue<T where
     T: UserDefaultable,
     T.ValueType: Equatable
@@ -42,6 +47,10 @@ class PalauTests: XCTestCase {
     assert(entry.value! == value)
     print("Done")
   }
+
+  // ----------------------------------------------------------------------------------------------
+  // MARK: - Test Types
+  // ----------------------------------------------------------------------------------------------
 
   func testStringValue() {
     for s in ["a", "zzz", "CCCC", "👻"] {
@@ -102,6 +111,10 @@ class PalauTests: XCTestCase {
 
 }
 
+
+// ----------------------------------------------------------------------------------------------
+// MARK: - Test Related Helpers
+// ----------------------------------------------------------------------------------------------
 
 let isEmpty: Int? -> Bool = {
   return $0 == nil

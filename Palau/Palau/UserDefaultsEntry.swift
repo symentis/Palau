@@ -18,8 +18,8 @@ public struct UserDefaultsEntry<T: UserDefaultable> {
   let ensure: (T.ValueType? -> T.ValueType?)
 
   public var value: T.ValueType? {
-    get { return ensure(T.get(key, fromDefaults: defaults)) }
-    set { T.set(ensure(newValue), forKey: key, inDefaults: defaults) }
+    get { return ensure(T.get(key, from: defaults)) }
+    set { T.set(ensure(newValue), forKey: key, in: defaults) }
   }
 
   public func reset() {
