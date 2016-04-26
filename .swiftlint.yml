@@ -1,0 +1,15 @@
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Carthage
+
+disabled_rules: # rule identifiers to exclude from running
+  - file_length
+  - type_body_length
+  - line_length
+  - valid_docs
+  - closing_brace
+
+variable_name:
+  min_length: 1
+
+type_name:
+  min_length: 1
