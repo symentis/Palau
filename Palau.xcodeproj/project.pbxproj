@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		285899541CCF85AB0086096D /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 285899531CCF85AB0086096D /* Fixtures */; };
 		C59F33FD1CCF58120055A4BA /* Palau.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C59F33F21CCF58110055A4BA /* Palau.framework */; };
 		C59F34021CCF58120055A4BA /* PalauTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34011CCF58120055A4BA /* PalauTests.swift */; };
 		C59F340D1CCF58400055A4BA /* UserDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340C1CCF58400055A4BA /* UserDefaultable.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		285899531CCF85AB0086096D /* Fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fixtures; sourceTree = SOURCE_ROOT; };
 		C59F33F21CCF58110055A4BA /* Palau.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Palau.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C59F33F71CCF58110055A4BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C59F33FC1CCF58120055A4BA /* PalauTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PalauTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +91,7 @@
 		C59F34001CCF58120055A4BA /* PalauTests */ = {
 			isa = PBXGroup;
 			children = (
+				285899531CCF85AB0086096D /* Fixtures */,
 				C59F34011CCF58120055A4BA /* PalauTests.swift */,
 				C59F34031CCF58120055A4BA /* Info.plist */,
 			);
@@ -193,6 +196,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				285899541CCF85AB0086096D /* Fixtures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +417,7 @@
 				C59F34081CCF58120055A4BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C59F34091CCF58120055A4BA /* Build configuration list for PBXNativeTarget "PalauTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +426,7 @@
 				C59F340B1CCF58120055A4BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
