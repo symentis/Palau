@@ -8,6 +8,18 @@
 
 import Foundation
 
+#if os(iOS)
+  import UIKit
+#endif
+
+#if os(tvOS)
+  import UIKit
+#endif
+
+#if os(watchOS)
+  import WatchKit
+#endif
+
 // -------------------------------------------------------------------------------------------------
 // MARK: - UserDefaultable
 // -------------------------------------------------------------------------------------------------
@@ -187,4 +199,9 @@ extension NSURL: UserDefaultable {
 /// Make NSIndexPath UserDefaultable
 extension NSIndexPath: UserDefaultable {
   public typealias ValueType = NSIndexPath
+}
+
+/// Make NSIndexPath UserDefaultable
+extension UIColor: UserDefaultable {
+  public typealias ValueType = UIColor
 }

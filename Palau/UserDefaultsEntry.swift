@@ -26,11 +26,15 @@ public struct UserDefaultsEntry<T: UserDefaultable> {
     defaults.removeObjectForKey(key)
   }
 
-  public func ensure(when when: T.ValueType? -> Bool,
-                          use defaultValue: T.ValueType) -> UserDefaultsEntry<T> {
+public func ensure(when when: T.ValueType? -> Bool,
+                   use defaultValue: T.ValueType) -> UserDefaultsEntry<T> {
     return UserDefaultsEntry(key:key, defaults:defaults) {
       let vx = self.ensure($0)
       return when(vx) ? defaultValue : vx
     }
+  }
+
+  public func whenNil(use defaultValue: T.ValueType) -> UserDefaultsEntry<T> {
+    return ensure(when:UserDefaults.isEmpty, use:defaultValue)
   }
 }

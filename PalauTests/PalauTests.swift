@@ -8,7 +8,7 @@
 
 import XCTest
 import Foundation
-import Darwin
+import CoreGraphics
 
 @testable import Palau
 
@@ -280,6 +280,16 @@ class PalauTests: XCTestCase {
     checkValue(&UserDefaults.nsIndexPath, value: indexPath)
   }
 
+  // test if we can get a default UIColor from a property
+  func testUIColorDefaultValue() {
+    let redColor = UserDefaults.ensuredUIColorValue.value
+    let redColor2 = UserDefaults.whenNilledUIColorValue.value
+
+    // UIColor sometimes returns different versions UIDeviceRGBColorSpace / UIDeviceWhiteColorSpace
+    assert(CGColorEqualToColor(redColor!.CGColor, UIColor.redColor().CGColor))
+    assert(redColor2 == UIColor.redColor())
+  }
+
   func testEnumValue() {
     for e in [TestEnum.CaseA, TestEnum.CaseB, TestEnum.CaseC] {
       checkValue(&UserDefaults.enumValue, value: e)
@@ -291,10 +301,6 @@ class PalauTests: XCTestCase {
 // -------------------------------------------------------------------------------------------------
 // MARK: - Test Related Helpers
 // -------------------------------------------------------------------------------------------------
-
-let isEmpty: Int? -> Bool = {
-  return $0 == nil
-}
 
 let lessThan10: Int? -> Bool = {
   return $0.map { $0 < 10 } ?? false
@@ -314,8 +320,20 @@ extension UserDefaults {
 
   public static var ensuredIntValue: UserDefaultsEntry<Int> {
     get { return value("ensuredIntValue")
-      .ensure(when: isEmpty, use: 10)
+      .ensure(when: UserDefaults.isEmpty, use: 10)
       .ensure(when: lessThan10, use: 10) }
+    set { }
+  }
+
+  public static var ensuredUIColorValue: UserDefaultsEntry<UIColor> {
+    get { return value("ensuredUIColorValue")
+      .ensure(when: UserDefaults.isEmpty, use: UIColor.redColor()) }
+    set { }
+  }
+
+  public static var whenNilledUIColorValue: UserDefaultsEntry<UIColor> {
+    get { return value("whenNilledUIColorValue")
+      .whenNil(use: UIColor.redColor()) }
     set { }
   }
 

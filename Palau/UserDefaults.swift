@@ -20,6 +20,13 @@ public struct UserDefaults {
     return value
   }
 
+  /// isEmpty - will return a Bool of Emptyness
+  /// - parameter value: T?
+  /// - returns: Bool
+  public static func isEmpty<T>(value: T?) -> Bool {
+    return value == nil
+  }
+
   public static var defaults: NSUserDefaults {
     return NSUserDefaults.standardUserDefaults()
   }
