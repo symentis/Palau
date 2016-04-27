@@ -34,7 +34,7 @@ public struct PalauDefaultsEntry<T: PalauDefaultable> {
   public let key: String
 
   /// Access to the default
-  let defaults: NSUserDefaults
+  let defaults: NSUD
 
   /// A function to change the incoming and outgoing value
   let ensure: (T.ValueType? -> T.ValueType?)
