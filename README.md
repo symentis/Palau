@@ -8,7 +8,7 @@
 
 ## Features
 
-- [x] Easily store your Custom Types in NSUSerDefaults
+- [x] Easily store your Custom Types in NSUserDefaults
 - [x] Most Standard Types Out-of-the-box
 - [x] Per-property based Chainable Rules
 - [x] Supports NSCoding and RawRepresentable
