@@ -117,8 +117,8 @@ extension UserDefaultable where ValueType: NSCoding {
 
 //
 /*
- TODO Swift 3: 
- 
+ TODO Swift 3:
+
  Swift 3 will probably give us extensions on generic types.
  This will make it easier for Array and Dictionary, Set
  Maybe like
