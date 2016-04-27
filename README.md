@@ -99,7 +99,7 @@ PalauDefaults.name.value = "Iam a great String value!"
 ### Get
 Getting your value back is as easy as:
 ```swift
-/// name is an Optional<String>?
+/// name is an String?
 let name = PalauDefaults.name.value
 ```
 
