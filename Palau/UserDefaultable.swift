@@ -28,22 +28,35 @@ public typealias NSUD = NSUserDefaults
 
 /// UserDefaultable Protocol
 /// Types that can be written to defaults should implement this
+/// By default we provide an implementation for most of the basic types
 public protocol UserDefaultable {
 
+  /// The associatedtype for the Value
   associatedtype ValueType
 
-  /// Obviously: Get the value
+  /// Static function to get an optional ValueType out of the
+  /// provided NSUserDefaults with the key
+  /// - param key: The key used in the NSUserDefaults
+  /// - param defaults: The NSUserDefaults
+  /// - returns: ValueType?
   static func get(key: String, from defaults: NSUD) -> ValueType?
 
-  /// Obviously: Set the value
+  /// Static function to set an optional ValueType in the provided NSUserDefaults with the key
+  /// - param value: The optional value to be stored
+  /// - param key: The key used in the NSUserDefaults
+  /// - param defaults: The NSUserDefaults
+  /// - returns: Void
   static func set(value: ValueType?, forKey key: String, in defaults: NSUD) -> Void
 }
 
 
 // -------------------------------------------------------------------------------------------------
 // MARK: - Extension Default
+//
+// The extension will provide set and get for basic types like String, Int and so forth
 // -------------------------------------------------------------------------------------------------
 
+/// Extension for basic types like Int, String and so forth
 extension UserDefaultable {
 
   public static func get(key: String, from defaults: NSUD) -> ValueType? {
@@ -58,8 +71,11 @@ extension UserDefaultable {
 
 // -------------------------------------------------------------------------------------------------
 // MARK: - RawRepresentable
+//
+// The extension will provide set and get for RawRepresentable
 // -------------------------------------------------------------------------------------------------
 
+/// Extension for RawRepresentable types aka enums
 extension UserDefaultable where ValueType: RawRepresentable {
 
   public static func get(key: String, from defaults: NSUD) -> ValueType? {
@@ -75,8 +91,11 @@ extension UserDefaultable where ValueType: RawRepresentable {
 
 // -------------------------------------------------------------------------------------------------
 // MARK: - NSCoding
+//
+// The extension will provide set and get for NSCoding types
 // -------------------------------------------------------------------------------------------------
 
+/// Extension for NSCoding types
 extension UserDefaultable where ValueType: NSCoding {
 
   public static func get(key: String, from defaults: NSUD) -> ValueType? {
@@ -96,30 +115,18 @@ extension UserDefaultable where ValueType: NSCoding {
 // MARK: - Implementations
 // -------------------------------------------------------------------------------------------------
 
-// TODO Swift 3: CollectionType: UserDefaultable where Element: UserDefaultable
+//
 /*
- /// Make Set UserDefaultable
- extension Set: UserDefaultable {
- public typealias ValueType = Set
+ TODO Swift 3: 
+ 
+ Swift 3 will probably give us extensions on generic types.
+ This will make it easier for Array and Dictionary, Set
+ Maybe like
 
- public static func get<T>(key: String, from defaults: NSUD) -> Set<T>? {
- guard let array = defaults.objectForKey(key) as? [T] else { return nil }
- return Set<T>(array)
+ extension CollectionType<Element>: UserDefaultable {
+  public typealias ValueType = CollectionType<Element>
  }
-
- public static func set<T>(value: Set<T>?, forKey key: String, in defaults: NSUD) -> Void {
- guard let set = value, let value = Array(set) as? AnyObject else {
-  return defaults.removeObjectForKey(key)
- }
- defaults.setObject(value, forKey: key)
- }
- }
-
- extension CollectionType where Element: UserDefaultable {
- public typealias ValueType = CollectionType<Element>
- }
- */
-
+*/
 
 /// Make Bool UserDefaultable
 extension Bool: UserDefaultable {
@@ -173,7 +180,7 @@ extension NSArray: UserDefaultable {
 
 /// Make Dictionary UserDefaultable
 extension Dictionary: UserDefaultable {
-  public typealias ValueType = Dictionary<Key, Value>
+  public typealias ValueType = Dictionary
 }
 
 /// Make NSDictionary UserDefaultable
