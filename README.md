@@ -82,7 +82,7 @@ By Default a Value will always be optional.
 If you want to set a value you call:
 
 ```swift
-PalauDefaults.name.value = "String"
+PalauDefaults.name.value = "Iam a great String value!"
 ```
 
 ### Get
