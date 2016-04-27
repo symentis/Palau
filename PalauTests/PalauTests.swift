@@ -66,7 +66,7 @@ class PalauTests: XCTestCase {
     assert(entry.value! == value)
 
     // clear it another way
-    entry.reset()
+    entry.clear()
     print(entry, "set again to nil")
     assert(entry.value == nil)
 

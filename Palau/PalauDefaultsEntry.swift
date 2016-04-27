@@ -51,9 +51,18 @@ public struct PalauDefaultsEntry<T: PalauDefaultable> {
 
   /// Use this function to remove a default value
   /// without additional calls of the ensure function
+  //@available(*, deprecated=1.0, obsoleted=2.0, message="Name was ambiguous, use .clear()")
+  @available(*, unavailable, renamed="clear")
   public func reset() {
     defaults.removeObjectForKey(key)
   }
+
+  /// Use this function to remove a default value
+  /// without additional calls of the ensure function
+  public func clear() {
+    defaults.removeObjectForKey(key)
+  }
+
 
   /// Helper function to take care of the value thats is read and written
   /// usage like:
