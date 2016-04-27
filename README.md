@@ -9,8 +9,8 @@ Once you import the module you can setup Defaults like:
 
 ```
 import Palau
-extension UserDefaults {
-  public static var name: UserDefaultsEntry<String> {
+extension PalauDefaults {
+  public static var name: PalauDefaultsEntry<String> {
     get { return value("name") }
     set { }
   }
@@ -21,7 +21,7 @@ By Default a Value will always be optional.
 If you want to set a value you call:
 
 ```
-UserDefaults.name.value = "String"
+PalauDefaults.name.value = "String"
 ```
 ## Usage with fallback
 
@@ -30,15 +30,15 @@ you can write:
 
 ```
 import Palau
-extension UserDefaults {
-  public static var color: UserDefaultsEntry<UIColor> {
+extension PalauDefaults {
+  public static var color: PalauDefaultsEntry<UIColor> {
     get { return value("color")
                  .whenNil(use: UIColor.redColor())  }
     set { }
   }
 }
 /// is redColor() 
-let color: UIColor? = UserDefaults.color.value
+let color: UIColor? = PalauDefaults.color.value
 ```
 
 ## Usage with ensure
@@ -46,7 +46,7 @@ let color: UIColor? = UserDefaults.color.value
 You can also build up arbitrary rules for your value like:
 
 ```
-  public static var ensuredIntValue: UserDefaultsEntry<Int> {
+  public static var ensuredIntValue: PalauDefaultsEntry<Int> {
     get { return value("ensuredIntValue")
       .whenNil(use: 10)
       .ensure(when: lessThan10, use: 10) }

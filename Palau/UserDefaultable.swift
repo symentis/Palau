@@ -1,5 +1,5 @@
 //
-//  UserDefaultable.swift
+//  PalauDefaultable.swift
 //  Palau
 //
 //  Created by symentis GmbH on 26.04.16.
@@ -21,15 +21,15 @@ import Foundation
 #endif
 
 // -------------------------------------------------------------------------------------------------
-// MARK: - UserDefaultable
+// MARK: - PalauDefaultable
 // -------------------------------------------------------------------------------------------------
 
 public typealias NSUD = NSUserDefaults
 
-/// UserDefaultable Protocol
+/// PalauDefaultable Protocol
 /// Types that can be written to defaults should implement this
 /// By default we provide an implementation for most of the basic types
-public protocol UserDefaultable {
+public protocol PalauDefaultable {
 
   /// The associatedtype for the Value
   associatedtype ValueType
@@ -57,7 +57,7 @@ public protocol UserDefaultable {
 // -------------------------------------------------------------------------------------------------
 
 /// Extension for basic types like Int, String and so forth
-extension UserDefaultable {
+extension PalauDefaultable {
 
   public static func get(key: String, from defaults: NSUD) -> ValueType? {
     return defaults.objectForKey(key) as? ValueType
@@ -76,7 +76,7 @@ extension UserDefaultable {
 // -------------------------------------------------------------------------------------------------
 
 /// Extension for RawRepresentable types aka enums
-extension UserDefaultable where ValueType: RawRepresentable {
+extension PalauDefaultable where ValueType: RawRepresentable {
 
   public static func get(key: String, from defaults: NSUD) -> ValueType? {
     guard let val = defaults.objectForKey(key) as? ValueType.RawValue else { return nil }
@@ -96,7 +96,7 @@ extension UserDefaultable where ValueType: RawRepresentable {
 // -------------------------------------------------------------------------------------------------
 
 /// Extension for NSCoding types
-extension UserDefaultable where ValueType: NSCoding {
+extension PalauDefaultable where ValueType: NSCoding {
 
   public static func get(key: String, from defaults: NSUD) -> ValueType? {
     guard let data = defaults.objectForKey(key) as? NSData,
@@ -123,92 +123,92 @@ extension UserDefaultable where ValueType: NSCoding {
  This will make it easier for Array and Dictionary, Set
  Maybe like
 
- extension CollectionType<Element>: UserDefaultable {
+ extension CollectionType<Element>: PalauDefaultable {
   public typealias ValueType = CollectionType<Element>
  }
 */
 
-/// Make Bool UserDefaultable
-extension Bool: UserDefaultable {
+/// Make Bool PalauDefaultable
+extension Bool: PalauDefaultable {
   public typealias ValueType = Bool
 }
 
-/// Make Int UserDefaultable
-extension Int: UserDefaultable {
+/// Make Int PalauDefaultable
+extension Int: PalauDefaultable {
   public typealias ValueType = Int
 }
 
-/// Make UInt UserDefaultable
-extension UInt: UserDefaultable {
+/// Make UInt PalauDefaultable
+extension UInt: PalauDefaultable {
   public typealias ValueType = UInt
 }
 
-/// Make Float UserDefaultable
-extension Float: UserDefaultable {
+/// Make Float PalauDefaultable
+extension Float: PalauDefaultable {
   public typealias ValueType = Float
 }
 
-/// Make Double UserDefaultable
-extension Double: UserDefaultable {
+/// Make Double PalauDefaultable
+extension Double: PalauDefaultable {
   public typealias ValueType = Double
 }
 
-/// Make NSNumber UserDefaultable
-extension NSNumber: UserDefaultable {
+/// Make NSNumber PalauDefaultable
+extension NSNumber: PalauDefaultable {
   public typealias ValueType = NSNumber
 }
 
-/// Make String UserDefaultable
-extension String: UserDefaultable {
+/// Make String PalauDefaultable
+extension String: PalauDefaultable {
   public typealias ValueType = String
 }
 
-/// Make NSString UserDefaultable
-extension NSString: UserDefaultable {
+/// Make NSString PalauDefaultable
+extension NSString: PalauDefaultable {
   public typealias ValueType = NSString
 }
 
-/// Make Array UserDefaultable
-extension Array: UserDefaultable {
+/// Make Array PalauDefaultable
+extension Array: PalauDefaultable {
   public typealias ValueType = Array
 }
 
-/// Make NSArray UserDefaultable
-extension NSArray: UserDefaultable {
+/// Make NSArray PalauDefaultable
+extension NSArray: PalauDefaultable {
   public typealias ValueType = NSArray
 }
 
-/// Make Dictionary UserDefaultable
-extension Dictionary: UserDefaultable {
+/// Make Dictionary PalauDefaultable
+extension Dictionary: PalauDefaultable {
   public typealias ValueType = Dictionary
 }
 
-/// Make NSDictionary UserDefaultable
-extension NSDictionary: UserDefaultable {
+/// Make NSDictionary PalauDefaultable
+extension NSDictionary: PalauDefaultable {
   public typealias ValueType = NSDictionary
 }
 
-/// Make NSDate UserDefaultable
-extension NSDate: UserDefaultable {
+/// Make NSDate PalauDefaultable
+extension NSDate: PalauDefaultable {
   public typealias ValueType = NSDate
 }
 
-/// Make NSData UserDefaultable
-extension NSData: UserDefaultable {
+/// Make NSData PalauDefaultable
+extension NSData: PalauDefaultable {
   public typealias ValueType = NSData
 }
 
-/// Make NSURL UserDefaultable
-extension NSURL: UserDefaultable {
+/// Make NSURL PalauDefaultable
+extension NSURL: PalauDefaultable {
   public typealias ValueType = NSURL
 }
 
-/// Make NSIndexPath UserDefaultable
-extension NSIndexPath: UserDefaultable {
+/// Make NSIndexPath PalauDefaultable
+extension NSIndexPath: PalauDefaultable {
   public typealias ValueType = NSIndexPath
 }
 
-/// Make NSIndexPath UserDefaultable
-extension UIColor: UserDefaultable {
+/// Make NSIndexPath PalauDefaultable
+extension UIColor: PalauDefaultable {
   public typealias ValueType = UIColor
 }

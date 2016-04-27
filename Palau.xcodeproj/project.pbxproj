@@ -23,7 +23,6 @@
 		C59F340D1CCF58400055A4BA /* UserDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340C1CCF58400055A4BA /* UserDefaultable.swift */; };
 		C59F340F1CCF584F0055A4BA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340E1CCF584F0055A4BA /* UserDefaults.swift */; };
 		C59F34111CCF589B0055A4BA /* UserDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34101CCF589B0055A4BA /* UserDefaultsEntry.swift */; };
-		C59F34161CD09FAF0055A4BA /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = C59F34151CD09FAF0055A4BA /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +46,6 @@
 		285899531CCF85AB0086096D /* Fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fixtures; sourceTree = SOURCE_ROOT; };
 		286A50AE1CCFB7AB00F02082 /* Palau.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Palau.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		286A50B21CCFB7AB00F02082 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		286A511C1CCFBAF400F02082 /* PalauTests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PalauTests copy-Info.plist"; path = "/Users/maja/Desktop/dev/madhava/Palau/PalauTests copy-Info.plist"; sourceTree = "<absolute>"; };
 		286A51341CCFBC5900F02082 /* Palau.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Palau.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		286A51361CCFBC5900F02082 /* PalauTV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PalauTV.h; sourceTree = "<group>"; };
 		286A51381CCFBC5900F02082 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 				286A51351CCFBC5900F02082 /* PalauTV */,
 				286A51411CCFBC5900F02082 /* PalauTVTests */,
 				C59F33F31CCF58110055A4BA /* Products */,
-				286A511C1CCFBAF400F02082 /* PalauTests copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -436,7 +433,6 @@
 			files = (
 				C59F340F1CCF584F0055A4BA /* UserDefaults.swift in Sources */,
 				C59F340D1CCF58400055A4BA /* UserDefaultable.swift in Sources */,
-				C59F34161CD09FAF0055A4BA /* README.md in Sources */,
 				C59F34111CCF589B0055A4BA /* UserDefaultsEntry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

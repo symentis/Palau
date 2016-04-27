@@ -1,5 +1,5 @@
 //
-//  UserDefaultsEntry.swift
+//  PalauDefaultsEntry.swift
 //  Palau
 //
 //  Created by symentis GmbH on 26.04.16.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-/// A UserDefaultsEntry
+/// A PalauDefaultsEntry
 /// with String key
-/// UserDefaultable value
-public struct UserDefaultsEntry<T: UserDefaultable> {
+/// PalauDefaultable value
+public struct PalauDefaultsEntry<T: PalauDefaultable> {
 
   /// The key of the entry
   public let key: String
@@ -42,7 +42,7 @@ public struct UserDefaultsEntry<T: UserDefaultable> {
   /// usage like:
   /// The functions provided for 'when' parameter can be implemented for any use case
   /// ````
-  /// public static var intValueWithMinOf10: UserDefaultsEntry<Int> {
+  /// public static var intValueWithMinOf10: PalauDefaultsEntry<Int> {
   /// get {
   ///   return value(_autoPauseThresholdSeconds)
   ///         .ensure(when: isEqual(0), use: 20)
@@ -52,15 +52,15 @@ public struct UserDefaultsEntry<T: UserDefaultable> {
   /// }
   /// ````
   public func ensure(when when: T.ValueType? -> Bool,
-                          use defaultValue: T.ValueType) -> UserDefaultsEntry<T> {
-    return UserDefaultsEntry(key:key, defaults:defaults) {
+                     use defaultValue: T.ValueType) -> PalauDefaultsEntry<T> {
+    return PalauDefaultsEntry(key:key, defaults:defaults) {
       let vx = self.ensure($0)
       return when(vx) ? defaultValue : vx
     }
   }
 
   /// Helper function to return a fallback in case the value is nil
-  public func whenNil(use defaultValue: T.ValueType) -> UserDefaultsEntry<T> {
-    return ensure(when:UserDefaults.isEmpty, use:defaultValue)
+  public func whenNil(use defaultValue: T.ValueType) -> PalauDefaultsEntry<T> {
+    return ensure(when:PalauDefaults.isEmpty, use:defaultValue)
   }
 }

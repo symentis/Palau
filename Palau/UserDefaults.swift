@@ -1,5 +1,5 @@
 //
-//  UserDefaults.swift
+//  PalauDefaults.swift
 //  Palau
 //
 //  Created by symentis GmbH on 26.04.16.
@@ -8,18 +8,18 @@
 
 import Foundation
 
-/// UserDefaults
+/// PalauDefaults
 ///
-/// UserDefaults wrap the NSUserDefaults
+/// PalauDefaults wrap the NSUserDefaults
 /// The easiest usage is:
-/// - extension on UserDefaults with:
+/// - extension on PalauDefaults with:
 /// ````
-///   public static var name: UserDefaultsEntry<String> {
+///   public static var name: PalauDefaultsEntry<String> {
 ///   get { return value("name") }
 ///   set { }
 /// }
 /// ````
-public struct UserDefaults {
+public struct PalauDefaults {
 
   /// The underlying defaults
   public static var defaults: NSUserDefaults {
@@ -42,10 +42,10 @@ public struct UserDefaults {
     return value == nil
   }
 
-  /// Generate a UserDefaultsEntry of Type T for provided key
+  /// Generate a PalauDefaultsEntry of Type T for provided key
   /// - parameter key: String, name of the entry
   /// - returns: DefaultValue
-  public static func value<T>(key: String) -> UserDefaultsEntry<T> {
-    return UserDefaultsEntry(key:key, defaults:defaults, ensure: pure)
+  public static func value<T>(key: String) -> PalauDefaultsEntry<T> {
+    return PalauDefaultsEntry(key:key, defaults:defaults, ensure: pure)
   }
 }
