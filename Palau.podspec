@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Palau"
-  s.version      = "1.0"
+  s.version      = "1.0.2"
   s.summary      = "Palau: NSUserDefaults with Wings!"
   s.homepage     = "https://github.com/symentis/Palau"
   s.screenshots  = "https://raw.githubusercontent.com/symentis/Palau/master/Resources/palau-logo.png"
@@ -9,6 +9,6 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = "8.0"
   s.tvos.deployment_target = "9.0"
   s.watchos.deployment_target = "2.0"
-  s.source       = { :git => "https://github.com/symentis/Palau.git", :tag => "1.0.1" }
+  s.source       = { :git => "https://github.com/symentis/Palau.git", :tag => s.version }
   s.source_files = 'Palau/*.swift'
 end
