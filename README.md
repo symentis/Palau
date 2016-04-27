@@ -1,4 +1,4 @@
-![Palau: NSUserDefaults with Wings!](https://raw.githubusercontent.com/symentis/Palau/Resources/palau-logo.png)
+![Palau: NSUserDefaults with Wings!](https://raw.githubusercontent.com/symentis/Palau/master/Resources/palau-logo.png)
 
 ![Build Status](https://img.shields.io/badge/build-passing-4BC51D.svg?style=flat)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
