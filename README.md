@@ -56,6 +56,17 @@ github "symentis/Palau" ~> 1.0
 Run `carthage update` to build the framework and drag the built `Palau.framework` into your Xcode project.
 See more instructions on the [Carthage page](https://github.com/Carthage/Carthage).
 
+### CocoaPods
+
+To integrate Palau into your project using CocoaPods, add to your `Podfile`:
+
+```ruby
+use_frameworks!
+
+pod 'Palau', '~> 1.0'
+```
+
+Run `pod install` to install the framework into your Xcode workspace.
 
 ## Usage
 Import Palau
