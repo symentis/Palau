@@ -23,6 +23,7 @@
 		C59F340D1CCF58400055A4BA /* UserDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340C1CCF58400055A4BA /* UserDefaultable.swift */; };
 		C59F340F1CCF584F0055A4BA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340E1CCF584F0055A4BA /* UserDefaults.swift */; };
 		C59F34111CCF589B0055A4BA /* UserDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34101CCF589B0055A4BA /* UserDefaultsEntry.swift */; };
+		C59F34161CD09FAF0055A4BA /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = C59F34151CD09FAF0055A4BA /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		C59F340C1CCF58400055A4BA /* UserDefaultable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultable.swift; sourceTree = "<group>"; };
 		C59F340E1CCF584F0055A4BA /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		C59F34101CCF589B0055A4BA /* UserDefaultsEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsEntry.swift; sourceTree = "<group>"; };
+		C59F34151CD09FAF0055A4BA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 		C59F33E81CCF58110055A4BA = {
 			isa = PBXGroup;
 			children = (
+				C59F34151CD09FAF0055A4BA /* README.md */,
 				285899531CCF85AB0086096D /* Fixtures */,
 				C59F33F41CCF58110055A4BA /* Palau */,
 				C59F34001CCF58120055A4BA /* PalauTests */,
@@ -433,6 +436,7 @@
 			files = (
 				C59F340F1CCF584F0055A4BA /* UserDefaults.swift in Sources */,
 				C59F340D1CCF58400055A4BA /* UserDefaultable.swift in Sources */,
+				C59F34161CD09FAF0055A4BA /* README.md in Sources */,
 				C59F34111CCF589B0055A4BA /* UserDefaultsEntry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -727,6 +731,7 @@
 				286A50B41CCFB7AB00F02082 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		286A51451CCFBC5900F02082 /* Build configuration list for PBXNativeTarget "PalauTV" */ = {
 			isa = XCConfigurationList;
@@ -735,6 +740,7 @@
 				286A51471CCFBC5900F02082 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		286A51481CCFBC5900F02082 /* Build configuration list for PBXNativeTarget "PalauTVTests" */ = {
 			isa = XCConfigurationList;
@@ -743,6 +749,7 @@
 				286A514A1CCFBC5900F02082 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C59F33EC1CCF58110055A4BA /* Build configuration list for PBXProject "Palau" */ = {
 			isa = XCConfigurationList;
