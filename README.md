@@ -84,9 +84,17 @@ import Palau
 Once you import the framework you can setup PalauDefaults like:
 
 ```swift
+/// Your defaults are defined as extension of PalauDefaults
+///
+/// - The generic type of your PalauDefaultsEntry must conform 
+///   to the protocol PalauDefaultable.
+/// - We provide support for the most common types. 
+/// - `value` is a helper function defined in PalauDefaults
+/// - The String "backingName" is the key used in NSUserDefaults
+/// - The empty `set` is used to please the compiler
 extension PalauDefaults {
+  /// a NSUserDefaults Entry of Type String with the key "backingName"
   public static var name: PalauDefaultsEntry<String> {
-    /// backingName is the key used in NSUserDefaults
     get { return value("backingName") }
     set { }
   }
@@ -94,12 +102,11 @@ extension PalauDefaults {
 ```
 
 ### Set
-By Default a Value will always be optional. 
-
+Every value of a PalauDefaultsEntry will always be optional. 
 If you want to set a value you call:
 
 ```swift
-PalauDefaults.name.value = "Iam a great String value!"
+PalauDefaults.name.value = "I am a great String value!"
 ```
 
 ### Get
@@ -110,21 +117,22 @@ let name = PalauDefaults.name.value
 ```
 
 ### Delete
-You can delete a property by setting it to: Nil
+You can delete a property by setting it to `nil`:
 ```swift
 PalauDefaults.name.value = nil
 ```
 Or
 ```swift
 /// skip custom rules and delete
-PalauDefaults.name.reset()
+PalauDefaults.name.clear()
 ```
 
 ## Custom Rules
 
 ### Providing a Default Value
 If you want to provide a default, when there is no value set,
-you can write a custom rule.
+you can write a custom rule. This allows fine granular control on
+your values.
 
 We include two rule types by default: whenNil and ensure
 
@@ -132,7 +140,9 @@ We include two rule types by default: whenNil and ensure
 import Palau
 extension PalauDefaults {
   public static var color: PalauDefaultsEntry<UIColor> {
-    /// Add as many chainable rules as you like
+    /// whenNil provides a value that will be returned
+    /// when the related NSUserDefaults value is nil 
+    /// (e.g. the 1st time, or after clear)
     get { return value("color").whenNil(use: UIColor.redColor())  }
     set { }
   }
@@ -152,22 +162,24 @@ let lessThan10: Int? -> Bool = {
   return $0.map { $0 < 10 } ?? false
 }
 
-/// the PalauDefaultsEntry with the key "ensuredIntValue" has 2 rules
+/// the PalauDefaultsEntry with the key "intValueMin10" has 2 rules
 /// - 1. when the value is nil - we will get or set 10
 /// - 2. when the value is less than 10 (see lessThan10 closure) - we will also get or set 10
-/// - the ensure function can be chained
-public static var ensuredIntValue: PalauDefaultsEntry<Int> {
-  get { return value("ensuredIntValue")
+/// - Add as many chainable rules as you like
+public static var intValueMin10: PalauDefaultsEntry<Int> {
+  get { return value("intValue")
     .whenNil(use: 10)
     .ensure(when: lessThan10, use: 10) }
   set { }
 }
 
 /// try setting the property to 8
-PalauDefaults.ensuredIntValue.value = 8
-
+PalauDefaults.intValueMin10.value = 8
 /// property ensured to be >= 10
-assert(PalauDefaults.ensuredIntValue.value == 10)
+assert(PalauDefaults.intValueMin10.value == 10)
+/// try setting the property to 11
+PalauDefaults.intValueMin10.value = 11
+assert(PalauDefaults.intValueMin10.value == 11)
 ```
 
 ## Custom Types
@@ -203,6 +215,9 @@ extension UIColor: PalauDefaultable {
 
 ## Look Mum, even Structs!
 
+For custom types you can provide an extension on your type for PalauDefaultable, 
+to implement a `get` and a `get` function.
+
 ```swift
 // example Struct called Structy for demonstrating we can save a Struct with Palau
 public struct Structy {
@@ -229,6 +244,19 @@ extension Structy: PalauDefaultable {
 extension PalauDefaults {
   public static var structWithTuple: PalauDefaultsEntry<Structy> {
     get { return value("structy") }
+    set { }
+  }
+}
+```
+
+## DidSet Callback
+
+You can easily register a `didSet` callback, which gets fired when the value has changed.
+
+```swift
+extension PalauDefaults {
+  public static var strings: PalauDefaultsEntry<[String]> {
+    get { return value("strings").didSet({ print("changed to:", $0, "from:", $1) }) }
     set { }
   }
 }
