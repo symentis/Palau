@@ -198,6 +198,39 @@ extension UIColor: PalauDefaultable {
 }
 ```
 
+## Look Mum, even Structs!
+
+```swift
+// example Struct called Structy for demonstrating we can save a Struct with Palau
+public struct Structy {
+  let tuple: (String, String)
+}
+
+// our Structy PalauDefaultable extension allowing the mapping between PalauDefaults and the Type
+// here we just map the two values to two keys named "1" and "2"
+extension Structy: PalauDefaultable {
+  public static func get(key: String, from defaults: NSUD) -> Structy? {
+    guard let d = defaults.objectForKey(key) as? [String: AnyObject] ,
+      let t1 = d["1"] as? String,
+      let t2 = d["2"] as? String else { return nil }
+    return Structy(tuple: (t1, t2))
+  }
+
+  public static func set(value: Structy?, forKey key: String, in defaults: NSUD) -> Void {
+    guard let value = value else { return defaults.setObject(nil, forKey: key) }
+    defaults.setObject(["1": value.tuple.0, "2": value.tuple.1], forKey: key)
+  }
+}
+
+// now create a property on PalauDefaults
+extension PalauDefaults {
+  public static var structWithTuple: PalauDefaultsEntry<Structy> {
+    get { return value("structy") }
+    set { }
+  }
+}
+```
+
 ## Limitations for Swift 2.2
 We are waiting for extensions on Generic types.... yay!
 
