@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Palau"
-  s.version      = "1.0.2"
+  s.version      = "1.0.3"
   s.summary      = "Palau: NSUserDefaults with Wings!"
   s.homepage     = "https://github.com/symentis/Palau"
   s.screenshots  = "https://raw.githubusercontent.com/symentis/Palau/master/Resources/palau-logo.png"
