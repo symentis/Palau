@@ -353,6 +353,17 @@ class PalauTests: XCTestCase {
       checkValue(&PalauDefaults.structWithTuple, value: s)
     }
   }
+
+  func testDeprecated() {
+    PalauDefaults.intValue.value = nil
+    PalauDefaults.intValue.value = 1
+    assert(PalauDefaults.intValue.value == 1)
+
+    // deprecated but still works
+    PalauDefaults.intValue.reset()
+    assert(PalauDefaults.intValue.value == nil)
+
+  }
 }
 
 // -------------------------------------------------------------------------------------------------

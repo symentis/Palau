@@ -7,21 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28409E181CD2420300AE4A2F /* PalauDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28409E141CD2420300AE4A2F /* PalauDefaultable.swift */; };
+		28409E191CD2420300AE4A2F /* PalauDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28409E151CD2420300AE4A2F /* PalauDefaults.swift */; };
+		28409E1A1CD2420300AE4A2F /* PalauDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28409E161CD2420300AE4A2F /* PalauDefaultsEntry.swift */; };
+		28409E1B1CD2421100AE4A2F /* PalauDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28409E141CD2420300AE4A2F /* PalauDefaultable.swift */; };
+		28409E1C1CD2421100AE4A2F /* PalauDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28409E151CD2420300AE4A2F /* PalauDefaults.swift */; };
+		28409E1D1CD2421100AE4A2F /* PalauDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28409E161CD2420300AE4A2F /* PalauDefaultsEntry.swift */; };
+		28409E1E1CD2421100AE4A2F /* PalauDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28409E141CD2420300AE4A2F /* PalauDefaultable.swift */; };
+		28409E1F1CD2421100AE4A2F /* PalauDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28409E151CD2420300AE4A2F /* PalauDefaults.swift */; };
+		28409E201CD2421100AE4A2F /* PalauDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28409E161CD2420300AE4A2F /* PalauDefaultsEntry.swift */; };
 		285899541CCF85AB0086096D /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 285899531CCF85AB0086096D /* Fixtures */; };
-		286A50BC1CCFB7D400F02082 /* PalauDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340C1CCF58400055A4BA /* PalauDefaultable.swift */; };
-		286A50C01CCFB7DB00F02082 /* PalauDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340E1CCF584F0055A4BA /* PalauDefaults.swift */; };
-		286A50C41CCFB7E100F02082 /* PalauDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34101CCF589B0055A4BA /* PalauDefaultsEntry.swift */; };
 		286A513E1CCFBC5900F02082 /* Palau.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 286A51341CCFBC5900F02082 /* Palau.framework */; };
 		286A51511CCFBC8900F02082 /* PalauTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34011CCF58120055A4BA /* PalauTests.swift */; };
-		286A51551CCFBC8F00F02082 /* PalauDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340C1CCF58400055A4BA /* PalauDefaultable.swift */; };
-		286A51561CCFBC8F00F02082 /* PalauDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340E1CCF584F0055A4BA /* PalauDefaults.swift */; };
-		286A51571CCFBC8F00F02082 /* PalauDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34101CCF589B0055A4BA /* PalauDefaultsEntry.swift */; };
 		286A516A1CCFBD6700F02082 /* Fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 285899531CCF85AB0086096D /* Fixtures */; };
 		C59F33FD1CCF58120055A4BA /* Palau.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C59F33F21CCF58110055A4BA /* Palau.framework */; };
 		C59F34021CCF58120055A4BA /* PalauTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34011CCF58120055A4BA /* PalauTests.swift */; };
-		C59F340D1CCF58400055A4BA /* PalauDefaultable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340C1CCF58400055A4BA /* PalauDefaultable.swift */; };
-		C59F340F1CCF584F0055A4BA /* PalauDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F340E1CCF584F0055A4BA /* PalauDefaults.swift */; };
-		C59F34111CCF589B0055A4BA /* PalauDefaultsEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59F34101CCF589B0055A4BA /* PalauDefaultsEntry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		28409E141CD2420300AE4A2F /* PalauDefaultable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PalauDefaultable.swift; sourceTree = "<group>"; };
+		28409E151CD2420300AE4A2F /* PalauDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PalauDefaults.swift; sourceTree = "<group>"; };
+		28409E161CD2420300AE4A2F /* PalauDefaultsEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PalauDefaultsEntry.swift; sourceTree = "<group>"; };
 		285899531CCF85AB0086096D /* Fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fixtures; sourceTree = SOURCE_ROOT; };
 		286A50AE1CCFB7AB00F02082 /* Palau.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Palau.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		286A50B21CCFB7AB00F02082 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -54,9 +57,6 @@
 		C59F33FC1CCF58120055A4BA /* PalauTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PalauTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C59F34011CCF58120055A4BA /* PalauTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalauTests.swift; sourceTree = "<group>"; };
 		C59F34031CCF58120055A4BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C59F340C1CCF58400055A4BA /* PalauDefaultable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PalauDefaultable.swift; sourceTree = "<group>"; };
-		C59F340E1CCF584F0055A4BA /* PalauDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PalauDefaults.swift; sourceTree = "<group>"; };
-		C59F34101CCF589B0055A4BA /* PalauDefaultsEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PalauDefaultsEntry.swift; sourceTree = "<group>"; };
 		C59F34151CD09FAF0055A4BA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,6 +101,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		28409E111CD2420300AE4A2F /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				28409E141CD2420300AE4A2F /* PalauDefaultable.swift */,
+				28409E151CD2420300AE4A2F /* PalauDefaults.swift */,
+				28409E161CD2420300AE4A2F /* PalauDefaultsEntry.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		286A50AF1CCFB7AB00F02082 /* PalauWatch */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +138,7 @@
 		C59F33E81CCF58110055A4BA = {
 			isa = PBXGroup;
 			children = (
+				28409E111CD2420300AE4A2F /* Sources */,
 				C59F34151CD09FAF0055A4BA /* README.md */,
 				285899531CCF85AB0086096D /* Fixtures */,
 				C59F33F41CCF58110055A4BA /* Palau */,
@@ -155,9 +166,6 @@
 			isa = PBXGroup;
 			children = (
 				C59F33F71CCF58110055A4BA /* Info.plist */,
-				C59F340C1CCF58400055A4BA /* PalauDefaultable.swift */,
-				C59F340E1CCF584F0055A4BA /* PalauDefaults.swift */,
-				C59F34101CCF589B0055A4BA /* PalauDefaultsEntry.swift */,
 			);
 			path = Palau;
 			sourceTree = "<group>";
@@ -399,9 +407,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				286A50C01CCFB7DB00F02082 /* PalauDefaults.swift in Sources */,
-				286A50BC1CCFB7D400F02082 /* PalauDefaultable.swift in Sources */,
-				286A50C41CCFB7E100F02082 /* PalauDefaultsEntry.swift in Sources */,
+				28409E1B1CD2421100AE4A2F /* PalauDefaultable.swift in Sources */,
+				28409E1D1CD2421100AE4A2F /* PalauDefaultsEntry.swift in Sources */,
+				28409E1C1CD2421100AE4A2F /* PalauDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,9 +417,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				286A51561CCFBC8F00F02082 /* PalauDefaults.swift in Sources */,
-				286A51551CCFBC8F00F02082 /* PalauDefaultable.swift in Sources */,
-				286A51571CCFBC8F00F02082 /* PalauDefaultsEntry.swift in Sources */,
+				28409E1E1CD2421100AE4A2F /* PalauDefaultable.swift in Sources */,
+				28409E201CD2421100AE4A2F /* PalauDefaultsEntry.swift in Sources */,
+				28409E1F1CD2421100AE4A2F /* PalauDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,9 +435,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C59F340F1CCF584F0055A4BA /* PalauDefaults.swift in Sources */,
-				C59F340D1CCF58400055A4BA /* PalauDefaultable.swift in Sources */,
-				C59F34111CCF589B0055A4BA /* PalauDefaultsEntry.swift in Sources */,
+				28409E1A1CD2420300AE4A2F /* PalauDefaultsEntry.swift in Sources */,
+				28409E191CD2420300AE4A2F /* PalauDefaults.swift in Sources */,
+				28409E181CD2420300AE4A2F /* PalauDefaultable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
