@@ -152,10 +152,13 @@ let lessThan10: Int? -> Bool = {
   return $0.map { $0 < 10 } ?? false
 }
 
+/// the PalauDefaultsEntry with the key "ensuredIntValue" has 2 rules
+/// - 1. when the value is nil - we will get or set 10
+/// - 2. when the value is less than 10 (see lessThan10 closure) - we will also get or set 10
+/// - the ensure function can be chained
 public static var ensuredIntValue: PalauDefaultsEntry<Int> {
   get { return value("ensuredIntValue")
     .whenNil(use: 10)
-    /// when: takes a closure in this case our Custom Validator
     .ensure(when: lessThan10, use: 10) }
   set { }
 }
