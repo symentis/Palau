@@ -102,7 +102,7 @@ extension PalauDefaults {
 ```
 
 ### Set
-Every value of a PalauDefaultsEntry will always be optional. 
+Every value of a `PalauDefaultsEntry` will always be optional. 
 If you want to set a value you call:
 
 ```swift
@@ -134,7 +134,7 @@ If you want to provide a default, when there is no value set,
 you can write a custom rule. This allows fine granular control on
 your values.
 
-We include two rule types by default: whenNil and ensure
+We include two rule types by default: `whenNil` and `ensure`
 
 ```swift
 import Palau
@@ -185,7 +185,7 @@ assert(PalauDefaults.intValueMin10.value == 11)
 ## Custom Types
 
 In Swift 2.2 Classes and Protocols can be used to constrain the ValueType.
-For example this is how Palau adds support for RawRepresentable via an Extension:
+For example this is how Palau adds support for `RawRepresentable` via an Extension:
 
 ```swift
 /// Extension for RawRepresentable types aka enums
@@ -203,7 +203,7 @@ extension PalauDefaultable where ValueType: RawRepresentable {
 }
 ```
 
-Generally for Types which conform to NSCoding you can usually just provide an
+Generally for Types which conform to `NSCoding` you can usually just provide an
 extension like so:
 
 ```swift
@@ -215,7 +215,7 @@ extension UIColor: PalauDefaultable {
 
 ## Look Mum, even Structs!
 
-For custom types you can provide an extension on your type for PalauDefaultable, 
+For custom types you can provide an extension on your type for `PalauDefaultable`, 
 to implement a `get` and a `get` function.
 
 ```swift
