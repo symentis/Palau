@@ -30,7 +30,7 @@ import Foundation
 /// with String key
 /// PalauDefaultable value
 public struct PalauDefaultsEntry<T: PalauDefaultable> {
-  
+
   /// for convenience
   public typealias PalauDidSetFunction = (newValue: T.ValueType?, oldValue: T.ValueType?) -> Void
   public typealias PalauEnsureFunction = (T.ValueType?) -> T.ValueType?
@@ -43,10 +43,10 @@ public struct PalauDefaultsEntry<T: PalauDefaultable> {
 
   /// A function to change the incoming and outgoing value
   let ensure: PalauEnsureFunction
-  
+
   /// A function as callback after set
   let didSet: PalauDidSetFunction?
-  
+
   /// a initializer
   init(key: String, defaults: NSUserDefaults, didSet: PalauDidSetFunction? = nil, ensure: PalauEnsureFunction) {
     self.key = key
@@ -63,13 +63,9 @@ public struct PalauDefaultsEntry<T: PalauDefaultable> {
   public var value: T.ValueType? {
     get { return ensure(T.get(key, from: defaults)) }
     set {
-      let new = ensure(newValue)
-      guard let didSet = didSet else {
-         return T.set(new, forKey: key, in: defaults)
+      withDidSet {
+        T.set(self.ensure(newValue), forKey: self.key, in: self.defaults)
       }
-      let old = ensure(T.get(key, from: defaults))
-      T.set(new, forKey: key, in: defaults)
-      didSet(newValue: new, oldValue: old)
     }
   }
 
@@ -78,15 +74,38 @@ public struct PalauDefaultsEntry<T: PalauDefaultable> {
   //@available(*, deprecated=1.0, obsoleted=2.0, message="Name was ambiguous, use .clear()")
   @available(*, unavailable, renamed="clear")
   public func reset() {
-    defaults.removeObjectForKey(key)
+    clear()
   }
 
   /// Use this function to remove a default value
   /// without additional calls of the ensure function
   public func clear() {
-    defaults.removeObjectForKey(key)
+    withDidSet {
+      self.defaults.removeObjectForKey(self.key)
+    }
   }
-  
+
+  /// private helper to take care of didSet
+  private func withDidSet(changeValue: () -> Void) {
+    // check if callback necessary
+    let callback: (() -> Void)?
+    switch didSet {
+    // get old value for callback
+    case let didSet?:
+      let old = ensure(T.get(key, from: defaults))
+      callback = {
+        didSet(newValue: self.value, oldValue: old)
+      }
+    // do nothing
+    default:
+      callback = nil
+    }
+    // perform remove
+    changeValue()
+    // perform optional callback
+    callback?()
+  }
+
   // ----------------------------------------------------------------------------------------------
   // MARK: - Rules
   // ----------------------------------------------------------------------------------------------
@@ -116,14 +135,16 @@ public struct PalauDefaultsEntry<T: PalauDefaultable> {
   public func whenNil(use defaultValue: T.ValueType) -> PalauDefaultsEntry<T> {
     return ensure(when: PalauDefaults.isEmpty, use: defaultValue)
   }
-  
+
   // ----------------------------------------------------------------------------------------------
   // MARK: - Observer
   // ----------------------------------------------------------------------------------------------
 
+  /// Add a callback when the value is set in the defaults
+  /// - parameter callback: functions which receives the optional old and optional new vale
+  /// - returns: PalauDefaultsEntry<T>
   public func didSet(callback: PalauDidSetFunction) -> PalauDefaultsEntry<T> {
-    // TODO: Chainable callbacks?
     return PalauDefaultsEntry(key: key, defaults: defaults, didSet: callback, ensure: ensure)
   }
-  
+
 }

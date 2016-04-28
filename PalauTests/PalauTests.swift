@@ -55,7 +55,7 @@ class PalauTests: XCTestCase {
 
     // nil the entry
     entry.value = nil
-    print(entry, "set to nil")
+    print(entry, "set to nil", entry.value)
     assert(entry.value == nil)
 
     // set the value
@@ -312,9 +312,9 @@ class PalauTests: XCTestCase {
       checkValue(&PalauDefaults.enumValue, value: e)
     }
   }
-  
+
   func testEnumValueWithDidSet() {
-    
+
     func assertIsEqual(new new: TestEnum?, old: TestEnum?) -> (TestEnum?, TestEnum?) -> Void {
       return { e1, e2 in
         let equal = new == e1 && old == e2
@@ -322,13 +322,13 @@ class PalauTests: XCTestCase {
         assert(equal)
       }
     }
-    
+
     PalauDefaults.enumValueWithDidSet.value = nil
-  
+
     var enumWithDidSet = PalauDefaults.enumValueWithDidSet.didSet(assertIsEqual(new: TestEnum.CaseB, old: nil))
-    
+
     enumWithDidSet.value = TestEnum.CaseB
-    
+
   }
 
 }
@@ -446,7 +446,7 @@ extension PalauDefaults {
     get { return value("testEnumValue") }
     set { }
   }
-  
+
   public static var enumValueWithDidSet: PalauDefaultsEntry<TestEnum> {
     get { return value("testEnumValueWithDidSet") }
     set { }
