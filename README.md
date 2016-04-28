@@ -1,8 +1,14 @@
-![Palau: NSUserDefaults with Wings!](https://raw.githubusercontent.com/symentis/Palau/master/Resources/palau-logo.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/symentis/Palau/master/Resources/palau-logo.png">
+</p>
 
-![Build Status](https://img.shields.io/badge/build-passing-4BC51D.svg?style=flat)
+[![Build Status](https://travis-ci.org/symentis/Palau.svg)](https://travis-ci.org/symentis/Palau)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Palau.svg)](https://img.shields.io/cocoapods/v/Palau)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-![Platform](https://img.shields.io/badge/platform-ios%20%7C%20tvos%20%7C%20watchos-9b9b9b.svg?style=flat)
+[![Platform](https://img.shields.io/cocoapods/p/Palau.svg?style=flat)](http://cocoadocs.org/docsets/Palau)
+[![swiftyness](https://img.shields.io/badge/pure-swift-ff3f26.svg?style=flat)](https://swift.org/)
+[![@elmkretzer](https://img.shields.io/badge/twitter-@elmkretzer-blue.svg?style=flat)](http://twitter.com/elmkretzer)
+[![@madhavajay](https://img.shields.io/badge/twitter-@madhavajay-blue.svg?style=flat)](http://twitter.com/madhavajay)
 
 #Palau: NSUserDefaults with Wings!
 
