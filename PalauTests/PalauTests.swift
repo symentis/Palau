@@ -55,7 +55,7 @@ class PalauTests: XCTestCase {
 
     // nil the entry
     entry.value = nil
-    print(entry, "set to nil")
+    print(entry, "set to nil", entry.value)
     assert(entry.value == nil)
 
     // set the value
@@ -313,6 +313,35 @@ class PalauTests: XCTestCase {
     }
   }
 
+  // this test demonstrates how to use a custom didSet function
+  func testEnumValueWithDidSet() {
+
+    // this function builds a callback that binds the two input parameters to the internal function
+    func assertIsEqual(new new: TestEnum?, old: TestEnum?) -> (TestEnum?, TestEnum?) -> Void {
+      return { e1, e2 in
+        let equal = new == e1 && old == e2
+        print(e1, e2)
+        assert(equal)
+      }
+    }
+
+    // start with nil
+    PalauDefaults.enumValueWithDidSet.value = nil
+
+    // bind the first didSet closure
+    var enumWithDidSet = PalauDefaults.enumValueWithDidSet.didSet(assertIsEqual(new: TestEnum.CaseB,
+                                                                                old: nil))
+    enumWithDidSet.value = TestEnum.CaseB
+
+    // lets add another
+    var enumWithDidSetAgain = enumWithDidSet.didSet(assertIsEqual(new: TestEnum.CaseA,
+                                                                  old: TestEnum.CaseB))
+    enumWithDidSetAgain.value = TestEnum.CaseA
+
+    // and finally lets chain another to test the new value is nil
+    let enumWithDidClear = enumWithDidSet.didSet(assertIsEqual(new: nil, old: TestEnum.CaseA))
+    enumWithDidClear.clear()
+  }
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -426,6 +455,11 @@ extension PalauDefaults {
 
   public static var enumValue: PalauDefaultsEntry<TestEnum> {
     get { return value("testEnumValue") }
+    set { }
+  }
+
+  public static var enumValueWithDidSet: PalauDefaultsEntry<TestEnum> {
+    get { return value("testEnumValueWithDidSet") }
     set { }
   }
 }
