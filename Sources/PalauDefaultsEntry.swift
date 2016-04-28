@@ -72,7 +72,7 @@ public struct PalauDefaultsEntry<T: PalauDefaultable> {
   /// Use this function to remove a default value
   /// without additional calls of the ensure function
   //@available(*, deprecated=1.0, obsoleted=2.0, message="Name was ambiguous, use .clear()")
-  @available(*, unavailable, renamed="clear")
+  @available(*, deprecated=1.0, renamed="clear")
   public func reset() {
     clear()
   }
