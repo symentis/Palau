@@ -1,8 +1,8 @@
 language: objective-c
 osx_image: xcode7.3
 
-install:
-  - ./Resources/install_swiftlint.sh
+#install:
+#  - ./Resources/install_swiftlint.sh
 
 env:
   global:
