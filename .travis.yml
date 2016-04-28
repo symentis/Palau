@@ -1,5 +1,9 @@
 language: objective-c
 osx_image: xcode7.3
+
+install:
+  - ./Resources/install_swiftlint.sh
+
 env:
   global:
   - LC_CTYPE=en_US.UTF-8
@@ -22,6 +26,7 @@ env:
     - DESTINATION="OS=9.3,name=iPhone 6S Plus"     SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="YES" POD_LINT="NO"
     - DESTINATION="OS=9.2,name=Apple TV 1080p"     SCHEME="$TVOS_FRAMEWORK_SCHEME"    SDK="$TVOS_SDK"    RUN_TESTS="YES" POD_LINT="NO"
 script:
+  - swiftlint
   - set -o pipefail
   - xcodebuild -version
   - xcodebuild -showsdks
