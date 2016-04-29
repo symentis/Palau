@@ -12,6 +12,17 @@
 
 #Palau: NSUserDefaults with Wings!
 
+-------
+<p align="center">
+    <a href="#features">Features</a> |
+    <a href="#already-included-types">Included Types</a> |
+    <a href="#installation">Installation</a> |
+    <a href="#custom-rules">Validators and Defaults</a> |
+    <a href="#custom-types">Custom Types</a> |
+    <a href="#didset-callback">DidSet Callback</a> |
+</p>
+-------
+
 ## Features
 
 - [x] Easily store your Custom Types in NSUserDefaults
@@ -179,6 +190,7 @@ PalauDefaults.intValueMin10.value = 8
 assert(PalauDefaults.intValueMin10.value == 10)
 /// try setting the property to 11
 PalauDefaults.intValueMin10.value = 11
+/// property changed to 11
 assert(PalauDefaults.intValueMin10.value == 11)
 ```
 
