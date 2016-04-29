@@ -275,13 +275,26 @@ extension PalauDefaults {
 ```
 
 ## Limitations for Swift 2.2
-We are waiting for extensions on Generic types.... yay!
+
+We are waiting for more Swift 3 generics features like extensions on Generic types.... yay!
+
+Then we get even more type saftey on arrays and dictionaries.
+Plus we might be able to make generic types conform to `PalauDefaultable`.
 
 ## FAQ
 
 ### What's the origin of the name Palau?
 
 Palau is named after the [Palau swiftlet](https://en.wikipedia.org/wiki/Palau_swiftlet), a species of swift, endemic to the island of Palau.
+
+Btw - if you really don\`t like the name, you can use a `typealias`
+
+```swift
+typealias Defaults = PalauDefaults
+typealias Defaultable = PalauDefaultable
+/// for Swift 3 even:
+/// typealias DefaultsEntry<T> = PalauDefaultsEntry<T>
+```
 
 ---
 
