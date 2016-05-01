@@ -39,8 +39,8 @@ import Foundation
 public struct PalauDefaults {
 
   /// The underlying defaults
-  public static var defaults: NSUserDefaults {
-    return NSUserDefaults.standardUserDefaults()
+  public static var defaults: NSUD {
+    return NSUD.standardUserDefaults()
   }
 
   /// Pure - will always return the provided value
