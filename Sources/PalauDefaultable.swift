@@ -117,7 +117,7 @@ extension PalauDefaultable where ValueType: NSCoding {
 
   public static func get(key: String, from defaults: NSUD) -> ValueType? {
     guard let data = defaults.objectForKey(key) as? NSData,
-      let value = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? ValueType else { return nil }
+       value = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? ValueType else { return nil }
     return value
   }
 

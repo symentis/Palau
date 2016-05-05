@@ -515,8 +515,8 @@ public struct Structy {
 extension Structy: PalauDefaultable {
   public static func get(key: String, from defaults: NSUD) -> Structy? {
     guard let d = defaults.objectForKey(key) as? [String: AnyObject] ,
-      let t1 = d["1"] as? String,
-      let t2 = d["2"] as? String else { return nil }
+       t1 = d["1"] as? String,
+       t2 = d["2"] as? String else { return nil }
     return Structy(tuple: (t1, t2))
   }
 
