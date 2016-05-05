@@ -65,4 +65,11 @@ public struct PalauDefaults {
   public static func value<T>(key: String) -> PalauDefaultsEntry<T> {
     return PalauDefaultsEntry(key:key, defaults:defaults, ensure: pure)
   }
+
+  /// Generate a PalauDefaultsEntry of Type T for provided key
+  /// - parameter key: String, name of the entry
+  /// - returns: DefaultValue
+  public static func value<T>(key: String) -> PalauDefaultsArrayEntry<T> {
+    return PalauDefaultsArrayEntry(key:key, defaults:defaults, ensure: pure)
+  }
 }
