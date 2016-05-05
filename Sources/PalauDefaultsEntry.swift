@@ -27,124 +27,60 @@ import Foundation
 
 
 /// A PalauDefaultsEntry
-/// with String key
-/// PalauDefaultable value
-public struct PalauDefaultsEntry<T: PalauDefaultable> {
+///
+/// This entry takes care of single values like
+/// ````
+/// public static var intValue: PalauDefaultsEntry<Int>
+///   get { return value("intValue") }
+///   set { }
+/// }
+/// ````
+/// The value of the PalauDefaultsEntry is always an optional e.g.
+/// ````
+/// // val is of type Int?
+/// let val = PalauDefaults.intValue.value
+/// ````
+public struct PalauDefaultsEntry<T: PalauDefaultable where T.ValueType == T>: PalauEntry {
+
+  public typealias ValueType = T
+  public typealias ReturnType = T
 
   /// for convenience
-  public typealias PalauDidSetFunction = (newValue: T.ValueType?, oldValue: T.ValueType?) -> Void
-  public typealias PalauEnsureFunction = (T.ValueType?) -> T.ValueType?
+  public typealias PalauDidSetFunction = (newValue: ReturnType?, oldValue: ReturnType?) -> Void
+  public typealias PalauEnsureFunction = (ReturnType?) -> ReturnType?
 
   /// The key of the entry
   public let key: String
 
   /// Access to the default
-  let defaults: NSUD
+  public let defaults: NSUD
 
   /// A function to change the incoming and outgoing value
-  let ensure: PalauEnsureFunction
+  public let ensure: PalauEnsureFunction
 
   /// A function as callback after set
-  let didSet: PalauDidSetFunction?
+  public let didSet: PalauDidSetFunction?
 
   /// a initializer
-  init(key: String, defaults: NSUserDefaults, didSet: PalauDidSetFunction? = nil, ensure: PalauEnsureFunction) {
+  public init(key: String, defaults: NSUserDefaults, didSet: PalauDidSetFunction? = nil, ensure: PalauEnsureFunction) {
     self.key = key
     self.defaults = defaults
     self.ensure = ensure
     self.didSet = didSet
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // MARK: - Public access
-  // -----------------------------------------------------------------------------------------------
-
-  /// Computed property value
-  public var value: T.ValueType? {
-    get { return ensure(T.get(key, from: defaults)) }
+  /// The value
+  /// use this property to get the Optional<ReturnType>
+  /// or to set the ReturnType
+  public var value: ReturnType? {
+    get {
+      return ensure(ValueType.get(key, from: defaults))
+    }
     set {
       withDidSet {
-        T.set(self.ensure(newValue), forKey: self.key, in: self.defaults)
+        ValueType.set(self.ensure(newValue), forKey: self.key, in: self.defaults)
       }
     }
-  }
-
-  /// Use this function to remove a default value
-  /// without additional calls of the ensure function
-  //@available(*, deprecated=1.0, obsoleted=2.0, message="Name was ambiguous, use .clear()")
-  @available(*, deprecated=1.0, renamed="clear")
-  public func reset() {
-    clear()
-  }
-
-  /// Use this function to remove a default value
-  /// without additional calls of the ensure function
-  public func clear() {
-    withDidSet {
-      self.defaults.removeObjectForKey(self.key)
-    }
-  }
-
-  /// private helper to take care of didSet
-  private func withDidSet(changeValue: () -> Void) {
-    // check if callback necessary
-    let callback: (() -> Void)?
-    switch didSet {
-    // get old value for callback
-    case let didSet?:
-      let old = ensure(T.get(key, from: defaults))
-      callback = {
-        didSet(newValue: self.value, oldValue: old)
-      }
-    // do nothing
-    default:
-      callback = nil
-    }
-    // perform remove
-    changeValue()
-    // perform optional callback
-    callback?()
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // MARK: - Rules
-  // -----------------------------------------------------------------------------------------------
-
-  /// Helper function to take care of the value thats is read and written
-  /// usage like:
-  /// The functions provided for 'when' parameter can be implemented for any use case
-  /// ````
-  /// public static var intValueWithMinOf10: PalauDefaultsEntry<Int> {
-  /// get {
-  ///   return value(_autoPauseThresholdSeconds)
-  ///         .ensure(when: isEqual(0), use: 20)
-  ///         .ensure(when: lessThan(10), use: 10)
-  ///     }
-  ///  set {}
-  /// }
-  /// ````
-  public func ensure(when when: T.ValueType? -> Bool,
-                     use defaultValue: T.ValueType) -> PalauDefaultsEntry<T> {
-    return PalauDefaultsEntry(key: key, defaults: defaults, didSet: didSet) {
-      let vx = self.ensure($0)
-      return when(vx) ? defaultValue : vx
-    }
-  }
-
-  /// Helper function to return a fallback in case the value is nil
-  public func whenNil(use defaultValue: T.ValueType) -> PalauDefaultsEntry<T> {
-    return ensure(when: PalauDefaults.isEmpty, use: defaultValue)
-  }
-
-  // -----------------------------------------------------------------------------------------------
-  // MARK: - Observer
-  // -----------------------------------------------------------------------------------------------
-
-  /// Add a callback when the value is set in the defaults
-  /// - parameter callback: functions which receives the optional old and optional new vale
-  /// - returns: PalauDefaultsEntry<T>
-  public func didSet(callback: PalauDidSetFunction) -> PalauDefaultsEntry<T> {
-    return PalauDefaultsEntry(key: key, defaults: defaults, didSet: callback, ensure: ensure)
   }
 
 }

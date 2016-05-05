@@ -60,37 +60,18 @@ public struct Structy {
 
 // our Structy PalauDefaultable extension allowing the mapping between PalauDefaults and the Type
 // here we just map the two values to two keys named "1" and "2"
-extension Structy: PalauDefaultable {
+extension Structy: PalauCustomDefaultable {
 
-  private static func toDict(from s: Structy) -> [String: AnyObject] {
+  public static func toIntermediate(s: Structy) -> [String: AnyObject] {
     return ["1": s.tuple.0, "2": s.tuple.1]
   }
 
-  private static func fromDict(dict: [String: AnyObject]) -> Structy? {
+  public static func fromIntermediate(dict: [String: AnyObject]) -> Structy? {
     guard let t1 = dict["1"] as? String,
       t2 = dict["2"] as? String else { return nil }
     return Structy(tuple: (t1, t2))
   }
 
-  public static func get(key: String, from defaults: NSUD) -> Structy? {
-    guard let d = defaults.objectForKey(key) as? [String: AnyObject] else { return nil }
-    return fromDict(d)
-  }
-
-  public static func get(key: String, from defaults: NSUD) -> [Structy]? {
-    guard let d = defaults.objectForKey(key) as? [[String: AnyObject]] else { return nil }
-    return d.flatMap(fromDict)
-  }
-
-  public static func set(value: Structy?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value else { return defaults.setObject(nil, forKey: key) }
-    defaults.setObject(toDict(from: value), forKey: key)
-  }
-
-  public static func set(value: [Structy]?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value else { return defaults.setObject(nil, forKey: key) }
-    defaults.setObject(value.map(toDict), forKey: key)
-  }
 }
 
 // make our struct equatable for our test
