@@ -29,17 +29,17 @@ import Foundation
 /// A PalauDefaultsArrayEntry
 ///
 /// This entry takes care of list of values like
-/// ````
+/// ```
 /// public static var intValues: PalauDefaultsArrayEntry<Int>
 ///   get { return value("intValues") }
 ///   set { }
 /// }
-/// ````
+/// ```
 /// The value of the PalauDefaultsArrayEntry is always an optional list e.g.
-/// ````
+/// ```
 /// // val is of type [Int]?
 /// let values = PalauDefaults.intValues.value
-/// ````
+/// ```
 public struct PalauDefaultsArrayEntry<T: PalauDefaultable where T.ValueType == T>: PalauEntry {
 
   public typealias ValueType = T

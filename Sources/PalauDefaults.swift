@@ -30,12 +30,12 @@ import Foundation
 /// PalauDefaults wrap the NSUserDefaults
 /// The easiest usage is:
 /// - extension on PalauDefaults with:
-/// ````
+/// ```
 ///   public static var name: PalauDefaultsEntry<String> {
 ///   get { return value("name") }
 ///   set { }
 /// }
-/// ````
+/// ```
 public struct PalauDefaults {
 
   /// The underlying defaults

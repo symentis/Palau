@@ -2,7 +2,7 @@
 //  PalauTests.swift
 //  PalauTests
 //
-//  Created by symentis GmbH on  05.05.16.
+//  Created by symentis GmbH on 05.05.16.
 //  Copyright © 2016 symentis GmbH. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
