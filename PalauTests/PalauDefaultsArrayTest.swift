@@ -127,7 +127,7 @@ class PalauArrayTests: XCTestCase {
     checkValue(&PalauDefaults.boolValues, value: [BooleanLiteralType(false)])
   }
 
-  #if __LP64__
+  #if arch(x86_64) || arch(arm64)
   func test64bitOnly () {
 
   // test max 64 bit unsigned int nine quintillion
