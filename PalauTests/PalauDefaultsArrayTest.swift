@@ -130,20 +130,20 @@ class PalauArrayTests: XCTestCase {
   #if arch(x86_64) || arch(arm64)
   func test64bitOnly () {
 
-  // test max 64 bit unsigned int nine quintillion
-  let reallyBigInt = 9_223_372_036_854_775_807
-  checkValue(&PalauDefaults.intValue, value: reallyBigInt)
+    // test max 64 bit unsigned int nine quintillion
+    let reallyBigInt = [9_223_372_036_854_775_807]
+    checkValue(&PalauDefaults.intValues, value: reallyBigInt)
 
-  // test max 64 bit signed int negative nine quintillion
-  let reallyNegativeBigInt = -9_223_372_036_854_775_808
-  checkValue(&PalauDefaults.intValue, value: reallyNegativeBigInt)
+    // test max 64 bit signed int negative nine quintillion
+    let reallyNegativeBigInt = [-9_223_372_036_854_775_808]
+    checkValue(&PalauDefaults.intValues, value: reallyNegativeBigInt)
 
-  let reallyBitUnsignedInt: UInt = 9_223_372_036_854_775_807
-  checkValue(&PalauDefaults.uIntValue, value: reallyBitUnsignedInt)
+    let reallyBitUnsignedInt: [UInt] = [9_223_372_036_854_775_807]
+    checkValue(&PalauDefaults.uIntValues, value: reallyBitUnsignedInt)
 
-  // really big int as NSNumber
-  let reallyBigNSNumber: NSNumber = NSNumber(integer: 9_223_372_036_854_775_807)
-  checkValue(&PalauDefaults.nsNumberValue, value: reallyBigNSNumber)
+    // really big int as NSNumber
+    let reallyBigNSNumber: [NSNumber] = [NSNumber(integer: 9_223_372_036_854_775_807)]
+    checkValue(&PalauDefaults.nsNumberValues, value: reallyBigNSNumber)
   }
   #endif
 
@@ -216,8 +216,13 @@ class PalauArrayTests: XCTestCase {
     checkValue(&PalauDefaults.dateValues, value: [NSDate()])
   }
 
-  func testEnsuredIntValue() {
-    // TODO Missing
+  func testEnsuredIntValues() {
+    PalauDefaults.ensuredIntValues.value = nil
+    assert(PalauDefaults.ensuredIntValues.value! == [10, 10])
+    PalauDefaults.ensuredIntValues.value = [12]
+    assert(PalauDefaults.ensuredIntValues.value! == [10, 10])
+    PalauDefaults.ensuredIntValues.value = [8, 8, 8]
+    assert(PalauDefaults.ensuredIntValues.value! == [8, 8, 8])
   }
 
   func testNSArrayValues() {
