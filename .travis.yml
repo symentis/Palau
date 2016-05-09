@@ -1,8 +1,8 @@
 language: objective-c
 osx_image: xcode7.3
 
-#install:
-#  - ./Resources/install_swiftlint.sh
+install:
+  - ./Resources/install_swiftlint.sh
 
 env:
   global:
@@ -27,6 +27,7 @@ env:
     - DESTINATION="OS=9.2,name=Apple TV 1080p"     SCHEME="$TVOS_FRAMEWORK_SCHEME"    SDK="$TVOS_SDK"    RUN_TESTS="YES" POD_LINT="NO"
 script:
   - set -o pipefail
+  - swiftlint
   - xcodebuild -version
   - xcodebuild -showsdks
 
