@@ -51,32 +51,42 @@ class PalauTests: XCTestCase {
   func checkValue<T where
     T: PalauDefaultable,
     T.ValueType: Equatable
-    >(inout entry: PalauDefaultsEntry<T>, value: T.ValueType) {
+    >(inout entry: PalauDefaultsEntry<T>, value: T.ValueType, printTest: Bool = true) {
 
     // nil the entry
     entry.value = nil
-    print(entry, "set to nil", entry.value)
+    if printTest {
+      print(entry, "set to nil", entry.value)
+    }
     assert(entry.value == nil)
 
     // set the value
     entry.value = value
-    print(entry, "set to", value)
+    if printTest {
+      print(entry, "set to", value)
+    }
 
     // check the force unwrapped value in the entry match the original value
     assert(entry.value! == value)
 
     // clear it another way
     entry.clear()
-    print(entry, "set again to nil")
+    if printTest {
+      print(entry, "set again to nil")
+    }
     assert(entry.value == nil)
 
     // set it again
     entry.value = value
-    print(entry, "set again to", value)
+    if printTest {
+      print(entry, "set again to", value)
+    }
 
     // check it still matches
     assert(entry.value! == value)
-    print("Done")
+    if printTest {
+      print("Done")
+    }
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -103,24 +113,25 @@ class PalauTests: XCTestCase {
 
     // test these strings
     for s in strings {
-      checkValue(&PalauDefaults.stringValue, value: s)
-      checkValue(&PalauDefaults.nsStringValue, value: NSString(string: s))
+      checkValue(&PalauDefaults.stringValue, value: s, printTest: false)
+      checkValue(&PalauDefaults.nsStringValue, value: NSString(string: s), printTest: false)
     }
 
     // test a html file
     let htmlString = try String(contentsOfFile: getFixtureFile("example", ext:"html")!)
-    checkValue(&PalauDefaults.stringValue, value: htmlString)
-    checkValue(&PalauDefaults.nsStringValue, value: NSString(string: htmlString))
+    checkValue(&PalauDefaults.stringValue, value: htmlString, printTest: false)
+    checkValue(&PalauDefaults.nsStringValue, value: NSString(string: htmlString), printTest: false)
 
     // test a crazy UTF-8 example
     let utf8String = try String(contentsOfFile: getFixtureFile("UTF-8-demo", ext:"txt")!)
-    checkValue(&PalauDefaults.stringValue, value: utf8String)
-    checkValue(&PalauDefaults.nsStringValue, value: NSString(string: utf8String))
+    checkValue(&PalauDefaults.stringValue, value: utf8String, printTest: false)
+    checkValue(&PalauDefaults.nsStringValue, value: NSString(string: utf8String), printTest: false)
 
     // test quickbrownfox in multiple languages
     let quickBrownString = try String(contentsOfFile: getFixtureFile("quickbrown", ext:"txt")!)
-    checkValue(&PalauDefaults.stringValue, value: quickBrownString)
-    checkValue(&PalauDefaults.nsStringValue, value: NSString(string: quickBrownString))
+    checkValue(&PalauDefaults.stringValue, value: quickBrownString, printTest: false)
+    checkValue(&PalauDefaults.nsStringValue, value: NSString(string: quickBrownString),
+               printTest: false)
   }
 
   func testBoolValue() {
@@ -284,7 +295,7 @@ class PalauTests: XCTestCase {
 
   func testNSDataValue() {
     let data = NSData(contentsOfFile: getFixtureFile("UTF-8-demo", ext:"txt")!)!
-    checkValue(&PalauDefaults.dataValue, value: data)
+    checkValue(&PalauDefaults.dataValue, value: data, printTest: false)
   }
 
   func testNSUrlValue() {
