@@ -113,7 +113,7 @@ class PalauTests: XCTestCase {
 
     // test these strings
     for s in strings {
-      checkValue(&PalauDefaults.stringValue, value: s)
+      checkValue(&PalauDefaults.stringValue, value: s, printTest: false)
       checkValue(&PalauDefaults.nsStringValue, value: NSString(string: s), printTest: false)
     }
 
