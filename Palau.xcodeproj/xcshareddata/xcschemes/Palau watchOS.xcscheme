@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "286A50AD1CCFB7AB00F02082"
                BuildableName = "Palau.framework"
-               BlueprintName = "PalauWatch"
+               BlueprintName = "Palau watchOS"
                ReferencedContainer = "container:Palau.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,7 +34,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "286A50AD1CCFB7AB00F02082"
             BuildableName = "Palau.framework"
-            BlueprintName = "PalauWatch"
+            BlueprintName = "Palau watchOS"
             ReferencedContainer = "container:Palau.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -56,7 +56,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "286A50AD1CCFB7AB00F02082"
             BuildableName = "Palau.framework"
-            BlueprintName = "PalauWatch"
+            BlueprintName = "Palau watchOS"
             ReferencedContainer = "container:Palau.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -74,7 +74,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "286A50AD1CCFB7AB00F02082"
             BuildableName = "Palau.framework"
-            BlueprintName = "PalauWatch"
+            BlueprintName = "Palau watchOS"
             ReferencedContainer = "container:Palau.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

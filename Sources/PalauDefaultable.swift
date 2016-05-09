@@ -37,6 +37,10 @@ import Foundation
   import WatchKit
 #endif
 
+#if os(OSX)
+  import AppKit
+#endif
+
 // -------------------------------------------------------------------------------------------------
 // MARK: - PalauDefaultable
 // -------------------------------------------------------------------------------------------------
@@ -270,7 +274,14 @@ extension NSIndexPath: PalauDefaultable {
   public typealias ValueType = NSIndexPath
 }
 
-/// Make UIColor PalauDefaultable
-extension UIColor: PalauDefaultable {
-  public typealias ValueType = UIColor
-}
+#if os(OSX)
+  /// Make NSColor PalauDefaultable
+  extension NSColor: PalauDefaultable {
+    public typealias ValueType = NSColor
+  }
+#else
+  /// Make UIColor PalauDefaultable
+  extension UIColor: PalauDefaultable {
+    public typealias ValueType = UIColor
+  }
+#endif

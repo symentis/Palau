@@ -86,7 +86,7 @@ class PalauTests: XCTestCase {
   func getFixtureFile(name: String, ext: String) -> String? {
     // lets get some files from the test bundle
     let bundle = NSBundle(forClass: self.dynamicType)
-    return bundle.pathForResource("Fixtures/" + name, ofType: ext)
+    return bundle.pathForResource(name, ofType: ext)
   }
 
   // test String and NSString
@@ -134,6 +134,7 @@ class PalauTests: XCTestCase {
 
   #if arch(x86_64) || arch(arm64)
   func test64bitOnly () {
+    print("Running 64 bit tests")
 
     // test max 64 bit unsigned int nine quintillion
     let reallyBigInt = 9_223_372_036_854_775_807
@@ -292,20 +293,31 @@ class PalauTests: XCTestCase {
     checkValue(&PalauDefaults.nsUrlValue, value: url)
   }
 
-  func testNSIndexPathValue() {
-    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-    checkValue(&PalauDefaults.nsIndexPathValue, value: indexPath)
-  }
+  #if os(OSX)
+    // test if we can get a default NSColor from a property
+    func testNSColorDefaultValue() {
+      let redColor = PalauDefaults.ensuredNSColorValue.value
+      let redColor2 = PalauDefaults.whenNilledNSColorValue.value
 
-  // test if we can get a default UIColor from a property
-  func testUIColorDefaultValue() {
-    let redColor = PalauDefaults.ensuredUIColorValue.value
-    let redColor2 = PalauDefaults.whenNilledUIColorValue.value
+      assert(CGColorEqualToColor(redColor!.CGColor, NSColor.redColor().CGColor))
+      assert(redColor2 == NSColor.redColor())
+    }
+  #else
+    func testNSIndexPathValue() {
+      let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+      checkValue(&PalauDefaults.nsIndexPathValue, value: indexPath)
+    }
 
-    // UIColor sometimes returns different versions UIDeviceRGBColorSpace / UIDeviceWhiteColorSpace
-    assert(CGColorEqualToColor(redColor!.CGColor, UIColor.redColor().CGColor))
-    assert(redColor2 == UIColor.redColor())
-  }
+    // test if we can get a default UIColor from a property
+    func testUIColorDefaultValue() {
+      let redColor = PalauDefaults.ensuredUIColorValue.value
+      let redColor2 = PalauDefaults.whenNilledUIColorValue.value
+
+      // UIColor sometimes returns different versions UIDeviceRGBColorSpace / UIDeviceWhiteColorSpace
+      assert(CGColorEqualToColor(redColor!.CGColor, UIColor.redColor().CGColor))
+      assert(redColor2 == UIColor.redColor())
+    }
+  #endif
 
   func testEnumValue() {
     for e in [TestEnum.CaseA, TestEnum.CaseB, TestEnum.CaseC] {
@@ -389,17 +401,31 @@ extension PalauDefaults {
     set { }
   }
 
-  public static var ensuredUIColorValue: PalauDefaultsEntry<UIColor> {
-    get { return value("ensuredUIColorValue")
-      .ensure(when: PalauDefaults.isEmpty, use: UIColor.redColor()) }
-    set { }
-  }
+  #if os(OSX)
+    public static var ensuredNSColorValue: PalauDefaultsEntry<NSColor> {
+      get { return value("ensuredNSColorValue")
+        .ensure(when: PalauDefaults.isEmpty, use: NSColor.redColor()) }
+      set { }
+    }
 
-  public static var whenNilledUIColorValue: PalauDefaultsEntry<UIColor> {
-    get { return value("whenNilledUIColorValue")
-      .whenNil(use: UIColor.redColor()) }
-    set { }
-  }
+    public static var whenNilledNSColorValue: PalauDefaultsEntry<NSColor> {
+      get { return value("whenNilledNSColorValue")
+        .whenNil(use: NSColor.redColor()) }
+      set { }
+    }
+  #else
+    public static var ensuredUIColorValue: PalauDefaultsEntry<UIColor> {
+      get { return value("ensuredUIColorValue")
+        .ensure(when: PalauDefaults.isEmpty, use: UIColor.redColor()) }
+      set { }
+    }
+
+    public static var whenNilledUIColorValue: PalauDefaultsEntry<UIColor> {
+      get { return value("whenNilledUIColorValue")
+        .whenNil(use: UIColor.redColor()) }
+      set { }
+    }
+  #endif
 
   public static var uIntValue: PalauDefaultsEntry<UInt> {
     get { return value("uIntValue") }
