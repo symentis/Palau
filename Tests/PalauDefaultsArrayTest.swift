@@ -51,32 +51,42 @@ class PalauArrayTests: XCTestCase {
   func checkValue<T where
     T: PalauDefaultable,
     T.ValueType: Equatable
-    >(inout entry: PalauDefaultsArrayEntry<T>, value: [T.ValueType]) {
+    >(inout entry: PalauDefaultsArrayEntry<T>, value: [T.ValueType], printTest: Bool = true) {
 
     // nil the entry
     entry.value = nil
-    print(entry, "set to nil", entry.value)
+    if printTest {
+      print(entry, "set to nil", entry.value)
+    }
     assert(entry.value == nil)
 
     // set the value
     entry.value = value
-    print(entry, "set to", value)
+    if printTest {
+      print(entry, "set to", value)
+    }
 
     // check the force unwrapped value in the entry match the original value
     assert(entry.value! == value)
 
     // clear it another way
     entry.clear()
-    print(entry, "set again to nil")
+    if printTest {
+      print(entry, "set again to nil")
+    }
     assert(entry.value == nil)
 
     // set it again
     entry.value = value
-    print(entry, "set again to", value)
+    if printTest {
+      print(entry, "set again to", value)
+    }
 
     // check it still matches
     assert(entry.value! == value)
-    print("Done")
+    if printTest {
+      print("Done")
+    }
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -102,8 +112,9 @@ class PalauArrayTests: XCTestCase {
     ]
 
     // test these strings
-    checkValue(&PalauDefaults.stringValues, value: strings)
-    checkValue(&PalauDefaults.nsStringValues, value: strings.map(NSString.init(string:)))
+    checkValue(&PalauDefaults.stringValues, value: strings, printTest: false)
+    checkValue(&PalauDefaults.nsStringValues, value: strings.map(NSString.init(string:)),
+               printTest: false)
 
 
     // test a html file
@@ -114,8 +125,9 @@ class PalauArrayTests: XCTestCase {
     let quickBrownString = try String(contentsOfFile: getFixtureFile("quickbrown", ext:"txt")!)
 
     let strings2 = [htmlString, utf8String, quickBrownString]
-    checkValue(&PalauDefaults.stringValues, value: strings2)
-    checkValue(&PalauDefaults.nsStringValues, value: strings2.map(NSString.init(string:)))
+    checkValue(&PalauDefaults.stringValues, value: strings2, printTest: false)
+    checkValue(&PalauDefaults.nsStringValues, value: strings2.map(NSString.init(string:)),
+               printTest: false)
   }
 
   func testBoolValue() {
@@ -269,7 +281,7 @@ class PalauArrayTests: XCTestCase {
 
   func testNSDataValue() {
     let data = [NSData(contentsOfFile: getFixtureFile("UTF-8-demo", ext:"txt")!)!]
-    checkValue(&PalauDefaults.dataValues, value: data)
+    checkValue(&PalauDefaults.dataValues, value: data, printTest: false)
   }
 
   func testNSUrlValue() {
