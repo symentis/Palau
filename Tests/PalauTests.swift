@@ -34,7 +34,7 @@ class PalauTests: XCTestCase {
   override func setUp() {
     super.setUp()
     // make sure to reste the defaults each time
-    NSUserDefaults.resetStandardUserDefaults()
+    UserDefaults.resetStandardUserDefaults()
   }
 
   override func tearDown() {
@@ -51,7 +51,7 @@ class PalauTests: XCTestCase {
   func checkValue<T where
     T: PalauDefaultable,
     T.ValueType: Equatable
-    >(inout entry: PalauDefaultsEntry<T>, value: T.ValueType, printTest: Bool = true) {
+    >(_ entry: inout PalauDefaultsEntry<T>, value: T.ValueType, printTest: Bool = true) {
 
     // nil the entry
     entry.value = nil
@@ -93,9 +93,9 @@ class PalauTests: XCTestCase {
   // MARK: - Test Types
   // -----------------------------------------------------------------------------------------------
 
-  func getFixtureFile(name: String, ext: String) -> String? {
+  func getFixtureFile(_ name: String, ext: String) -> String? {
     // lets get some files from the test bundle
-    let bundle = NSBundle(forClass: self.dynamicType)
+    let bundle = Bundle(for: self.dynamicType)
     return bundle.pathForResource(name, ofType: ext)
   }
 
@@ -159,7 +159,7 @@ class PalauTests: XCTestCase {
     checkValue(&PalauDefaults.uIntValue, value: reallyBitUnsignedInt)
 
     // really big int as NSNumber
-    let reallyBigNSNumber: NSNumber = NSNumber(integer: 9_223_372_036_854_775_807)
+    let reallyBigNSNumber: NSNumber = NSNumber(value: 9_223_372_036_854_775_807)
     checkValue(&PalauDefaults.nsNumberValue, value: reallyBigNSNumber)
   }
   #endif
@@ -182,11 +182,11 @@ class PalauTests: XCTestCase {
 
   func testNSNumberValue() {
     for i in [1, 2, 3, 4, 5, 6, 100, -44] {
-      let testNumber: NSNumber = NSNumber(integer: i)
+      let testNumber: NSNumber = NSNumber(value: i)
       checkValue(&PalauDefaults.nsNumberValue, value: testNumber)
     }
 
-    let nsDecimalNumber = NSDecimalNumber(integer: 1)
+    let nsDecimalNumber = NSDecimalNumber(value: 1)
     checkValue(&PalauDefaults.nsNumberValue, value: nsDecimalNumber)
   }
 
@@ -246,7 +246,7 @@ class PalauTests: XCTestCase {
   }
 
   func testDateValue() {
-    checkValue(&PalauDefaults.dateValue, value: NSDate())
+    checkValue(&PalauDefaults.dateValue, value: Date())
   }
 
   func testEnsuredIntValue() {
@@ -259,10 +259,10 @@ class PalauTests: XCTestCase {
   }
 
   func testNSArrayValue() {
-    let array = NSArray(array: [1, NSDate(), NSString(string: "test")])
+    let array = NSArray(array: [1, Date(), NSString(string: "test")])
     checkValue(&PalauDefaults.nsArrayValue, value: array)
 
-    let mutableArray = NSMutableArray(array: [1, NSDate(), NSString(string: "test")])
+    let mutableArray = NSMutableArray(array: [1, Date(), NSString(string: "test")])
     checkValue(&PalauDefaults.nsArrayValue, value: mutableArray)
   }
 
@@ -285,23 +285,20 @@ class PalauTests: XCTestCase {
   }
 
   func testNSDictionaryValue() {
-    let dictionary = NSDictionary(dictionary: ["key": "value", NSDate(): NSNumber(integer: 1)])
+    let dictionary = NSDictionary(dictionary: ["key": "value", Date(): NSNumber(value: 1)])
     checkValue(&PalauDefaults.nsDictionaryValue, value: dictionary)
 
     let mutableDictionary = NSMutableDictionary(
-      dictionary: ["key": "value", NSDate(): NSNumber(integer: 1)]
+      dictionary: ["key": "value", Date(): NSNumber(value: 1)]
     )
     checkValue(&PalauDefaults.nsDictionaryValue, value: mutableDictionary)
   }
 
-  func testNSDataValue() {
-    let data = NSData(contentsOfFile: getFixtureFile("UTF-8-demo", ext:"txt")!)!
+  func testDataValue() {
+    guard let data = try? Data(contentsOf: URL(fileURLWithPath: getFixtureFile("UTF-8-demo", ext:"txt")!)) else {
+      fatalError()
+    }
     checkValue(&PalauDefaults.dataValue, value: data, printTest: false)
-  }
-
-  func testNSUrlValue() {
-    let url = NSURL(string: "http://symentis.com")!
-    checkValue(&PalauDefaults.nsUrlValue, value: url)
   }
 
   #if os(OSX)
@@ -310,28 +307,23 @@ class PalauTests: XCTestCase {
       let redColor = PalauDefaults.ensuredNSColorValue.value
       let redColor2 = PalauDefaults.whenNilledNSColorValue.value
 
-      assert(CGColorEqualToColor(redColor!.CGColor, NSColor.redColor().CGColor))
-      assert(redColor2 == NSColor.redColor())
+      assert(redColor!.cgColor.equalTo(NSColor.red().cgColor))
+      assert(redColor2 == NSColor.red())
     }
   #else
-    func testNSIndexPathValue() {
-      let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-      checkValue(&PalauDefaults.nsIndexPathValue, value: indexPath)
-    }
-
     // test if we can get a default UIColor from a property
     func testUIColorDefaultValue() {
       let redColor = PalauDefaults.ensuredUIColorValue.value
       let redColor2 = PalauDefaults.whenNilledUIColorValue.value
 
       // UIColor sometimes returns different versions UIDeviceRGBColorSpace / UIDeviceWhiteColorSpace
-      assert(CGColorEqualToColor(redColor!.CGColor, UIColor.redColor().CGColor))
-      assert(redColor2 == UIColor.redColor())
+      assert(redColor!.cgColor.equalTo(UIColor.red().cgColor))
+      assert(redColor2 == UIColor.red())
     }
   #endif
 
   func testEnumValue() {
-    for e in [TestEnum.CaseA, TestEnum.CaseB, TestEnum.CaseC] {
+    for e in [TestEnum.caseA, TestEnum.caseB, TestEnum.caseC] {
       checkValue(&PalauDefaults.enumValue, value: e)
     }
   }
@@ -340,7 +332,7 @@ class PalauTests: XCTestCase {
   func testEnumValueWithDidSet() {
 
     // this function builds a callback that binds the two input parameters to the internal function
-    func assertIsEqual(new new: TestEnum?, old: TestEnum?) -> (TestEnum?, TestEnum?) -> Void {
+    func assertIsEqual(new: TestEnum?, old: TestEnum?) -> (TestEnum?, TestEnum?) -> Void {
       return { e1, e2 in
         let equal = new == e1 && old == e2
         print(e1, e2)
@@ -352,17 +344,17 @@ class PalauTests: XCTestCase {
     PalauDefaults.enumValueWithDidSet.value = nil
 
     // bind the first didSet closure
-    var enumWithDidSet = PalauDefaults.enumValueWithDidSet.didSet(assertIsEqual(new: TestEnum.CaseB,
+    var enumWithDidSet = PalauDefaults.enumValueWithDidSet.didSet(assertIsEqual(new: TestEnum.caseB,
                                                                                 old: nil))
-    enumWithDidSet.value = TestEnum.CaseB
+    enumWithDidSet.value = TestEnum.caseB
 
     // lets add another
-    var enumWithDidSetAgain = enumWithDidSet.didSet(assertIsEqual(new: TestEnum.CaseA,
-                                                                  old: TestEnum.CaseB))
-    enumWithDidSetAgain.value = TestEnum.CaseA
+    var enumWithDidSetAgain = enumWithDidSet.didSet(assertIsEqual(new: TestEnum.caseA,
+                                                                  old: TestEnum.caseB))
+    enumWithDidSetAgain.value = TestEnum.caseA
 
     // and finally lets chain another to test the new value is nil
-    let enumWithDidClear = enumWithDidSet.didSet(assertIsEqual(new: nil, old: TestEnum.CaseA))
+    let enumWithDidClear = enumWithDidSet.didSet(assertIsEqual(new: nil, old: TestEnum.caseA))
     enumWithDidClear.clear()
   }
 
@@ -375,17 +367,6 @@ class PalauTests: XCTestCase {
     for s in arrayOfStructs {
       checkValue(&PalauDefaults.structWithTuple, value: s)
     }
-  }
-
-  func testDeprecated() {
-    PalauDefaults.intValue.value = nil
-    PalauDefaults.intValue.value = 1
-    assert(PalauDefaults.intValue.value == 1)
-
-    // deprecated but still works
-    PalauDefaults.intValue.reset()
-    assert(PalauDefaults.intValue.value == nil)
-
   }
 }
 
@@ -415,25 +396,25 @@ extension PalauDefaults {
   #if os(OSX)
     public static var ensuredNSColorValue: PalauDefaultsEntry<NSColor> {
       get { return value("ensuredNSColorValue")
-        .ensure(when: PalauDefaults.isEmpty, use: NSColor.redColor()) }
+        .ensure(when: PalauDefaults.isEmpty, use: NSColor.red()) }
       set { }
     }
 
     public static var whenNilledNSColorValue: PalauDefaultsEntry<NSColor> {
       get { return value("whenNilledNSColorValue")
-        .whenNil(use: NSColor.redColor()) }
+        .whenNil(use: NSColor.red()) }
       set { }
     }
   #else
     public static var ensuredUIColorValue: PalauDefaultsEntry<UIColor> {
       get { return value("ensuredUIColorValue")
-        .ensure(when: PalauDefaults.isEmpty, use: UIColor.redColor()) }
+        .ensure(when: PalauDefaults.isEmpty, use: UIColor.red()) }
       set { }
     }
 
     public static var whenNilledUIColorValue: PalauDefaultsEntry<UIColor> {
       get { return value("whenNilledUIColorValue")
-        .whenNil(use: UIColor.redColor()) }
+        .whenNil(use: UIColor.red()) }
       set { }
     }
   #endif
@@ -488,23 +469,13 @@ extension PalauDefaults {
     set { }
   }
 
-  public static var dateValue: PalauDefaultsEntry<NSDate> {
+  public static var dateValue: PalauDefaultsEntry<Date> {
     get { return value("dateValue") }
     set { }
   }
 
-  public static var dataValue: PalauDefaultsEntry<NSData> {
+  public static var dataValue: PalauDefaultsEntry<Data> {
     get { return value("dataValue") }
-    set { }
-  }
-
-  public static var nsUrlValue: PalauDefaultsEntry<NSURL> {
-    get { return value("nsUrlValue") }
-    set { }
-  }
-
-  public static var nsIndexPathValue: PalauDefaultsEntry<NSIndexPath> {
-    get { return value("nsIndexPathValue") }
     set { }
   }
 

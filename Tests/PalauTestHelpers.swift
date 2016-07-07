@@ -31,18 +31,18 @@ import Palau
 // -------------------------------------------------------------------------------------------------
 
 
-let lessThanTwo: [Int]? -> Bool = {
+let lessThanTwo: ([Int]?) -> Bool = {
   return $0?.count < 2
 }
 
-let lessThan10: Int? -> Bool = {
+let lessThan10: (Int?) -> Bool = {
   return $0.map { $0 < 10 } ?? false
 }
 
 public enum TestEnum: Int {
-  case CaseA
-  case CaseB
-  case CaseC
+  case caseA
+  case caseB
+  case caseC
 }
 
 extension TestEnum: PalauDefaultable {
@@ -62,11 +62,11 @@ public struct Structy {
 // here we just map the two values to two keys named "1" and "2"
 extension Structy: PalauCustomDefaultable {
 
-  public static func toIntermediate(s: Structy) -> [String: AnyObject] {
+  public static func toIntermediate(_ s: Structy) -> [String: AnyObject] {
     return ["1": s.tuple.0, "2": s.tuple.1]
   }
 
-  public static func fromIntermediate(dict: [String: AnyObject]) -> Structy? {
+  public static func fromIntermediate(_ dict: [String: AnyObject]) -> Structy? {
     guard let t1 = dict["1"] as? String,
       t2 = dict["2"] as? String else { return nil }
     return Structy(tuple: (t1, t2))

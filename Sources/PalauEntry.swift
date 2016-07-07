@@ -73,20 +73,11 @@ extension PalauEntry {
   // -----------------------------------------------------------------------------------------------
   // MARK: - Clear
   // -----------------------------------------------------------------------------------------------
-
-  /// Use this function to remove a default value
-  /// without additional calls of the ensure function
-  //@available(*, deprecated=1.0, obsoleted=2.0, message="Name was ambiguous, use .clear()")
-  @available(*, deprecated=1.0, renamed="clear")
-  public func reset() {
-    clear()
-  }
-
   /// Use this function to remove a default value
   /// without additional calls of the ensure function
   public func clear() {
     withDidSet {
-      self.defaults.removeObjectForKey(self.key)
+      self.defaults.removeObject(forKey: self.key)
     }
   }
 
@@ -95,7 +86,7 @@ extension PalauEntry {
   // -----------------------------------------------------------------------------------------------
 
   /// private helper to take care of didSet
-  func withDidSet(changeValue: () -> Void) {
+  func withDidSet(_ changeValue: @noescape () -> Void) {
     let callback: (() -> Void)?
     // check if callback is necessary as optional didSet is provided
     if let didSet = didSet {
@@ -127,7 +118,7 @@ extension PalauEntry {
   ///  set {}
   /// }
   /// ```
-  public func ensure(when when: ReturnType? -> Bool,
+  public func ensure(when: (ReturnType?) -> Bool,
                           use defaultValue: ReturnType) -> Self {
     return Self(key: key, defaults: defaults, didSet: didSet) {
       let vx = self.ensure($0)
@@ -147,7 +138,7 @@ extension PalauEntry {
   /// Add a callback when the value is set in the defaults
   /// - parameter callback: functions which receives the optional old and optional new vale
   /// - returns: PalauDefaultsEntry<T>
-  public func didSet(callback: ((newValue: ReturnType?, oldValue: ReturnType?) -> Void)) -> Self {
+  public func didSet(_ callback: ((newValue: ReturnType?, oldValue: ReturnType?) -> Void)) -> Self {
     return Self(key: key, defaults: defaults, didSet: callback, ensure: ensure)
   }
 

@@ -67,29 +67,29 @@ public protocol PalauCustomDefaultable: PalauDefaultable {
 public extension PalauCustomDefaultable {
 
   /// default implementation
-  static func get(key: String, from defaults: NSUD) -> Self? {
-    guard let d = defaults.objectForKey(key) as? IntermediateType else { return nil }
+  static func get(_ key: String, from defaults: NSUD) -> Self? {
+    guard let d = defaults.object(forKey: key) as? IntermediateType else { return nil }
     return fromIntermediate(d)
   }
 
   /// default implementation
-  static func get(key: String, from defaults: NSUD) -> [Self]? {
-    guard let d = defaults.objectForKey(key) as? [IntermediateType] else { return nil }
+  static func get(_ key: String, from defaults: NSUD) -> [Self]? {
+    guard let d = defaults.object(forKey: key) as? [IntermediateType] else { return nil }
     let v = d.flatMap(fromIntermediate)
     return v
   }
 
   /// default implementation
-  static func set(value: Self?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value else { return defaults.setObject(nil, forKey: key) }
-    defaults.setObject(toIntermediate(value) as? AnyObject, forKey: key)
+  static func set(_ value: Self?, forKey key: String, in defaults: NSUD) -> Void {
+    guard let value = value else { return defaults.set(nil, forKey: key) }
+    defaults.set(toIntermediate(value) as? AnyObject, forKey: key)
   }
 
   /// default implementation
-  static func set(value: [Self]?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value else { return defaults.setObject(nil, forKey: key) }
+  static func set(_ value: [Self]?, forKey key: String, in defaults: NSUD) -> Void {
+    guard let value = value else { return defaults.set(nil, forKey: key) }
     let v = value.flatMap { toIntermediate($0) as? AnyObject }
-    defaults.setObject(v, forKey: key)
+    defaults.set(v, forKey: key)
   }
 
 }

@@ -61,7 +61,7 @@ public struct PalauDefaultsArrayEntry<T: PalauDefaultable where T.ValueType == T
   public let didSet: PalauDidSetArrayFunction?
 
   /// a initializer
-  public init(key: String, defaults: NSUserDefaults, didSet: PalauDidSetArrayFunction? = nil, ensure: PalauEnsureArrayFunction) {
+  public init(key: String, defaults: UserDefaults, didSet: PalauDidSetArrayFunction? = nil, ensure: PalauEnsureArrayFunction) {
     self.key = key
     self.defaults = defaults
     self.ensure = ensure

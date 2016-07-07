@@ -62,7 +62,7 @@ public struct PalauDefaultsEntry<T: PalauDefaultable where T.ValueType == T>: Pa
   public let didSet: PalauDidSetFunction?
 
   /// a initializer
-  public init(key: String, defaults: NSUserDefaults, didSet: PalauDidSetFunction? = nil, ensure: PalauEnsureFunction) {
+  public init(key: String, defaults: UserDefaults, didSet: PalauDidSetFunction? = nil, ensure: PalauEnsureFunction) {
     self.key = key
     self.defaults = defaults
     self.ensure = ensure
@@ -78,7 +78,7 @@ public struct PalauDefaultsEntry<T: PalauDefaultable where T.ValueType == T>: Pa
     }
     set {
       withDidSet {
-        ValueType.set(self.ensure(newValue), forKey: self.key, in: self.defaults)
+        ValueType.set(ensure(newValue), forKey: key, in: defaults)
       }
     }
   }
