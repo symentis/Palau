@@ -67,8 +67,7 @@ extension Structy: PalauCustomDefaultable {
   }
 
   public static func fromIntermediate(_ dict: [String: AnyObject]) -> Structy? {
-    guard let t1 = dict["1"] as? String,
-      t2 = dict["2"] as? String else { return nil }
+    guard let t1 = dict["1"] as? String, let t2 = dict["2"] as? String else { return nil }
     return Structy(tuple: (t1, t2))
   }
 

@@ -118,11 +118,11 @@ extension PalauEntry {
   ///  set {}
   /// }
   /// ```
-  public func ensure(when: (ReturnType?) -> Bool,
+  public func ensure(when whenFunc: (ReturnType?) -> Bool,
                           use defaultValue: ReturnType) -> Self {
     return Self(key: key, defaults: defaults, didSet: didSet) {
       let vx = self.ensure($0)
-      return when(vx) ? defaultValue : vx
+      return whenFunc(vx) ? defaultValue : vx
     }
   }
 

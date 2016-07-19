@@ -332,7 +332,7 @@ class PalauTests: XCTestCase {
   func testEnumValueWithDidSet() {
 
     // this function builds a callback that binds the two input parameters to the internal function
-    func assertIsEqual(new: TestEnum?, old: TestEnum?) -> (TestEnum?, TestEnum?) -> Void {
+    func assertIsEqual(_ new: TestEnum?, old: TestEnum?) -> (TestEnum?, TestEnum?) -> Void {
       return { e1, e2 in
         let equal = new == e1 && old == e2
         print(e1, e2)
@@ -343,18 +343,18 @@ class PalauTests: XCTestCase {
     // start with nil
     PalauDefaults.enumValueWithDidSet.value = nil
 
+
     // bind the first didSet closure
-    var enumWithDidSet = PalauDefaults.enumValueWithDidSet.didSet(assertIsEqual(new: TestEnum.caseB,
-                                                                                old: nil))
+
+    var enumWithDidSet = PalauDefaults.enumValueWithDidSet.didSet(assertIsEqual(TestEnum.caseB, old: nil))
     enumWithDidSet.value = TestEnum.caseB
 
     // lets add another
-    var enumWithDidSetAgain = enumWithDidSet.didSet(assertIsEqual(new: TestEnum.caseA,
-                                                                  old: TestEnum.caseB))
+    var enumWithDidSetAgain = enumWithDidSet.didSet(assertIsEqual(TestEnum.caseA, old: TestEnum.caseB))
     enumWithDidSetAgain.value = TestEnum.caseA
 
     // and finally lets chain another to test the new value is nil
-    let enumWithDidClear = enumWithDidSet.didSet(assertIsEqual(new: nil, old: TestEnum.caseA))
+    let enumWithDidClear = enumWithDidSet.didSet(assertIsEqual(nil, old: TestEnum.caseA))
     enumWithDidClear.clear()
   }
 

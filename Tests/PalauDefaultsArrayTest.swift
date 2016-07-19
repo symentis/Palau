@@ -54,7 +54,6 @@ class PalauArrayTests: XCTestCase {
     >(_ entry: inout PalauDefaultsArrayEntry<T>, value: [T.ValueType], printTest: Bool = true) {
 
     // nil the entry
-    var entry = entry
     entry.value = nil
     if printTest {
       print(entry, "set to nil", entry.value)
@@ -323,7 +322,7 @@ class PalauArrayTests: XCTestCase {
   func testEnumValueWithDidSet() {
 
     // this function builds a callback that binds the two input parameters to the internal function
-    func assertIsEqual(new: [TestEnum]?, old: [TestEnum]?) -> ([TestEnum]?, [TestEnum]?) -> Void {
+    func assertIsEqual(_ new: [TestEnum]?, old: [TestEnum]?) -> ([TestEnum]?, [TestEnum]?) -> Void {
       return { e1, e2 in
         let conditionOld = old == nil ? (e2 == nil) : (old! == e2!)
         let conditionNew = new == nil ? (e1 == nil) : (new! == e1!)
@@ -337,17 +336,15 @@ class PalauArrayTests: XCTestCase {
     PalauDefaults.enumValuesWithDidSet.value = nil
 
     // bind the first didSet closure
-    var enumWithDidSet = PalauDefaults.enumValuesWithDidSet.didSet(assertIsEqual(new: [TestEnum.caseB],
-      old: nil))
+    var enumWithDidSet = PalauDefaults.enumValuesWithDidSet.didSet(assertIsEqual([TestEnum.caseB], old: nil))
     enumWithDidSet.value = [TestEnum.caseB]
 
     // lets add another
-    var enumWithDidSetAgain = enumWithDidSet.didSet(assertIsEqual(new: [TestEnum.caseA],
-      old: [TestEnum.caseB]))
+    var enumWithDidSetAgain = enumWithDidSet.didSet(assertIsEqual([TestEnum.caseA], old: [TestEnum.caseB]))
     enumWithDidSetAgain.value = [TestEnum.caseA]
 
     // and finally lets chain another to test the new value is nil
-    let enumWithDidClear = enumWithDidSet.didSet(assertIsEqual(new: nil, old: [TestEnum.caseA]))
+    let enumWithDidClear = enumWithDidSet.didSet(assertIsEqual(nil, old: [TestEnum.caseA]))
     enumWithDidClear.clear()
   }
 
