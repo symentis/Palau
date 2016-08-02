@@ -96,7 +96,7 @@ class PalauTests: XCTestCase {
   func getFixtureFile(_ name: String, ext: String) -> String? {
     // lets get some files from the test bundle
     let bundle = Bundle(for: self.dynamicType)
-    return bundle.pathForResource(name, ofType: ext)
+    return bundle.path(forResource: name, ofType: ext)
   }
 
   // test String and NSString
@@ -317,8 +317,8 @@ class PalauTests: XCTestCase {
       let redColor2 = PalauDefaults.whenNilledUIColorValue.value
 
       // UIColor sometimes returns different versions UIDeviceRGBColorSpace / UIDeviceWhiteColorSpace
-      assert(redColor!.cgColor.equalTo(UIColor.red().cgColor))
-      assert(redColor2 == UIColor.red())
+      assert(redColor!.cgColor == UIColor.red.cgColor)
+      assert(redColor2 == UIColor.red)
     }
   #endif
 
@@ -408,13 +408,13 @@ extension PalauDefaults {
   #else
     public static var ensuredUIColorValue: PalauDefaultsEntry<UIColor> {
       get { return value("ensuredUIColorValue")
-        .ensure(when: PalauDefaults.isEmpty, use: UIColor.red()) }
+        .ensure(when: PalauDefaults.isEmpty, use: UIColor.red) }
       set { }
     }
 
     public static var whenNilledUIColorValue: PalauDefaultsEntry<UIColor> {
       get { return value("whenNilledUIColorValue")
-        .whenNil(use: UIColor.red()) }
+        .whenNil(use: UIColor.red) }
       set { }
     }
   #endif
