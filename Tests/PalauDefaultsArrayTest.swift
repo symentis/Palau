@@ -41,9 +41,9 @@ class PalauArrayTests: PalauTestCase {
   func checkValue<E>(_ palauEntry: E, value: E.ReturnType, printTest: Bool = true)
     where E: PalauEntry, E.ReturnType == [E.ValueType], E.ValueType: Equatable {
 
-    // nil the entry
     var entry = palauEntry
 
+    // nil the entry
     entry.value = nil
     if printTest {
       print(entry, "set to nil", entry.value)
@@ -280,8 +280,8 @@ class PalauArrayTests: PalauTestCase {
       let redColor = redColors!.first!
       let redColor2 = redColors2!.first!
 
-      assert(redColor.cgColor.equalTo(NSColor.red().cgColor))
-      assert(redColor2 == NSColor.red())
+      assert(redColor.cgColor == NSColor.red.cgColor)
+      assert(redColor2 == NSColor.red)
     }
   #else
 
@@ -369,13 +369,13 @@ extension PalauDefaults {
   #if os(OSX)
     public static var ensuredNSColorValues: PalauDefaultsArrayEntry<NSColor> {
       get { return value("ensuredNSColorValue")
-        .ensure(when: PalauDefaults.isEmpty, use: [NSColor.red()]) }
+        .ensure(when: PalauDefaults.isEmpty, use: [NSColor.red]) }
       set { }
     }
 
     public static var whenNilledNSColorValues: PalauDefaultsArrayEntry<NSColor> {
       get { return value("whenNilledNSColorValue")
-        .whenNil(use: [NSColor.red()]) }
+        .whenNil(use: [NSColor.red]) }
       set { }
     }
   #else

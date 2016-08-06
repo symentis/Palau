@@ -42,6 +42,7 @@ class PalauTests: PalauTestCase {
     where E: PalauEntry, E.ValueType: Equatable, E.ReturnType: Equatable {
 
     var entry = palauEntry
+
     // nil the entry
     entry.value = nil
     if printTest {
@@ -290,8 +291,8 @@ class PalauTests: PalauTestCase {
       let redColor = PalauDefaults.ensuredNSColorValue.value
       let redColor2 = PalauDefaults.whenNilledNSColorValue.value
 
-      assert(redColor!.cgColor.equalTo(NSColor.red().cgColor))
-      assert(redColor2 == NSColor.red())
+      assert(redColor!.cgColor == NSColor.red.cgColor)
+      assert(redColor2 == NSColor.red)
     }
   #else
     // test if we can get a default UIColor from a property
@@ -379,13 +380,13 @@ extension PalauDefaults {
   #if os(OSX)
     public static var ensuredNSColorValue: PalauDefaultsEntry<NSColor> {
       get { return value("ensuredNSColorValue")
-        .ensure(when: PalauDefaults.isEmpty, use: NSColor.red()) }
+        .ensure(when: PalauDefaults.isEmpty, use: NSColor.red) }
       set { }
     }
 
     public static var whenNilledNSColorValue: PalauDefaultsEntry<NSColor> {
       get { return value("whenNilledNSColorValue")
-        .whenNil(use: NSColor.red()) }
+        .whenNil(use: NSColor.red) }
       set { }
     }
   #else
