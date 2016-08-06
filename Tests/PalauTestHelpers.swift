@@ -24,12 +24,45 @@
 // THE SOFTWARE.
 
 import Foundation
+import XCTest
 
 import Palau
+
+// -------------------------------------------------------------------------------------------------
+// MARK: - PalauTestCase
+// -------------------------------------------------------------------------------------------------
+
+class PalauTestCase: XCTestCase {
+
+  override func setUp() {
+    super.setUp()
+    cleanUpSimulatorDefaultsForSure()
+  }
+
+  override func tearDown() {
+    super.tearDown()
+    cleanUpSimulatorDefaultsForSure()
+  }
+
+  func cleanUpSimulatorDefaultsForSure() {
+    UserDefaults.resetStandardUserDefaults()
+    for (k, _) in UserDefaults.standard.dictionaryRepresentation() {
+      UserDefaults.standard.removeObject(forKey: k)
+    }
+  }
+
+
+  func getFixtureFile(_ name: String, ext: String) -> String? {
+    // lets get some files from the test bundle
+    let bundle = Bundle(for: self.dynamicType)
+    return bundle.path(forResource: name, ofType: ext)
+  }
+
+}
+
 // -------------------------------------------------------------------------------------------------
 // MARK: - Test Related Helpers
 // -------------------------------------------------------------------------------------------------
-
 
 let lessThanTwo: ([Int]?) -> Bool = {
   return $0?.count < 2
@@ -39,6 +72,7 @@ let lessThan10: (Int?) -> Bool = {
   return $0.map { $0 < 10 } ?? false
 }
 
+//swiftlint:disable type_name
 public enum TestEnum: Int {
   case caseA
   case caseB
@@ -66,6 +100,7 @@ extension Structy: PalauCustomDefaultable {
     return ["1": s.tuple.0, "2": s.tuple.1]
   }
 
+  // swiftlint:disable conditional_binding_cascade
   public static func fromIntermediate(_ dict: [String: AnyObject]) -> Structy? {
     guard let t1 = dict["1"] as? String, let t2 = dict["2"] as? String else { return nil }
     return Structy(tuple: (t1, t2))

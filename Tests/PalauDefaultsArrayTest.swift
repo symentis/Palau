@@ -29,17 +29,7 @@ import CoreGraphics
 
 @testable import Palau
 
-class PalauArrayTests: XCTestCase {
-
-  override func setUp() {
-    super.setUp()
-    // make sure to reste the defaults each time
-    UserDefaults.resetStandardUserDefaults()
-  }
-
-  override func tearDown() {
-    super.tearDown()
-  }
+class PalauArrayTests: PalauTestCase {
 
   // -----------------------------------------------------------------------------------------------
   // MARK: - Internal Helper
@@ -48,12 +38,12 @@ class PalauArrayTests: XCTestCase {
   /// Helper for checking values
   /// - parameter entry: PalauDefaultsEntry
   /// - parameter value: T.ValueType
-  func checkValue<T where
-    T: PalauDefaultable,
-    T.ValueType: Equatable
-    >(_ entry: inout PalauDefaultsArrayEntry<T>, value: [T.ValueType], printTest: Bool = true) {
+  func checkValue<E>(_ palauEntry: E, value: E.ReturnType, printTest: Bool = true)
+    where E: PalauEntry, E.ReturnType == [E.ValueType], E.ValueType: Equatable {
 
     // nil the entry
+    var entry = palauEntry
+
     entry.value = nil
     if printTest {
       print(entry, "set to nil", entry.value)
@@ -93,12 +83,6 @@ class PalauArrayTests: XCTestCase {
   // MARK: - Test Types
   // -----------------------------------------------------------------------------------------------
 
-  func getFixtureFile(_ name: String, ext: String) -> String? {
-    // lets get some files from the test bundle
-    let bundle = Bundle(for: self.dynamicType)
-    return bundle.path(forResource: name, ofType: ext)
-  }
-
   // test String and NSString
   func testStringValue() throws {
     let strings = [
@@ -112,8 +96,9 @@ class PalauArrayTests: XCTestCase {
     ]
 
     // test these strings
-    checkValue(&PalauDefaults.stringValues, value: strings, printTest: false)
-    checkValue(&PalauDefaults.nsStringValues, value: strings.map(NSString.init(string:)),
+    checkValue(PalauDefaults.stringValues, value: ["a"])
+    checkValue(PalauDefaults.stringValues, value: strings, printTest: false)
+    checkValue(PalauDefaults.nsStringValues, value: strings.map(NSString.init(string:)),
                printTest: false)
 
 
@@ -125,18 +110,18 @@ class PalauArrayTests: XCTestCase {
     let quickBrownString = try String(contentsOfFile: getFixtureFile("quickbrown", ext:"txt")!)
 
     let strings2 = [htmlString, utf8String, quickBrownString]
-    checkValue(&PalauDefaults.stringValues, value: strings2, printTest: false)
-    checkValue(&PalauDefaults.nsStringValues, value: strings2.map(NSString.init(string:)),
+    checkValue(PalauDefaults.stringValues, value: strings2, printTest: false)
+    checkValue(PalauDefaults.nsStringValues, value: strings2.map(NSString.init(string:)),
                printTest: false)
   }
 
   func testBoolValue() {
-    checkValue(&PalauDefaults.boolValues, value: [true, false])
-    checkValue(&PalauDefaults.boolValues, value: [false, true])
-    checkValue(&PalauDefaults.boolValues, value: [CBool(true)])
-    checkValue(&PalauDefaults.boolValues, value: [CBool(false)])
-    checkValue(&PalauDefaults.boolValues, value: [BooleanLiteralType(true)])
-    checkValue(&PalauDefaults.boolValues, value: [BooleanLiteralType(false)])
+    checkValue(PalauDefaults.boolValues, value: [true, false])
+    checkValue(PalauDefaults.boolValues, value: [false, true])
+    checkValue(PalauDefaults.boolValues, value: [CBool(true)])
+    checkValue(PalauDefaults.boolValues, value: [CBool(false)])
+    checkValue(PalauDefaults.boolValues, value: [BooleanLiteralType(true)])
+    checkValue(PalauDefaults.boolValues, value: [BooleanLiteralType(false)])
   }
 
   #if arch(x86_64) || arch(arm64)
@@ -145,88 +130,88 @@ class PalauArrayTests: XCTestCase {
 
     // test max 64 bit unsigned int nine quintillion
     let reallyBigInt = [9_223_372_036_854_775_807]
-    checkValue(&PalauDefaults.intValues, value: reallyBigInt)
+    checkValue(PalauDefaults.intValues, value: reallyBigInt)
 
     // test max 64 bit signed int negative nine quintillion
     let reallyNegativeBigInt = [-9_223_372_036_854_775_808]
-    checkValue(&PalauDefaults.intValues, value: reallyNegativeBigInt)
+    checkValue(PalauDefaults.intValues, value: reallyNegativeBigInt)
 
     let reallyBitUnsignedInt: [UInt] = [9_223_372_036_854_775_807]
-    checkValue(&PalauDefaults.uIntValues, value: reallyBitUnsignedInt)
+    checkValue(PalauDefaults.uIntValues, value: reallyBitUnsignedInt)
 
     // really big int as NSNumber
     let reallyBigNSNumber: [NSNumber] = [NSNumber(value: 9_223_372_036_854_775_807)]
-    checkValue(&PalauDefaults.nsNumberValues, value: reallyBigNSNumber)
+    checkValue(PalauDefaults.nsNumberValues, value: reallyBigNSNumber)
   }
   #endif
 
   func testIntValue() {
     // test some vanilla ints
-    checkValue(&PalauDefaults.intValues, value: [1, 2, 3, 4, 5, 6, 100, -44])
+    checkValue(PalauDefaults.intValues, value: [1, 2, 3, 4, 5, 6, 100, -44])
   }
 
   func testNSNumberValue() {
     let testNumbers = [1, 2, 3, 4, 5, 6, 100, -44].map { NSNumber(value: $0) }
-    checkValue(&PalauDefaults.nsNumberValues, value: testNumbers)
+    checkValue(PalauDefaults.nsNumberValues, value: testNumbers)
   }
 
   func testFloatValue() {
     // some weird double literals
     let decimalFloat: [Float] = [12.1875, 99, 99.898]
-    checkValue(&PalauDefaults.floatValues, value: decimalFloat)
+    checkValue(PalauDefaults.floatValues, value: decimalFloat)
 
     let exponentFloat: [Float] = [1.21875e1, 99, 99.898]
-    checkValue(&PalauDefaults.floatValues, value: exponentFloat)
+    checkValue(PalauDefaults.floatValues, value: exponentFloat)
 
     let hexadecimalFloat: [Float] = [0xC.3p0]
-    checkValue(&PalauDefaults.floatValues, value: hexadecimalFloat)
+    checkValue(PalauDefaults.floatValues, value: hexadecimalFloat)
 
     let paddedDouble: [Float] = [000123.456]
-    checkValue(&PalauDefaults.floatValues, value: paddedDouble)
+    checkValue(PalauDefaults.floatValues, value: paddedDouble)
 
     let justOverOneMillion: [Float] = [1_000_000.000_000_1]
-    checkValue(&PalauDefaults.floatValues, value: justOverOneMillion)
+    checkValue(PalauDefaults.floatValues, value: justOverOneMillion)
 
     let fmin = [FLT_MIN]
-    checkValue(&PalauDefaults.floatValues, value: fmin)
+    checkValue(PalauDefaults.floatValues, value: fmin)
 
     let fmax = [FLT_MAX]
-    checkValue(&PalauDefaults.floatValues, value: fmax)
+    checkValue(PalauDefaults.floatValues, value: fmax)
 
     let inf = [Float.infinity]
-    checkValue(&PalauDefaults.floatValues, value: inf)
+    checkValue(PalauDefaults.floatValues, value: inf)
   }
 
   func testDoubleValue() {
     // some weird double literals
     let decimalDouble = [12.1875]
-    checkValue(&PalauDefaults.doubleValues, value: decimalDouble)
+    checkValue(PalauDefaults.doubleValues, value: decimalDouble)
 
     let exponentDouble = [1.21875e1]
-    checkValue(&PalauDefaults.doubleValues, value: exponentDouble)
+    checkValue(PalauDefaults.doubleValues, value: exponentDouble)
 
     let hexadecimalDouble = [0xC.3p0]
-    checkValue(&PalauDefaults.doubleValues, value: hexadecimalDouble)
+    checkValue(PalauDefaults.doubleValues, value: hexadecimalDouble)
 
     let paddedDouble = [000123.456]
-    checkValue(&PalauDefaults.doubleValues, value: paddedDouble)
+    checkValue(PalauDefaults.doubleValues, value: paddedDouble)
 
     let justOverOneMillion = [1_000_000.000_000_1]
-    checkValue(&PalauDefaults.doubleValues, value: justOverOneMillion)
+    checkValue(PalauDefaults.doubleValues, value: justOverOneMillion)
 
 
     let dmin = [DBL_MIN]
-    checkValue(&PalauDefaults.doubleValues, value: dmin)
+    checkValue(PalauDefaults.doubleValues, value: dmin)
 
     let dmax = [DBL_MAX]
-    checkValue(&PalauDefaults.doubleValues, value: dmax)
+    checkValue(PalauDefaults.doubleValues, value: dmax)
 
     let inf = [Double.infinity]
-    checkValue(&PalauDefaults.doubleValues, value: inf)
+    checkValue(PalauDefaults.doubleValues, value: inf)
   }
 
   func testDateValue() {
-    checkValue(&PalauDefaults.dateValues, value: [Date()])
+    checkValue(PalauDefaults.dateValues, value: [Date()])
   }
 
   func testEnsuredIntValues() {
@@ -240,10 +225,10 @@ class PalauArrayTests: XCTestCase {
 
   func testNSArrayValues() {
     let array = [NSArray(array: [1, Date(), NSString(string: "test")])]
-    checkValue(&PalauDefaults.nsArrayValues, value: array)
+    checkValue(PalauDefaults.nsArrayValues, value: array)
 
     let mutableArray = [NSMutableArray(array: [1, Date(), NSString(string: "test")])]
-    checkValue(&PalauDefaults.nsArrayValues, value: mutableArray)
+    checkValue(PalauDefaults.nsArrayValues, value: mutableArray)
   }
 
   func testStringArrayValue() {
@@ -269,21 +254,21 @@ class PalauArrayTests: XCTestCase {
       NSDictionary(dictionary: ["key": "value", Date(): NSNumber(value: 1)]),
       NSDictionary(dictionary: ["key": "value2", Date(): NSNumber(value: 2)])
     ]
-    checkValue(&PalauDefaults.nsDictionaryValues, value: dictionary)
+    checkValue(PalauDefaults.nsDictionaryValues, value: dictionary)
 
     let mutableDictionary = [NSMutableDictionary(
       dictionary: ["key": "value", Date(): NSNumber(value: 1)]
       ), NSMutableDictionary(
         dictionary: ["key": "value2", Date(): NSNumber(value: 2)]
       )]
-    checkValue(&PalauDefaults.nsDictionaryValues, value: mutableDictionary)
+    checkValue(PalauDefaults.nsDictionaryValues, value: mutableDictionary)
   }
 
   func testDataValue() {
     guard let data = try? Data(contentsOf: URL(fileURLWithPath: getFixtureFile("UTF-8-demo", ext:"txt")!)) else {
       fatalError()
     }
-    checkValue(&PalauDefaults.dataValues, value: [data], printTest: false)
+    checkValue(PalauDefaults.dataValues, value: [data], printTest: false)
   }
 
   #if os(OSX)
@@ -315,7 +300,7 @@ class PalauArrayTests: XCTestCase {
   #endif
 
   func testEnumValue() {
-    checkValue(&PalauDefaults.enumValues, value: [TestEnum.caseA, TestEnum.caseB, TestEnum.caseC])
+    checkValue(PalauDefaults.enumValues, value: [TestEnum.caseA, TestEnum.caseB, TestEnum.caseC])
   }
 
   // this test demonstrates how to use a custom didSet function
@@ -354,7 +339,7 @@ class PalauArrayTests: XCTestCase {
       Structy(tuple: ("Test3", "Test4")),
       Structy(tuple: ("Test5", "Test6"))
     ]
-    checkValue(&PalauDefaults.structsWithTuple, value: arrayOfStructs)
+    checkValue(PalauDefaults.structsWithTuple, value: arrayOfStructs)
   }
 }
 
