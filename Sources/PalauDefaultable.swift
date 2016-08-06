@@ -149,6 +149,7 @@ extension PalauDefaultable where ValueType: RawRepresentable {
 // The extension will provide set and get for NSCoding types
 // -------------------------------------------------------------------------------------------------
 
+// swiftlint:disable conditional_binding_cascade
 /// Extension for NSCoding types
 extension PalauDefaultable where ValueType: NSCoding {
 
