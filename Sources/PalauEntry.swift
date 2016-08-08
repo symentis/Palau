@@ -25,121 +25,389 @@
 
 import Foundation
 
-// -------------------------------------------------------------------------------------------------
-// MARK: - PalauEntry Protocol
-// -------------------------------------------------------------------------------------------------
+func pure<T>(t: T) -> T { return t }
 
-/// PalauEntry is the base protocol for PalauEntry or PalauArrayEntry
-/// By extending the protocol we can provide the default functionality
-/// to both types
-public protocol PalauEntry {
 
-  /// the ValueType must conform to PalauDefaultable
-  associatedtype ValueType: PalauDefaultable
+// ----------------------------------------------------------------------------------------------
+// MARK: - PalauQuantifier
+// ----------------------------------------------------------------------------------------------
 
-  /// the return type can be e.g. ValueType or [ValueType]
+public protocol PalauQuantifier {
+  associatedtype DefaultableType: PalauDefaultable
+  associatedtype ReturnType
+}
+
+public protocol PalauQuantifierSingle: PalauQuantifier {}
+public protocol PalauQuantifierList: PalauQuantifier {}
+
+public struct PalauSingle<T>: PalauQuantifierSingle where T: PalauDefaultable {
+  public typealias DefaultableType = T
+  public typealias ReturnType = T
+}
+
+public struct PalauList<T>: PalauQuantifierList where T: PalauDefaultable {
+  public typealias DefaultableType = T
+  public typealias ReturnType = [T]
+}
+
+// ----------------------------------------------------------------------------------------------
+// MARK: - PalauStrategy
+// ----------------------------------------------------------------------------------------------
+
+public protocol PalauStrategy {
+  associatedtype QuantifierType: PalauQuantifier
   associatedtype ReturnType
 
-  /// the key in defaults
+  var fallback: () -> ReturnType { get }
+  var ensure: (ReturnType) -> ReturnType { get }
+  var didSet: ((ReturnType, ReturnType) -> ())? { get }
+
+  func resolve(_ value: QuantifierType.ReturnType?) -> ReturnType
+
+  init(for: QuantifierType.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType, didSet: ((ReturnType, ReturnType) -> ()))
+  init(for: QuantifierType.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType)
+}
+
+public protocol PalauStrategyOptional: PalauStrategy { }
+public protocol PalauStrategyEnsured: PalauStrategy { }
+
+public struct PalauOptional<T>: PalauStrategyOptional where T: PalauQuantifier {
+  public typealias QuantifierType = T
+  public typealias ReturnType = T.ReturnType?
+
+  public let fallback: () -> ReturnType
+  public let ensure: (ReturnType) -> ReturnType
+  public let didSet: ((ReturnType, ReturnType) -> ())?
+
+  public init(for: T.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType) {
+    self.fallback = fallback
+    self.ensure = ensure
+    self.didSet = nil
+  }
+
+  public init(for: T.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType, didSet: ((ReturnType, ReturnType) -> ())) {
+    self.fallback = fallback
+    self.ensure = ensure
+    self.didSet = didSet
+  }
+
+  public func resolve(_ value: QuantifierType.ReturnType?) -> ReturnType {
+    return ensure(value)
+  }
+}
+
+public struct PalauEnsured<T>: PalauStrategyEnsured where T: PalauQuantifier {
+  public typealias QuantifierType = T
+  public typealias ReturnType = T.ReturnType
+
+  public let fallback: () -> ReturnType
+  public let ensure: (ReturnType) -> ReturnType
+  public let didSet: ((ReturnType, ReturnType) -> ())?
+
+  public init(for: T.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType) {
+    self.fallback = fallback
+    self.ensure = ensure
+    self.didSet = nil
+  }
+
+  public init(for: T.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType, didSet: ((ReturnType, ReturnType) -> ())) {
+    self.fallback = fallback
+    self.ensure = ensure
+    self.didSet = didSet
+  }
+
+  public func resolve(_ value: QuantifierType.ReturnType?) -> ReturnType {
+    guard let value = value else {
+      return fallback()
+    }
+    return ensure(value)
+  }
+}
+
+// ----------------------------------------------------------------------------------------------
+// MARK: - PalauEntry
+// ----------------------------------------------------------------------------------------------
+
+public protocol PalauEntryBase {
+
+  associatedtype StrategyType: PalauStrategy
+
+  var strategy: StrategyType { get }
   var key: String { get }
-
-  /// access to the defaults
   var defaults: NSUD { get }
-
-  /// A function to change the incoming and outgoing value
-  var ensure: (ReturnType?) -> ReturnType? { get }
-
-  /// A function as callback after set
-  var didSet: ((newValue: ReturnType?, oldValue: ReturnType?) -> Void)? { get }
-
-  /// computed property for the return value
-  var value: ReturnType? { get set }
-
-  /// inititalizer
-  init(key: String,
-       defaults: NSUD,
-       didSet: ((newValue: ReturnType?, oldValue: ReturnType?) -> Void)?,
-       ensure: (ReturnType?) -> ReturnType?
-  )
 
 }
 
-// -------------------------------------------------------------------------------------------------
-// MARK: - PalauEntry Default Extension
-// -------------------------------------------------------------------------------------------------
+public struct PalauEntry<Strategy>: PalauEntryBase
+  where
+  Strategy: PalauStrategy,
+  Strategy.QuantifierType.DefaultableType: PalauDefaultable {
 
-extension PalauEntry {
+  public typealias EntryType = Strategy.ReturnType
+  public typealias EnsureFunction = (EntryType) -> EntryType
+  public typealias DidSetFunction = (EntryType, EntryType) -> ()
 
-  // -----------------------------------------------------------------------------------------------
-  // MARK: - Clear
-  // -----------------------------------------------------------------------------------------------
-  /// Use this function to remove a default value
-  /// without additional calls of the ensure function
-  public func clear() {
-    withDidSet {
-      self.defaults.removeObject(forKey: self.key)
+  public let key: String
+  public let strategy: Strategy
+  public let defaults: NSUD
+
+}
+
+// ----------------------------------------------------------------------------------------------------
+// MARK: - Optional Single
+// ----------------------------------------------------------------------------------------------------
+
+
+public extension PalauEntry
+  where
+  Strategy: PalauStrategyOptional,
+  Strategy.ReturnType == Strategy.QuantifierType.ReturnType?,
+  Strategy.QuantifierType: PalauQuantifierSingle,
+  Strategy.QuantifierType.ReturnType == Strategy.QuantifierType.DefaultableType {
+
+  public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, ensure: EnsureFunction = pure) {
+    self.key = key
+    self.defaults = defaults
+    if let didSet = didSet {
+      self.strategy = Strategy(for: Strategy.QuantifierType.self, fallback: { nil }, ensure: ensure, didSet: didSet)
+    } else {
+      self.strategy = Strategy(for: Strategy.QuantifierType.self, fallback: { nil }, ensure: ensure)
     }
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // MARK: - DidSet Observation
-  // -----------------------------------------------------------------------------------------------
+  public func ensure(when: (EntryType) -> Bool, use defaultValue: EntryType) -> PalauEntry {
+    return PalauEntry(key: key, defaults: defaults, didSet: strategy.didSet) { value in
+      let value = self.strategy.ensure(value)
+      return when(value) ? defaultValue : value
+    }
+  }
 
-  /// private helper to take care of didSet
-  func withDidSet(_ changeValue: @noescape () -> Void) {
+  public func didSet(_ callback: DidSetFunction) -> PalauEntry {
+    return PalauEntry(key: key, defaults: defaults, didSet: callback, ensure: strategy.ensure)
+  }
+
+  public func withDidSet(_ changeValue: @noescape () -> Void) {
     let callback: (() -> Void)?
-    // check if callback is necessary as optional didSet is provided
-    if let didSet = didSet {
+    if let didSet = strategy.didSet {
       let old = value
-      callback = { didSet(newValue: self.value, oldValue: old) }
+      callback = { didSet(self.value, old) }
     } else {
       callback = nil
     }
-    // perform remove
     changeValue()
-    // perform optional callback
     callback?()
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // MARK: - Rules
-  // -----------------------------------------------------------------------------------------------
-
-  /// Helper function to take care of the value thats is read and written
-  /// usage like:
-  /// The functions provided for 'when' parameter can be implemented for any use case
-  /// ```
-  /// public static var intValueWithMinOf10: PalauDefaultsEntry<Int> {
-  /// get {
-  ///   return value("intValue")
-  ///         .ensure(when: isEqual(0), use: 20)
-  ///         .ensure(when: lessThan(10), use: 10)
-  ///     }
-  ///  set {}
-  /// }
-  /// ```
-  public func ensure(when whenFunc: (ReturnType?) -> Bool,
-                          use defaultValue: ReturnType) -> Self {
-    return Self(key: key, defaults: defaults, didSet: didSet) {
-      let vx = self.ensure($0)
-      return whenFunc(vx) ? defaultValue : vx
+  public var value: EntryType {
+    get {
+      return strategy.resolve(Strategy.QuantifierType.DefaultableType.get(key, from: defaults))
+    }
+    set {
+      Strategy.QuantifierType.DefaultableType.set(strategy.resolve(newValue), forKey: key, in: defaults)
     }
   }
 
-  /// Helper function to return a fallback in case the value is nil
-  public func whenNil(use defaultValue: ReturnType) -> Self {
-    return ensure(when: PalauDefaults.isEmpty, use: defaultValue)
+}
+
+// ----------------------------------------------------------------------------------------------------
+// MARK: - Optional List
+// ----------------------------------------------------------------------------------------------------
+
+public extension PalauEntry
+  where
+  Strategy: PalauStrategyOptional,
+  Strategy.QuantifierType: PalauQuantifierList,
+  Strategy.ReturnType == Strategy.QuantifierType.ReturnType?,
+  Strategy.QuantifierType.ReturnType == [Strategy.QuantifierType.DefaultableType],
+  Strategy.QuantifierType.DefaultableType == Strategy.QuantifierType.DefaultableType.StoredType {
+
+  public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, ensure: EnsureFunction = pure) {
+    self.key = key
+    self.defaults = defaults
+    if let didSet = didSet {
+      self.strategy = Strategy(for: Strategy.QuantifierType.self, fallback: { nil }, ensure: ensure, didSet: didSet)
+    } else {
+      self.strategy = Strategy(for: Strategy.QuantifierType.self, fallback: { nil }, ensure: ensure)
+    }
   }
 
-  // -----------------------------------------------------------------------------------------------
-  // MARK: - Observer
-  // -----------------------------------------------------------------------------------------------
-
-  /// Add a callback when the value is set in the defaults
-  /// - parameter callback: functions which receives the optional old and optional new vale
-  /// - returns: PalauDefaultsEntry<T>
-  public func didSet(_ callback: ((newValue: ReturnType?, oldValue: ReturnType?) -> Void)) -> Self {
-    return Self(key: key, defaults: defaults, didSet: callback, ensure: ensure)
+  public func ensure(when: (EntryType) -> Bool, use defaultValue: EntryType) -> PalauEntry {
+    return PalauEntry(key: key, defaults: defaults, didSet: strategy.didSet) { value in
+      let value = self.strategy.ensure(value)
+      return when(value) ? defaultValue : value
+    }
   }
 
+  public func didSet(_ callback: DidSetFunction) -> PalauEntry {
+    return PalauEntry(key: key, defaults: defaults, didSet: callback, ensure: strategy.ensure)
+  }
+
+  public func withDidSet(_ changeValue: @noescape () -> Void) {
+    let callback: (() -> Void)?
+    if let didSet = strategy.didSet {
+      let old = value
+      callback = { didSet(self.value, old) }
+    } else {
+      callback = nil
+    }
+    changeValue()
+    callback?()
+  }
+
+  public var value: EntryType {
+    get {
+      return strategy.resolve(Strategy.QuantifierType.DefaultableType.get(key, from: defaults))
+    }
+    set {
+      Strategy.QuantifierType.DefaultableType.set(strategy.resolve(newValue), forKey: key, in: defaults)
+    }
+  }
+
+}
+
+// ----------------------------------------------------------------------------------------------------
+// MARK: - Ensured Single
+// ----------------------------------------------------------------------------------------------------
+
+public extension PalauEntry
+  where
+  Strategy: PalauStrategyEnsured,
+  Strategy.QuantifierType: PalauQuantifierSingle,
+  Strategy.ReturnType == Strategy.QuantifierType.ReturnType,
+  Strategy.QuantifierType.ReturnType == Strategy.QuantifierType.DefaultableType,
+  Strategy.QuantifierType.DefaultableType == Strategy.QuantifierType.DefaultableType.StoredType {
+
+  public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, fallback: @autoclosure(escaping) () -> EntryType, ensure: EnsureFunction = pure) {
+    self.key = key
+    self.defaults = defaults
+    if let didSet = didSet {
+      self.strategy = Strategy(for: Strategy.QuantifierType.self, fallback: { fallback() }, ensure: ensure, didSet: didSet)
+    } else {
+      self.strategy = Strategy(for: Strategy.QuantifierType.self, fallback: { fallback() }, ensure: ensure)
+    }
+  }
+
+  public func ensure(when: (EntryType) -> Bool, use defaultValue: EntryType) -> PalauEntry {
+    return PalauEntry(key: key, defaults: defaults, didSet: strategy.didSet, fallback: self.strategy.fallback()) { value in
+      let value = self.strategy.ensure(value)
+      return when(value) ? defaultValue : self.strategy.fallback()
+    }
+  }
+
+  public func didSet(_ callback: DidSetFunction) -> PalauEntry {
+    return PalauEntry(key: key, defaults: defaults, didSet: callback, fallback: self.strategy.fallback(), ensure: strategy.ensure)
+  }
+
+  public func withDidSet(_ changeValue: @noescape () -> Void) {
+    let callback: (() -> Void)?
+    if let didSet = strategy.didSet {
+      let old = value
+      callback = { didSet(self.value, old) }
+    } else {
+      callback = nil
+    }
+    changeValue()
+    callback?()
+  }
+
+  public var value: EntryType {
+    get {
+      return strategy.resolve(Strategy.QuantifierType.DefaultableType.get(key, from: defaults))
+    }
+    set {
+      Strategy.QuantifierType.DefaultableType.set(strategy.resolve(newValue), forKey: key, in: defaults)
+    }
+  }
+
+}
+
+// ----------------------------------------------------------------------------------------------------
+// MARK: - Ensured List
+// ----------------------------------------------------------------------------------------------------
+
+public extension PalauEntry
+  where
+  Strategy: PalauStrategyEnsured,
+  Strategy.QuantifierType: PalauQuantifierList,
+  Strategy.ReturnType == Strategy.QuantifierType.ReturnType,
+  Strategy.QuantifierType.ReturnType == [Strategy.QuantifierType.DefaultableType],
+  Strategy.QuantifierType.DefaultableType == Strategy.QuantifierType.DefaultableType.StoredType {
+
+  public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, fallback: @autoclosure(escaping) () -> EntryType, ensure: EnsureFunction = pure) {
+    self.key = key
+    self.defaults = defaults
+    if let didSet = didSet {
+      self.strategy = Strategy(for: Strategy.QuantifierType.self, fallback: { fallback() }, ensure: ensure, didSet: didSet)
+    } else {
+      self.strategy = Strategy(for: Strategy.QuantifierType.self, fallback: { fallback() }, ensure: ensure)
+    }
+  }
+
+  public func ensure(when: (EntryType) -> Bool, use defaultValue: EntryType) -> PalauEntry {
+    return PalauEntry(key: key, defaults: defaults, didSet: strategy.didSet, fallback: self.strategy.fallback()) { value in
+      let value = self.strategy.ensure(value)
+      return when(value) ? defaultValue : self.strategy.fallback()
+    }
+  }
+
+
+  public func didSet(_ callback: DidSetFunction) -> PalauEntry {
+    return PalauEntry(key: key, defaults: defaults, didSet: callback, fallback: self.strategy.fallback(), ensure: strategy.ensure)
+  }
+
+  public func withDidSet(_ changeValue: @noescape () -> Void) {
+    let callback: (() -> Void)?
+    if let didSet = strategy.didSet {
+      let old = value
+      callback = { didSet(self.value, old) }
+    } else {
+      callback = nil
+    }
+    changeValue()
+    callback?()
+  }
+
+
+  public var value: EntryType {
+    get {
+      return strategy.resolve(Strategy.QuantifierType.DefaultableType.get(key, from: defaults))
+    }
+    set {
+      Strategy.QuantifierType.DefaultableType.set(strategy.resolve(newValue), forKey: key, in: defaults)
+    }
+  }
+
+}
+
+public typealias PalauDefaultsEntry<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauSingle<T>>>
+public typealias PalauDefaultsEntryEnsured<T: PalauDefaultable> = PalauEntry<PalauEnsured<PalauSingle<T>>>
+public typealias PalauDefaultsArrayEntry<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauList<T>>>
+public typealias PalauDefaultsArrayEntryEnsured<T: PalauDefaultable> = PalauEntry<PalauEnsured<PalauList<T>>>
+
+public struct PalauDefaults {
+
+  /// The underlying defaults
+  public static var defaults: NSUD {
+    return NSUD.standard
+  }
+
+  public static func value<T>(_ key: String) -> PalauDefaultsEntry<T>
+    where T: PalauDefaultable {
+      return PalauEntry(key:key, defaults:defaults)
+  }
+
+  public static func value<T>(_ key: String, whenNil fallback: @autoclosure(escaping) () -> T) -> PalauDefaultsEntryEnsured<T>
+    where T: PalauDefaultable, T.StoredType == T {
+      return PalauEntry(key:key, defaults:defaults, fallback: fallback())
+  }
+
+  public static func value<T>(_ key: String) -> PalauDefaultsArrayEntry<T>
+    where T: PalauDefaultable, T.StoredType == T {
+      return PalauEntry(key:key, defaults:defaults)
+  }
+
+  public static func value<T>(_ key: String, whenNil fallback: @autoclosure(escaping) () -> [T]) -> PalauDefaultsArrayEntryEnsured<T>
+    where T: PalauDefaultable, T.StoredType == T {
+      return PalauEntry(key:key, defaults:defaults, fallback: fallback())
+  }
 }

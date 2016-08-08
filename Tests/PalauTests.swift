@@ -38,8 +38,8 @@ class PalauTests: PalauTestCase {
   /// Helper for checking values
   /// - parameter entry: PalauDefaultsEntry
   /// - parameter value: T.ValueType
-  func checkValue<E>(_ palauEntry: E, value: E.ReturnType, printTest: Bool = true)
-    where E: PalauEntry, E.ValueType: Equatable, E.ReturnType: Equatable {
+  func checkValue<E>(_ palauEntry: PalauDefaultsEntry<E>, value: E, printTest: Bool = true)
+    where E: Equatable {
 
     var entry = palauEntry
 
@@ -372,7 +372,7 @@ extension PalauDefaults {
 
   public static var ensuredIntValue: PalauDefaultsEntry<Int> {
     get { return value("ensuredIntValue")
-      .ensure(when: PalauDefaults.isEmpty, use: 10)
+      .ensure(when: { $0 == nil }, use: 10)
       .ensure(when: lessThan10, use: 10) }
     set { }
   }
@@ -380,25 +380,23 @@ extension PalauDefaults {
   #if os(OSX)
     public static var ensuredNSColorValue: PalauDefaultsEntry<NSColor> {
       get { return value("ensuredNSColorValue")
-        .ensure(when: PalauDefaults.isEmpty, use: NSColor.red) }
+        .ensure(when: { $0 == nil }, use: NSColor.red) }
       set { }
     }
 
-    public static var whenNilledNSColorValue: PalauDefaultsEntry<NSColor> {
-      get { return value("whenNilledNSColorValue")
-        .whenNil(use: NSColor.red) }
+    public static var whenNilledNSColorValue: PalauDefaultsEntryEnsured<NSColor> {
+      get { return value("whenNilledNSColorValue", whenNil: NSColor.red) }
       set { }
     }
   #else
     public static var ensuredUIColorValue: PalauDefaultsEntry<UIColor> {
       get { return value("ensuredUIColorValue")
-        .ensure(when: PalauDefaults.isEmpty, use: UIColor.red) }
+        .ensure(when: { $0 == nil }, use: UIColor.red) }
       set { }
     }
 
-    public static var whenNilledUIColorValue: PalauDefaultsEntry<UIColor> {
-      get { return value("whenNilledUIColorValue")
-        .whenNil(use: UIColor.red) }
+    public static var whenNilledUIColorValue: PalauDefaultsEntryEnsured<UIColor> {
+      get { return value("whenNilledUIColorValue", whenNil: UIColor.red) }
       set { }
     }
   #endif

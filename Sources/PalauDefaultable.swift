@@ -53,35 +53,35 @@ public typealias NSUD = UserDefaults
 public protocol PalauDefaultable {
 
   /// The associatedtype for the Value
-  associatedtype ValueType
+  associatedtype StoredType = Self
 
   /// Static function to get an optional ValueType out of the
   /// provided NSUserDefaults with the key
   /// - param key: The key used in the NSUserDefaults
   /// - param defaults: The NSUserDefaults
   /// - returns: ValueType?
-  static func get(_ key: String, from defaults: NSUD) -> ValueType?
+  static func get(_ key: String, from defaults: NSUD) -> StoredType?
 
   /// Static function to get an optional ValueType out of the
   /// provided NSUserDefaults with the key
   /// - param key: The key used in the NSUserDefaults
   /// - param defaults: The NSUserDefaults
   /// - returns: ValueType?
-  static func get(_ key: String, from defaults: NSUD) -> [ValueType]?
+  static func get(_ key: String, from defaults: NSUD) -> [StoredType]?
 
   /// Static function to set an optional ValueType in the provided NSUserDefaults with the key
   /// - param value: The optional value to be stored
   /// - param key: The key used in the NSUserDefaults
   /// - param defaults: The NSUserDefaults
   /// - returns: Void
-  static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) -> Void
+  static func set(_ value: StoredType?, forKey key: String, in defaults: NSUD) -> Void
 
   /// Static function to set an optional ValueType in the provided NSUserDefaults with the key
   /// - param value: The optional value to be stored
   /// - param key: The key used in the NSUserDefaults
   /// - param defaults: The NSUserDefaults
   /// - returns: Void
-  static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) -> Void
+  static func set(_ value: [StoredType]?, forKey key: String, in defaults: NSUD) -> Void
 }
 
 
@@ -94,20 +94,20 @@ public protocol PalauDefaultable {
 /// Extension for basic types like Int, String and so forth
 extension PalauDefaultable {
 
-  public static func get(_ key: String, from defaults: NSUD) -> ValueType? {
-    return defaults.object(forKey: key) as? ValueType
+  public static func get(_ key: String, from defaults: NSUD) -> StoredType? {
+    return defaults.object(forKey: key) as? StoredType
   }
 
-  public static func get(_ key: String, from defaults: NSUD) -> [ValueType]? {
-    return defaults.object(forKey: key) as? [ValueType]
+  public static func get(_ key: String, from defaults: NSUD) -> [StoredType]? {
+    return defaults.object(forKey: key) as? [StoredType]
   }
 
-  public static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) -> Void {
+  public static func set(_ value: StoredType?, forKey key: String, in defaults: NSUD) -> Void {
     guard let value = value as? AnyObject else { return defaults.removeObject(forKey: key) }
     defaults.set(value, forKey: key)
   }
 
-  public static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) -> Void {
+  public static func set(_ value: [StoredType]?, forKey key: String, in defaults: NSUD) -> Void {
     guard let value = value as? AnyObject else { return defaults.removeObject(forKey: key) }
     defaults.set(value, forKey: key)
   }
@@ -120,24 +120,24 @@ extension PalauDefaultable {
 // -------------------------------------------------------------------------------------------------
 
 /// Extension for RawRepresentable types aka enums
-extension PalauDefaultable where ValueType: RawRepresentable {
+extension PalauDefaultable where StoredType: RawRepresentable {
 
-  public static func get(_ key: String, from defaults: NSUD) -> ValueType? {
-    guard let val = defaults.object(forKey: key) as? ValueType.RawValue else { return nil }
-    return ValueType(rawValue: val)
+  public static func get(_ key: String, from defaults: NSUD) -> StoredType? {
+    guard let val = defaults.object(forKey: key) as? StoredType.RawValue else { return nil }
+    return StoredType(rawValue: val)
   }
 
-  public static func get(_ key: String, from defaults: NSUD) -> [ValueType]? {
-    guard let val = defaults.object(forKey: key) as? [ValueType.RawValue] else { return nil }
-    return val.flatMap { ValueType(rawValue: $0) }
+  public static func get(_ key: String, from defaults: NSUD) -> [StoredType]? {
+    guard let val = defaults.object(forKey: key) as? [StoredType.RawValue] else { return nil }
+    return val.flatMap { StoredType(rawValue: $0) }
   }
 
-  public static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) -> Void {
+  public static func set(_ value: StoredType?, forKey key: String, in defaults: NSUD) -> Void {
     guard let value = value?.rawValue as? AnyObject else { return defaults.removeObject(forKey: key) }
     defaults.set(value, forKey: key)
   }
 
-  public static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) -> Void {
+  public static func set(_ value: [StoredType]?, forKey key: String, in defaults: NSUD) -> Void {
     guard let value = value?.map({ $0.rawValue }) as? AnyObject else { return defaults.removeObject(forKey: key) }
     defaults.set(value, forKey: key)
   }
@@ -151,27 +151,27 @@ extension PalauDefaultable where ValueType: RawRepresentable {
 
 // swiftlint:disable conditional_binding_cascade
 /// Extension for NSCoding types
-extension PalauDefaultable where ValueType: NSCoding {
+extension PalauDefaultable where StoredType: NSCoding {
 
-  public static func get(_ key: String, from defaults: NSUD) -> ValueType? {
+  public static func get(_ key: String, from defaults: NSUD) -> StoredType? {
     guard let data = defaults.object(forKey: key) as? Data,
-          let value = NSKeyedUnarchiver.unarchiveObject(with: data) as? ValueType else { return nil }
+          let value = NSKeyedUnarchiver.unarchiveObject(with: data) as? StoredType else { return nil }
     return value
   }
 
-  public static func get(_ key: String, from defaults: NSUD) -> [ValueType]? {
+  public static func get(_ key: String, from defaults: NSUD) -> [StoredType]? {
     guard let data = defaults.object(forKey: key) as? Data,
-          let value = NSKeyedUnarchiver.unarchiveObject(with: data) as? [ValueType] else { return nil }
+          let value = NSKeyedUnarchiver.unarchiveObject(with: data) as? [StoredType] else { return nil }
     return value
   }
 
-  public static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) -> Void {
+  public static func set(_ value: StoredType?, forKey key: String, in defaults: NSUD) -> Void {
     guard let value = value as? AnyObject else { return defaults.removeObject(forKey: key) }
     let data = NSKeyedArchiver.archivedData(withRootObject: value)
     defaults.set(data, forKey: key)
   }
 
-  public static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) -> Void {
+  public static func set(_ value: [StoredType]?, forKey key: String, in defaults: NSUD) -> Void {
     guard let value = value?.flatMap({ $0 as AnyObject }) else { return defaults.removeObject(forKey: key) }
     let data = NSKeyedArchiver.archivedData(withRootObject: value)
     defaults.set(data, forKey: key)
@@ -191,88 +191,87 @@ extension PalauDefaultable where ValueType: NSCoding {
  Maybe like
 
  extension CollectionType<Element>: PalauDefaultable {
-  public typealias ValueType = CollectionType<Element>
+  public typealias StoredType = CollectionType<Element>
  }
 */
 
 /// Make Bool PalauDefaultable
 extension Bool: PalauDefaultable {
-  public typealias ValueType = Bool
 }
 
 /// Make Int PalauDefaultable
 extension Int: PalauDefaultable {
-  public typealias ValueType = Int
+  public typealias StoredType = Int
 }
 
 /// Make UInt PalauDefaultable
 extension UInt: PalauDefaultable {
-  public typealias ValueType = UInt
+  public typealias StoredType = UInt
 }
 
 /// Make Float PalauDefaultable
 extension Float: PalauDefaultable {
-  public typealias ValueType = Float
+  public typealias StoredType = Float
 }
 
 /// Make Double PalauDefaultable
 extension Double: PalauDefaultable {
-  public typealias ValueType = Double
+  public typealias StoredType = Double
 }
 
 /// Make NSNumber PalauDefaultable
 extension NSNumber: PalauDefaultable {
-  public typealias ValueType = NSNumber
+  public typealias StoredType = NSNumber
 }
 
 /// Make String PalauDefaultable
 extension String: PalauDefaultable {
-  public typealias ValueType = String
+  public typealias StoredType = String
 }
 
 /// Make NSString PalauDefaultable
 extension NSString: PalauDefaultable {
-  public typealias ValueType = NSString
+  public typealias StoredType = NSString
 }
 
 /// Make Array PalauDefaultable
 extension Array: PalauDefaultable {
-  public typealias ValueType = Array
+  public typealias StoredType = Array
 }
 
 /// Make NSArray PalauDefaultable
 extension NSArray: PalauDefaultable {
-  public typealias ValueType = NSArray
+  public typealias StoredType = NSArray
 }
 
 /// Make Dictionary PalauDefaultable
 extension Dictionary: PalauDefaultable {
-  public typealias ValueType = Dictionary
+  public typealias StoredType = Dictionary
 }
 
 /// Make NSDictionary PalauDefaultable
 extension NSDictionary: PalauDefaultable {
-  public typealias ValueType = NSDictionary
+  public typealias StoredType = NSDictionary
 }
 
 /// Make Date PalauDefaultable
 extension Date: PalauDefaultable {
-  public typealias ValueType = Date
+  public typealias StoredType = Date
 }
 
 /// Make Data PalauDefaultable
 extension Data: PalauDefaultable {
-  public typealias ValueType = Data
+  public typealias StoredType = Data
 }
 
 #if os(OSX)
   /// Make NSColor PalauDefaultable
   extension NSColor: PalauDefaultable {
-    public typealias ValueType = NSColor
+    public typealias StoredType = NSColor
   }
 #else
   /// Make UIColor PalauDefaultable
   extension UIColor: PalauDefaultable {
-    public typealias ValueType = UIColor
+    public typealias StoredType = UIColor
   }
 #endif

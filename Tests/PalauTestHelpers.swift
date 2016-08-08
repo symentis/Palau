@@ -60,58 +60,58 @@ class PalauTestCase: XCTestCase {
 
 }
 
-// -------------------------------------------------------------------------------------------------
-// MARK: - Test Related Helpers
-// -------------------------------------------------------------------------------------------------
-
-let lessThanTwo: ([Int]?) -> Bool = {
-  return $0?.count < 2
-}
-
-let lessThan10: (Int?) -> Bool = {
-  return $0.map { $0 < 10 } ?? false
-}
-
-//swiftlint:disable type_name
-public enum TestEnum: Int {
-  case caseA
-  case caseB
-  case caseC
-}
-
-extension TestEnum: PalauDefaultable {
-  public typealias ValueType = TestEnum
-}
-
-// -------------------------------------------------------------------------------------------------
-// MARK: - Struct Example
-// -------------------------------------------------------------------------------------------------
-
-// example Struct called Structy for demonstrating we can save a Struct with Palau
-public struct Structy {
-  let tuple: (String, String)
-}
-
-// our Structy PalauDefaultable extension allowing the mapping between PalauDefaults and the Type
-// here we just map the two values to two keys named "1" and "2"
-extension Structy: PalauCustomDefaultable {
-
-  public static func toIntermediate(_ s: Structy) -> [String: AnyObject] {
-    return ["1": s.tuple.0, "2": s.tuple.1]
-  }
-
-  // swiftlint:disable conditional_binding_cascade
-  public static func fromIntermediate(_ dict: [String: AnyObject]) -> Structy? {
-    guard let t1 = dict["1"] as? String, let t2 = dict["2"] as? String else { return nil }
-    return Structy(tuple: (t1, t2))
-  }
-
-}
-
-// make our struct equatable for our test
-extension Structy: Equatable {}
-
-// we need a global == infix operator that supports Structy == Structy
-public func == (lhs: Structy, rhs: Structy) -> Bool {
-  return lhs.tuple.0 == rhs.tuple.0 && lhs.tuple.1 == rhs.tuple.1
-}
+//// -------------------------------------------------------------------------------------------------
+//// MARK: - Test Related Helpers
+//// -------------------------------------------------------------------------------------------------
+//
+//let lessThanTwo: ([Int]?) -> Bool = {
+//  return $0?.count < 2
+//}
+//
+//let lessThan10: (Int?) -> Bool = {
+//  return $0.map { $0 < 10 } ?? false
+//}
+//
+////swiftlint:disable type_name
+//public enum TestEnum: Int {
+//  case caseA
+//  case caseB
+//  case caseC
+//}
+//
+//extension TestEnum: PalauDefaultable {
+//  public typealias ValueType = TestEnum
+//}
+//
+//// -------------------------------------------------------------------------------------------------
+//// MARK: - Struct Example
+//// -------------------------------------------------------------------------------------------------
+//
+//// example Struct called Structy for demonstrating we can save a Struct with Palau
+//public struct Structy {
+//  let tuple: (String, String)
+//}
+//
+//// our Structy PalauDefaultable extension allowing the mapping between PalauDefaults and the Type
+//// here we just map the two values to two keys named "1" and "2"
+//extension Structy: PalauCustomDefaultable {
+//
+//  public static func toIntermediate(_ s: Structy) -> [String: AnyObject] {
+//    return ["1": s.tuple.0, "2": s.tuple.1]
+//  }
+//
+//  // swiftlint:disable conditional_binding_cascade
+//  public static func fromIntermediate(_ dict: [String: AnyObject]) -> Structy? {
+//    guard let t1 = dict["1"] as? String, let t2 = dict["2"] as? String else { return nil }
+//    return Structy(tuple: (t1, t2))
+//  }
+//
+//}
+//
+//// make our struct equatable for our test
+//extension Structy: Equatable {}
+//
+//// we need a global == infix operator that supports Structy == Structy
+//public func == (lhs: Structy, rhs: Structy) -> Bool {
+//  return lhs.tuple.0 == rhs.tuple.0 && lhs.tuple.1 == rhs.tuple.1
+//}
