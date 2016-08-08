@@ -380,6 +380,12 @@ public extension PalauEntry
 
 }
 
+// they are all working!
+public let p1: PalauDefaultsEntry<Bool> = PalauDefaults.value("")
+let p2: PalauDefaultsEntryEnsured<Bool> = PalauDefaults.value("", whenNil: true)
+let p3: PalauDefaultsArrayEntry<Bool> = PalauDefaults.value("")
+let p4: PalauDefaultsArrayEntryEnsured<Bool> = PalauDefaults.value("", whenNil: [true])
+
 public typealias PalauDefaultsEntry<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauSingle<T>>>
 public typealias PalauDefaultsEntryEnsured<T: PalauDefaultable> = PalauEntry<PalauEnsured<PalauSingle<T>>>
 public typealias PalauDefaultsArrayEntry<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauList<T>>>

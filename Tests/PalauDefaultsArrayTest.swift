@@ -347,13 +347,28 @@ class PalauArrayTests: PalauTestCase {
 // MARK: - PalauDefaults
 // -------------------------------------------------------------------------------------------------
 
+//let p1x: PalauDefaultsEntry<Bool> = PalauDefaults.value("")
+//let p2x: PalauDefaultsEntryEnsured<Bool> = PalauDefaults.value("", whenNil: true)
+//let p3x: PalauDefaultsArrayEntry<Bool> = PalauDefaults.value("")
+//let p4x: PalauDefaultsArrayEntryEnsured<Bool> = PalauDefaults.value("", whenNil: [true])
+
+
+// This is not working either
+//let p0x = p1
+
 struct PD {
 
-  // PalauDefaultsEntry not working?
+  // This is working
   public static var boolValues: PalauEntry<PalauOptional<PalauSingle<Bool>>> {
     get { return PalauDefaults.value("boolValues") }
     set { }
   }
+
+  // This is not working
+  //public static var boolValue2:PalauDefaultsEntry<Bool> {
+  //  get { return PalauDefaults.value("boolValues") }
+  //  set { }
+  //}
 }
 //  public static var intValues: PalauDefaultsArrayEntry<Int> {
 //    get { return value("intValues") }
