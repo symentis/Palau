@@ -197,6 +197,7 @@ extension PalauDefaultable where StoredType: NSCoding {
 
 /// Make Bool PalauDefaultable
 extension Bool: PalauDefaultable {
+  public typealias StoredType = Bool
 }
 
 /// Make Int PalauDefaultable

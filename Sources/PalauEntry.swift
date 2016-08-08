@@ -163,7 +163,8 @@ public extension PalauEntry
   Strategy: PalauStrategyOptional,
   Strategy.ReturnType == Strategy.QuantifierType.ReturnType?,
   Strategy.QuantifierType: PalauQuantifierSingle,
-  Strategy.QuantifierType.ReturnType == Strategy.QuantifierType.DefaultableType {
+  Strategy.QuantifierType.ReturnType == Strategy.QuantifierType.DefaultableType,
+  Strategy.QuantifierType.DefaultableType == Strategy.QuantifierType.DefaultableType.StoredType {
 
   public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, ensure: EnsureFunction = pure) {
     self.key = key
@@ -392,7 +393,7 @@ public struct PalauDefaults {
   }
 
   public static func value<T>(_ key: String) -> PalauDefaultsEntry<T>
-    where T: PalauDefaultable {
+    where T: PalauDefaultable, T.StoredType == T {
       return PalauEntry(key:key, defaults:defaults)
   }
 

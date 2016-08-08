@@ -349,7 +349,8 @@ class PalauArrayTests: PalauTestCase {
 
 struct PD {
 
-  public static var boolValues: PalauDefaultsEntry<Bool> {
+  // PalauDefaultsEntry not working?
+  public static var boolValues: PalauEntry<PalauOptional<PalauSingle<Bool>>> {
     get { return PalauDefaults.value("boolValues") }
     set { }
   }
