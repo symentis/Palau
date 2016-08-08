@@ -352,6 +352,10 @@ class PalauArrayTests: PalauTestCase {
 //let p3x: PalauDefaultsArrayEntry<Bool> = PalauDefaults.value("")
 //let p4x: PalauDefaultsArrayEntryEnsured<Bool> = PalauDefaults.value("", whenNil: [true])
 
+public typealias PalauDefaultsEntry2<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauSingle<T>>>
+public typealias PalauDefaultsEntryEnsured2<T: PalauDefaultable> = PalauEntry<PalauEnsured<PalauSingle<T>>>
+public typealias PalauDefaultsArrayEntry2<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauList<T>>>
+public typealias PalauDefaultsArrayEntryEnsured2<T: PalauDefaultable> = PalauEntry<PalauEnsured<PalauList<T>>>
 
 // This is not working either
 //let p0x = p1
@@ -365,10 +369,16 @@ struct PD {
   }
 
   // This is not working
-  //public static var boolValue2:PalauDefaultsEntry<Bool> {
+  //public static var boolValue2: PalauDefaultsEntry<Bool> {
   //  get { return PalauDefaults.value("boolValues") }
   //  set { }
   //}
+
+  // But wait this ie working
+  public static var boolValue3: PalauDefaultsEntry2<Bool> {
+    get { return PalauDefaults.value("boolValues") }
+    set { }
+  }
 }
 //  public static var intValues: PalauDefaultsArrayEntry<Int> {
 //    get { return value("intValues") }
