@@ -32,54 +32,6 @@ import CoreGraphics
 class PalauTests: PalauTestCase {
 
   // -----------------------------------------------------------------------------------------------
-  // MARK: - Internal Helper
-  // -----------------------------------------------------------------------------------------------
-
-  /// Helper for checking values
-  /// - parameter entry: PalauDefaultsEntry
-  /// - parameter value: T.ValueType
-  func checkValue<E>(_ palauEntry: PalauDefaultsEntry<E>, value: E, printTest: Bool = true)
-    where E: Equatable {
-
-    var entry = palauEntry
-
-    // nil the entry
-    entry.value = nil
-    if printTest {
-      print(entry, "set to nil", entry.value)
-    }
-    assert(entry.value == nil)
-
-    // set the value
-    entry.value = value
-    if printTest {
-      print(entry, "set to", value)
-    }
-
-    // check the force unwrapped value in the entry match the original value
-    assert(entry.value! == value)
-
-    // clear it another way
-    entry.clear()
-    if printTest {
-      print(entry, "set again to nil")
-    }
-    assert(entry.value == nil)
-
-    // set it again
-    entry.value = value
-    if printTest {
-      print(entry, "set again to", value)
-    }
-
-    // check it still matches
-    assert(entry.value! == value)
-    if printTest {
-      print("Done")
-    }
-  }
-
-  // -----------------------------------------------------------------------------------------------
   // MARK: - Test Types
   // -----------------------------------------------------------------------------------------------
 
@@ -97,34 +49,34 @@ class PalauTests: PalauTestCase {
 
     // test these strings
     for s in strings {
-      checkValue(PalauDefaults.stringValue, value: s, printTest: false)
-      checkValue(PalauDefaults.nsStringValue, value: NSString(string: s), printTest: false)
+      PalauDefaults.stringValue.checkValue(s, printTest: false)
+      PalauDefaults.nsStringValue.checkValue(NSString(string: s), printTest: false)
     }
 
     // test a html file
     let htmlString = try String(contentsOfFile: getFixtureFile("example", ext:"html")!)
-    checkValue(PalauDefaults.stringValue, value: htmlString, printTest: false)
-    checkValue(PalauDefaults.nsStringValue, value: NSString(string: htmlString), printTest: false)
+    PalauDefaults.stringValue.checkValue(htmlString, printTest: false)
+    PalauDefaults.nsStringValue.checkValue(NSString(string: htmlString), printTest: false)
 
     // test a crazy UTF-8 example
     let utf8String = try String(contentsOfFile: getFixtureFile("UTF-8-demo", ext:"txt")!)
-    checkValue(PalauDefaults.stringValue, value: utf8String, printTest: false)
-    checkValue(PalauDefaults.nsStringValue, value: NSString(string: utf8String), printTest: false)
+    PalauDefaults.stringValue.checkValue(utf8String, printTest: false)
+    PalauDefaults.nsStringValue.checkValue(NSString(string: utf8String), printTest: false)
 
     // test quickbrownfox in multiple languages
     let quickBrownString = try String(contentsOfFile: getFixtureFile("quickbrown", ext:"txt")!)
-    checkValue(PalauDefaults.stringValue, value: quickBrownString, printTest: false)
-    checkValue(PalauDefaults.nsStringValue, value: NSString(string: quickBrownString),
+    PalauDefaults.stringValue.checkValue(quickBrownString, printTest: false)
+    PalauDefaults.nsStringValue.checkValue(NSString(string: quickBrownString),
                printTest: false)
   }
 
   func testBoolValue() {
-    checkValue(PalauDefaults.boolValue, value: true)
-    checkValue(PalauDefaults.boolValue, value: false)
-    checkValue(PalauDefaults.boolValue, value: CBool(true))
-    checkValue(PalauDefaults.boolValue, value: CBool(false))
-    checkValue(PalauDefaults.boolValue, value: BooleanLiteralType(true))
-    checkValue(PalauDefaults.boolValue, value: BooleanLiteralType(false))
+    PalauDefaults.boolValue.checkValue(true)
+    PalauDefaults.boolValue.checkValue(false)
+    PalauDefaults.boolValue.checkValue(CBool(true))
+    PalauDefaults.boolValue.checkValue(CBool(false))
+    PalauDefaults.boolValue.checkValue(BooleanLiteralType(true))
+    PalauDefaults.boolValue.checkValue(BooleanLiteralType(false))
   }
 
   #if arch(x86_64) || arch(arm64)
@@ -133,104 +85,104 @@ class PalauTests: PalauTestCase {
 
     // test max 64 bit unsigned int nine quintillion
     let reallyBigInt = 9_223_372_036_854_775_807
-    checkValue(PalauDefaults.intValue, value: reallyBigInt)
+    PalauDefaults.intValue.checkValue(reallyBigInt)
 
     // test max 64 bit signed int negative nine quintillion
     let reallyNegativeBigInt = -9_223_372_036_854_775_808
-    checkValue(PalauDefaults.intValue, value: reallyNegativeBigInt)
+    PalauDefaults.intValue.checkValue(reallyNegativeBigInt)
 
     let reallyBitUnsignedInt: UInt = 9_223_372_036_854_775_807
-    checkValue(PalauDefaults.uIntValue, value: reallyBitUnsignedInt)
+    PalauDefaults.uIntValue.checkValue(reallyBitUnsignedInt)
 
     // really big int as NSNumber
     let reallyBigNSNumber: NSNumber = NSNumber(value: 9_223_372_036_854_775_807)
-    checkValue(PalauDefaults.nsNumberValue, value: reallyBigNSNumber)
+    PalauDefaults.nsNumberValue.checkValue(reallyBigNSNumber)
   }
   #endif
 
   func testIntValue() {
     // test some vanilla ints
     for i in [1, 2, 3, 4, 5, 6, 100, -44] {
-      checkValue(PalauDefaults.intValue, value: i)
+      PalauDefaults.intValue.checkValue(i)
     }
 
     let binaryInteger = 0b10001       // 17 in binary notation
-    checkValue(PalauDefaults.intValue, value: binaryInteger)
+    PalauDefaults.intValue.checkValue(binaryInteger)
 
     let octalInteger = 0o21           // 17 in octal notation
-    checkValue(PalauDefaults.intValue, value: octalInteger)
+    PalauDefaults.intValue.checkValue(octalInteger)
 
     let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
-    checkValue(PalauDefaults.intValue, value: hexadecimalInteger)
+    PalauDefaults.intValue.checkValue(hexadecimalInteger)
   }
 
   func testNSNumberValue() {
     for i in [1, 2, 3, 4, 5, 6, 100, -44] {
       let testNumber: NSNumber = NSNumber(value: i)
-      checkValue(PalauDefaults.nsNumberValue, value: testNumber)
+      PalauDefaults.nsNumberValue.checkValue(testNumber)
     }
 
     let nsDecimalNumber = NSDecimalNumber(value: 1)
-    checkValue(PalauDefaults.nsNumberValue, value: nsDecimalNumber)
+    PalauDefaults.nsNumberValue.checkValue(nsDecimalNumber)
   }
 
   func testFloatValue() {
     // some weird double literals
     let decimalFloat: Float = 12.1875
-    checkValue(PalauDefaults.floatValue, value: decimalFloat)
+    PalauDefaults.floatValue.checkValue(decimalFloat)
 
     let exponentFloat: Float = 1.21875e1
-    checkValue(PalauDefaults.floatValue, value: exponentFloat)
+    PalauDefaults.floatValue.checkValue(exponentFloat)
 
     let hexadecimalFloat: Float = 0xC.3p0
-    checkValue(PalauDefaults.floatValue, value: hexadecimalFloat)
+    PalauDefaults.floatValue.checkValue(hexadecimalFloat)
 
     let paddedDouble: Float = 000123.456
-    checkValue(PalauDefaults.floatValue, value: paddedDouble)
+    PalauDefaults.floatValue.checkValue(paddedDouble)
 
     let justOverOneMillion: Float = 1_000_000.000_000_1
-    checkValue(PalauDefaults.floatValue, value: justOverOneMillion)
+    PalauDefaults.floatValue.checkValue(justOverOneMillion)
 
     let fmin = FLT_MIN
-    checkValue(PalauDefaults.floatValue, value: fmin)
+    PalauDefaults.floatValue.checkValue(fmin)
 
     let fmax = FLT_MAX
-    checkValue(PalauDefaults.floatValue, value: fmax)
+    PalauDefaults.floatValue.checkValue(fmax)
 
     let inf = Float.infinity
-    checkValue(PalauDefaults.floatValue, value: inf)
+    PalauDefaults.floatValue.checkValue(inf)
   }
 
   func testDoubleValue() {
     // some weird double literals
     let decimalDouble = 12.1875
-    checkValue(PalauDefaults.doubleValue, value: decimalDouble)
+    PalauDefaults.doubleValue.checkValue(decimalDouble)
 
     let exponentDouble = 1.21875e1
-    checkValue(PalauDefaults.doubleValue, value: exponentDouble)
+    PalauDefaults.doubleValue.checkValue(exponentDouble)
 
     let hexadecimalDouble = 0xC.3p0
-    checkValue(PalauDefaults.doubleValue, value: hexadecimalDouble)
+    PalauDefaults.doubleValue.checkValue(hexadecimalDouble)
 
     let paddedDouble = 000123.456
-    checkValue(PalauDefaults.doubleValue, value: paddedDouble)
+    PalauDefaults.doubleValue.checkValue(paddedDouble)
 
     let justOverOneMillion = 1_000_000.000_000_1
-    checkValue(PalauDefaults.doubleValue, value: justOverOneMillion)
+    PalauDefaults.doubleValue.checkValue(justOverOneMillion)
 
 
     let dmin = DBL_MIN
-    checkValue(PalauDefaults.doubleValue, value: dmin)
+    PalauDefaults.doubleValue.checkValue(dmin)
 
     let dmax = DBL_MAX
-    checkValue(PalauDefaults.doubleValue, value: dmax)
+    PalauDefaults.doubleValue.checkValue(dmax)
 
     let inf = Double.infinity
-    checkValue(PalauDefaults.doubleValue, value: inf)
+    PalauDefaults.doubleValue.checkValue(inf)
   }
 
   func testDateValue() {
-    checkValue(PalauDefaults.dateValue, value: Date())
+    PalauDefaults.dateValue.checkValue(Date())
   }
 
   func testEnsuredIntValue() {
@@ -244,10 +196,10 @@ class PalauTests: PalauTestCase {
 
   func testNSArrayValue() {
     let array = NSArray(array: [1, Date(), NSString(string: "test")])
-    checkValue(PalauDefaults.nsArrayValue, value: array)
+    PalauDefaults.nsArrayValue.checkValue(array)
 
     let mutableArray = NSMutableArray(array: [1, Date(), NSString(string: "test")])
-    checkValue(PalauDefaults.nsArrayValue, value: mutableArray)
+    PalauDefaults.nsArrayValue.checkValue(mutableArray)
   }
 
   func testStringArrayValue() {
@@ -270,19 +222,19 @@ class PalauTests: PalauTestCase {
 
   func testNSDictionaryValue() {
     let dictionary = NSDictionary(dictionary: ["key": "value", Date(): NSNumber(value: 1)])
-    checkValue(PalauDefaults.nsDictionaryValue, value: dictionary)
+    PalauDefaults.nsDictionaryValue.checkValue(dictionary)
 
     let mutableDictionary = NSMutableDictionary(
       dictionary: ["key": "value", Date(): NSNumber(value: 1)]
     )
-    checkValue(PalauDefaults.nsDictionaryValue, value: mutableDictionary)
+    PalauDefaults.nsDictionaryValue.checkValue(mutableDictionary)
   }
 
   func testDataValue() {
     guard let data = try? Data(contentsOf: URL(fileURLWithPath: getFixtureFile("UTF-8-demo", ext:"txt")!)) else {
       fatalError()
     }
-    checkValue(PalauDefaults.dataValue, value: data, printTest: false)
+    PalauDefaults.dataValue.checkValue(data, printTest: false)
   }
 
   #if os(OSX)
@@ -308,7 +260,7 @@ class PalauTests: PalauTestCase {
 
   func testEnumValue() {
     for e in [TestEnum.caseA, TestEnum.caseB, TestEnum.caseC] {
-      checkValue(PalauDefaults.enumValue, value: e)
+      PalauDefaults.enumValue.checkValue(e)
     }
   }
 
@@ -349,7 +301,7 @@ class PalauTests: PalauTestCase {
       Structy(tuple: ("Test5", "Test6"))
     ]
     for s in arrayOfStructs {
-      checkValue(PalauDefaults.structWithTuple, value: s)
+      PalauDefaults.structWithTuple.checkValue(s)
     }
   }
 }
@@ -358,19 +310,22 @@ class PalauTests: PalauTestCase {
 // MARK: - PalauDefaults
 // -------------------------------------------------------------------------------------------------
 
+typealias PalauDefaultsEntry<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauSingle<T>>>
+typealias PalauDefaultsEntryEnsured<T: PalauDefaultable> = PalauEntry<PalauEnsured<PalauSingle<T>>>
+
 extension PalauDefaults {
 
-  public static var boolValue: PalauDefaultsEntry<Bool> {
+  static var boolValue: PalauDefaultsEntry<Bool> {
     get { return value("boolValue") }
     set { }
   }
 
-  public static var intValue: PalauDefaultsEntry<Int> {
+  static var intValue: PalauDefaultsEntry<Int> {
     get { return value("intValue") }
     set { }
   }
 
-  public static var ensuredIntValue: PalauDefaultsEntry<Int> {
+  static var ensuredIntValue: PalauDefaultsEntry<Int> {
     get { return value("ensuredIntValue")
       .ensure(when: { $0 == nil }, use: 10)
       .ensure(when: lessThan10, use: 10) }
@@ -378,100 +333,100 @@ extension PalauDefaults {
   }
 
   #if os(OSX)
-    public static var ensuredNSColorValue: PalauDefaultsEntry<NSColor> {
+    static var ensuredNSColorValue: PalauDefaultsEntry<NSColor> {
       get { return value("ensuredNSColorValue")
         .ensure(when: { $0 == nil }, use: NSColor.red) }
       set { }
     }
 
-    public static var whenNilledNSColorValue: PalauDefaultsEntryEnsured<NSColor> {
+    static var whenNilledNSColorValue: PalauDefaultsEntryEnsured<NSColor> {
       get { return value("whenNilledNSColorValue", whenNil: NSColor.red) }
       set { }
     }
   #else
-    public static var ensuredUIColorValue: PalauDefaultsEntry<UIColor> {
+    static var ensuredUIColorValue: PalauDefaultsEntry<UIColor> {
       get { return value("ensuredUIColorValue")
         .ensure(when: { $0 == nil }, use: UIColor.red) }
       set { }
     }
 
-    public static var whenNilledUIColorValue: PalauDefaultsEntryEnsured<UIColor> {
+    static var whenNilledUIColorValue: PalauDefaultsEntryEnsured<UIColor> {
       get { return value("whenNilledUIColorValue", whenNil: UIColor.red) }
       set { }
     }
   #endif
 
-  public static var uIntValue: PalauDefaultsEntry<UInt> {
+  static var uIntValue: PalauDefaultsEntry<UInt> {
     get { return value("uIntValue") }
     set { }
   }
 
-  public static var floatValue: PalauDefaultsEntry<Float> {
+  static var floatValue: PalauDefaultsEntry<Float> {
     get { return value("floatValue") }
     set { }
   }
 
-  public static var doubleValue: PalauDefaultsEntry<Double> {
+  static var doubleValue: PalauDefaultsEntry<Double> {
     get { return value("doubleValue") }
     set { }
   }
 
-  public static var nsNumberValue: PalauDefaultsEntry<NSNumber> {
+  static var nsNumberValue: PalauDefaultsEntry<NSNumber> {
     get { return value("nsNumberValue") }
     set { }
   }
 
-  public static var stringValue: PalauDefaultsEntry<String> {
+  static var stringValue: PalauDefaultsEntry<String> {
     get { return value("stringValue") }
     set { }
   }
 
-  public static var nsStringValue: PalauDefaultsEntry<NSString> {
+  static var nsStringValue: PalauDefaultsEntry<NSString> {
     get { return value("nsStringValue") }
     set { }
   }
 
-  public static var stringArrayValue: PalauDefaultsEntry<[String]> {
+  static var stringArrayValue: PalauDefaultsEntry<[String]> {
     get { return value("stringArrayValue") }
     set { }
   }
 
-  public static var nsArrayValue: PalauDefaultsEntry<NSArray> {
+  static var nsArrayValue: PalauDefaultsEntry<NSArray> {
     get { return value("nsArrayValue") }
     set { }
   }
 
-  public static var stringMapValue: PalauDefaultsEntry<[String: String]> {
+  static var stringMapValue: PalauDefaultsEntry<[String: String]> {
     get { return value("stringMapValue") }
     set { }
   }
 
-  public static var nsDictionaryValue: PalauDefaultsEntry<NSDictionary> {
+  static var nsDictionaryValue: PalauDefaultsEntry<NSDictionary> {
     get { return value("nsDictionaryValue") }
     set { }
   }
 
-  public static var dateValue: PalauDefaultsEntry<Date> {
+  static var dateValue: PalauDefaultsEntry<Date> {
     get { return value("dateValue") }
     set { }
   }
 
-  public static var dataValue: PalauDefaultsEntry<Data> {
+  static var dataValue: PalauDefaultsEntry<Data> {
     get { return value("dataValue") }
     set { }
   }
 
-  public static var enumValue: PalauDefaultsEntry<TestEnum> {
+  static var enumValue: PalauDefaultsEntry<TestEnum> {
     get { return value("testEnumValue") }
     set { }
   }
 
-  public static var enumValueWithDidSet: PalauDefaultsEntry<TestEnum> {
+  static var enumValueWithDidSet: PalauDefaultsEntry<TestEnum> {
     get { return value("testEnumValueWithDidSet") }
     set { }
   }
 
-  public static var structWithTuple: PalauDefaultsEntry<Structy> {
+  static var structWithTuple: PalauDefaultsEntry<Structy> {
     get { return value("structy") }
     set { }
   }

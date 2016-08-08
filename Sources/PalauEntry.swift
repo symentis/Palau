@@ -27,105 +27,8 @@ import Foundation
 
 func pure<T>(t: T) -> T { return t }
 
-
 // ----------------------------------------------------------------------------------------------
-// MARK: - PalauQuantifier
-// ----------------------------------------------------------------------------------------------
-
-public protocol PalauQuantifier {
-  associatedtype DefaultableType: PalauDefaultable
-  associatedtype ReturnType
-}
-
-public protocol PalauQuantifierSingle: PalauQuantifier {}
-public protocol PalauQuantifierList: PalauQuantifier {}
-
-public struct PalauSingle<T>: PalauQuantifierSingle where T: PalauDefaultable {
-  public typealias DefaultableType = T
-  public typealias ReturnType = T
-}
-
-public struct PalauList<T>: PalauQuantifierList where T: PalauDefaultable {
-  public typealias DefaultableType = T
-  public typealias ReturnType = [T]
-}
-
-// ----------------------------------------------------------------------------------------------
-// MARK: - PalauStrategy
-// ----------------------------------------------------------------------------------------------
-
-public protocol PalauStrategy {
-  associatedtype QuantifierType: PalauQuantifier
-  associatedtype ReturnType
-
-  var fallback: () -> ReturnType { get }
-  var ensure: (ReturnType) -> ReturnType { get }
-  var didSet: ((ReturnType, ReturnType) -> ())? { get }
-
-  func resolve(_ value: QuantifierType.ReturnType?) -> ReturnType
-
-  init(for: QuantifierType.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType, didSet: ((ReturnType, ReturnType) -> ()))
-  init(for: QuantifierType.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType)
-}
-
-public protocol PalauStrategyOptional: PalauStrategy { }
-public protocol PalauStrategyEnsured: PalauStrategy { }
-
-public struct PalauOptional<T>: PalauStrategyOptional where T: PalauQuantifier {
-  public typealias QuantifierType = T
-  public typealias ReturnType = T.ReturnType?
-
-  public let fallback: () -> ReturnType
-  public let ensure: (ReturnType) -> ReturnType
-  public let didSet: ((ReturnType, ReturnType) -> ())?
-
-  public init(for: T.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType) {
-    self.fallback = fallback
-    self.ensure = ensure
-    self.didSet = nil
-  }
-
-  public init(for: T.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType, didSet: ((ReturnType, ReturnType) -> ())) {
-    self.fallback = fallback
-    self.ensure = ensure
-    self.didSet = didSet
-  }
-
-  public func resolve(_ value: QuantifierType.ReturnType?) -> ReturnType {
-    return ensure(value)
-  }
-}
-
-public struct PalauEnsured<T>: PalauStrategyEnsured where T: PalauQuantifier {
-  public typealias QuantifierType = T
-  public typealias ReturnType = T.ReturnType
-
-  public let fallback: () -> ReturnType
-  public let ensure: (ReturnType) -> ReturnType
-  public let didSet: ((ReturnType, ReturnType) -> ())?
-
-  public init(for: T.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType) {
-    self.fallback = fallback
-    self.ensure = ensure
-    self.didSet = nil
-  }
-
-  public init(for: T.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType, didSet: ((ReturnType, ReturnType) -> ())) {
-    self.fallback = fallback
-    self.ensure = ensure
-    self.didSet = didSet
-  }
-
-  public func resolve(_ value: QuantifierType.ReturnType?) -> ReturnType {
-    guard let value = value else {
-      return fallback()
-    }
-    return ensure(value)
-  }
-}
-
-// ----------------------------------------------------------------------------------------------
-// MARK: - PalauEntry
+// MARK: - PalauEntryBase
 // ----------------------------------------------------------------------------------------------
 
 public protocol PalauEntryBase {
@@ -137,6 +40,10 @@ public protocol PalauEntryBase {
   var defaults: NSUD { get }
 
 }
+
+// ----------------------------------------------------------------------------------------------
+// MARK: - PalauEntry
+// ----------------------------------------------------------------------------------------------
 
 public struct PalauEntry<Strategy>: PalauEntryBase
   where
@@ -151,12 +58,14 @@ public struct PalauEntry<Strategy>: PalauEntryBase
   public let strategy: Strategy
   public let defaults: NSUD
 
+  public func clear() {
+    defaults.removeObject(forKey: key)
+  }
 }
 
 // ----------------------------------------------------------------------------------------------------
 // MARK: - Optional Single
 // ----------------------------------------------------------------------------------------------------
-
 
 public extension PalauEntry
   where
@@ -368,7 +277,6 @@ public extension PalauEntry
     callback?()
   }
 
-
   public var value: EntryType {
     get {
       return strategy.resolve(Strategy.QuantifierType.DefaultableType.get(key, from: defaults))
@@ -380,17 +288,26 @@ public extension PalauEntry
 
 }
 
-// they are all working!
-public let p1: PalauDefaultsEntry<Bool> = PalauDefaults.value("")
-let p2: PalauDefaultsEntryEnsured<Bool> = PalauDefaults.value("", whenNil: true)
-let p3: PalauDefaultsArrayEntry<Bool> = PalauDefaults.value("")
-let p4: PalauDefaultsArrayEntryEnsured<Bool> = PalauDefaults.value("", whenNil: [true])
+// ----------------------------------------------------------------------------------------------------
+// MARK: - PalauDefaults
+// ----------------------------------------------------------------------------------------------------
 
 public typealias PalauDefaultsEntry<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauSingle<T>>>
 public typealias PalauDefaultsEntryEnsured<T: PalauDefaultable> = PalauEntry<PalauEnsured<PalauSingle<T>>>
 public typealias PalauDefaultsArrayEntry<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauList<T>>>
 public typealias PalauDefaultsArrayEntryEnsured<T: PalauDefaultable> = PalauEntry<PalauEnsured<PalauList<T>>>
 
+/// PalauDefaults
+///
+/// PalauDefaults wrap the NSUserDefaults
+/// The easiest usage is:
+/// - extension on PalauDefaults with:
+/// ```
+///   public static var name: PalauDefaultsEntry<String> {
+///   get { return value("name") }
+///   set { }
+/// }
+/// ```
 public struct PalauDefaults {
 
   /// The underlying defaults
