@@ -103,13 +103,13 @@ extension PalauDefaultable {
   }
 
   public static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value as? AnyObject else { return defaults.removeObject(forKey: key) }
-    defaults.set(value, forKey: key)
+    guard let value = value else { return defaults.removeObject(forKey: key) }
+    defaults.set(value as AnyObject, forKey: key)
   }
 
   public static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value as? AnyObject else { return defaults.removeObject(forKey: key) }
-    defaults.set(value, forKey: key)
+    guard let value = value else { return defaults.removeObject(forKey: key) }
+    defaults.set(value as AnyObject, forKey: key)
   }
 }
 
@@ -133,13 +133,13 @@ extension PalauDefaultable where ValueType: RawRepresentable {
   }
 
   public static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value?.rawValue as? AnyObject else { return defaults.removeObject(forKey: key) }
-    defaults.set(value, forKey: key)
+    guard let value = value?.rawValue else { return defaults.removeObject(forKey: key) }
+    defaults.set(value as AnyObject, forKey: key)
   }
 
   public static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value?.map({ $0.rawValue }) as? AnyObject else { return defaults.removeObject(forKey: key) }
-    defaults.set(value, forKey: key)
+    guard let value = value?.map({ $0.rawValue }) else { return defaults.removeObject(forKey: key) }
+    defaults.set(value as AnyObject, forKey: key)
   }
 }
 
@@ -166,8 +166,8 @@ extension PalauDefaultable where ValueType: NSCoding {
   }
 
   public static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value as? AnyObject else { return defaults.removeObject(forKey: key) }
-    let data = NSKeyedArchiver.archivedData(withRootObject: value)
+    guard let value = value else { return defaults.removeObject(forKey: key) }
+    let data = NSKeyedArchiver.archivedData(withRootObject: value as AnyObject)
     defaults.set(data, forKey: key)
   }
 

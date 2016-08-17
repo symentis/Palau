@@ -50,16 +50,21 @@ public protocol PalauEntry {
   var ensure: (ReturnType?) -> ReturnType? { get }
 
   /// A function as callback after set
-  var didSet: ((newValue: ReturnType?, oldValue: ReturnType?) -> Void)? { get }
+  var didSet: ((_ newValue: ReturnType?, _ oldValue: ReturnType?) -> Void)? { get }
 
   /// computed property for the return value
   var value: ReturnType? { get set }
 
   /// inititalizer
+//  init(key: String,
+//       defaults: NSUD,
+//       ensure: @escaping (ReturnType?) -> ReturnType?
+//  )
+
   init(key: String,
        defaults: NSUD,
-       didSet: ((newValue: ReturnType?, oldValue: ReturnType?) -> Void)?,
-       ensure: (ReturnType?) -> ReturnType?
+       didSet: (@escaping (_ newValue: ReturnType?, _ oldValue: ReturnType?) -> Void)?,
+       ensure: @escaping (ReturnType?) -> ReturnType?
   )
 
 }
@@ -86,12 +91,12 @@ extension PalauEntry {
   // -----------------------------------------------------------------------------------------------
 
   /// private helper to take care of didSet
-  func withDidSet(_ changeValue: @noescape () -> Void) {
+  func withDidSet(_ changeValue: () -> Void) {
     let callback: (() -> Void)?
     // check if callback is necessary as optional didSet is provided
     if let didSet = didSet {
       let old = value
-      callback = { didSet(newValue: self.value, oldValue: old) }
+      callback = { didSet(self.value, old) }
     } else {
       callback = nil
     }
@@ -118,8 +123,14 @@ extension PalauEntry {
   ///  set {}
   /// }
   /// ```
-  public func ensure(when whenFunc: (ReturnType?) -> Bool,
+  public func ensure(when whenFunc: @escaping (ReturnType?) -> Bool,
                           use defaultValue: ReturnType) -> Self {
+//    if let didSet = didSet {
+//      return Self(key: key, defaults: defaults, didSet: didSet) {
+//        let vx = self.ensure($0)
+//        return whenFunc(vx) ? defaultValue : vx
+//      }
+//    }
     return Self(key: key, defaults: defaults, didSet: didSet) {
       let vx = self.ensure($0)
       return whenFunc(vx) ? defaultValue : vx
@@ -138,7 +149,7 @@ extension PalauEntry {
   /// Add a callback when the value is set in the defaults
   /// - parameter callback: functions which receives the optional old and optional new vale
   /// - returns: PalauDefaultsEntry<T>
-  public func didSet(_ callback: ((newValue: ReturnType?, oldValue: ReturnType?) -> Void)) -> Self {
+  public func didSet(_ callback: ((_ newValue: ReturnType?, _ oldValue: ReturnType?) -> Void)) -> Self {
     return Self(key: key, defaults: defaults, didSet: callback, ensure: ensure)
   }
 

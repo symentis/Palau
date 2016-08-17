@@ -40,13 +40,13 @@ import Foundation
 /// // val is of type Int?
 /// let val = PalauDefaults.intValue.value
 /// ```
-public struct PalauDefaultsEntry<T: PalauDefaultable where T.ValueType == T>: PalauEntry {
+public struct PalauDefaultsEntry<T: PalauDefaultable>: PalauEntry where T.ValueType == T {
 
   public typealias ValueType = T
   public typealias ReturnType = T
 
   /// for convenience
-  public typealias PalauDidSetFunction = (newValue: ReturnType?, oldValue: ReturnType?) -> Void
+  public typealias PalauDidSetFunction = (_ newValue: ReturnType?, _ oldValue: ReturnType?) -> Void
   public typealias PalauEnsureFunction = (ReturnType?) -> ReturnType?
 
   /// The key of the entry
@@ -62,12 +62,19 @@ public struct PalauDefaultsEntry<T: PalauDefaultable where T.ValueType == T>: Pa
   public let didSet: PalauDidSetFunction?
 
   /// a initializer
-  public init(key: String, defaults: UserDefaults, didSet: PalauDidSetFunction? = nil, ensure: PalauEnsureFunction) {
+  public init(key: String, defaults: UserDefaults, didSet: (@escaping (T?, T?) -> Void)? = nil, ensure: @escaping (T?) -> T?) {
     self.key = key
     self.defaults = defaults
     self.ensure = ensure
     self.didSet = didSet
   }
+
+//  public init(key: String, defaults: UserDefaults, ensure: @escaping (T?) -> T?) {
+//    self.key = key
+//    self.defaults = defaults
+//    self.ensure = ensure
+//    self.didSet = nil
+//  }
 
   /// The value
   /// use this property to get the Optional<ReturnType>

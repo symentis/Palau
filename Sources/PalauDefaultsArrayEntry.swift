@@ -40,12 +40,12 @@ import Foundation
 /// // val is of type [Int]?
 /// let values = PalauDefaults.intValues.value
 /// ```
-public struct PalauDefaultsArrayEntry<T: PalauDefaultable where T.ValueType == T>: PalauEntry {
+public struct PalauDefaultsArrayEntry<T: PalauDefaultable>: PalauEntry where T.ValueType == T {
 
   public typealias ValueType = T
   public typealias ReturnType = [T]
   /// for convenience
-  public typealias PalauDidSetArrayFunction = (newValue: ReturnType?, oldValue: ReturnType?) -> Void
+  public typealias PalauDidSetArrayFunction = (_ newValue: ReturnType?, _ oldValue: ReturnType?) -> Void
   public typealias PalauEnsureArrayFunction = (ReturnType?) -> ReturnType?
 
   /// The key of the entry
@@ -61,7 +61,8 @@ public struct PalauDefaultsArrayEntry<T: PalauDefaultable where T.ValueType == T
   public let didSet: PalauDidSetArrayFunction?
 
   /// a initializer
-  public init(key: String, defaults: UserDefaults, didSet: PalauDidSetArrayFunction? = nil, ensure: PalauEnsureArrayFunction) {
+
+ public init(key: String, defaults: UserDefaults, didSet: (@escaping ([T]?, [T]?) -> Void)? = nil, ensure: @escaping ([T]?) -> [T]?) {
     self.key = key
     self.defaults = defaults
     self.ensure = ensure
