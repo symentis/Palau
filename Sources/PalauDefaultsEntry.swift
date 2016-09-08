@@ -62,7 +62,7 @@ public struct PalauDefaultsEntry<T: PalauDefaultable>: PalauEntry where T.ValueT
   public let didSet: PalauDidSetFunction?
 
   /// a initializer
-  public init(key: String, defaults: UserDefaults, didSet: (@escaping (T?, T?) -> Void)? = nil, ensure: @escaping (T?) -> T?) {
+  public init(key: String, defaults: UserDefaults, didSet: ((T?, T?) -> Void)? = nil, ensure: @escaping (T?) -> T?) {
     self.key = key
     self.defaults = defaults
     self.ensure = ensure

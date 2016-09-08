@@ -63,7 +63,7 @@ public protocol PalauEntry {
 
   init(key: String,
        defaults: NSUD,
-       didSet: (@escaping (_ newValue: ReturnType?, _ oldValue: ReturnType?) -> Void)?,
+       didSet: ((_ newValue: ReturnType?, _ oldValue: ReturnType?) -> Void)?,
        ensure: @escaping (ReturnType?) -> ReturnType?
   )
 
@@ -149,7 +149,7 @@ extension PalauEntry {
   /// Add a callback when the value is set in the defaults
   /// - parameter callback: functions which receives the optional old and optional new vale
   /// - returns: PalauDefaultsEntry<T>
-  public func didSet(_ callback: ((_ newValue: ReturnType?, _ oldValue: ReturnType?) -> Void)) -> Self {
+  public func didSet(_ callback: @escaping ((_ newValue: ReturnType?, _ oldValue: ReturnType?) -> Void)) -> Self {
     return Self(key: key, defaults: defaults, didSet: callback, ensure: ensure)
   }
 
