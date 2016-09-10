@@ -103,12 +103,12 @@ extension PalauDefaultable {
   }
 
   public static func set(_ value: StoredType?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value as? AnyObject else { return defaults.removeObject(forKey: key) }
+    guard let value = value else { return defaults.removeObject(forKey: key) }
     defaults.set(value, forKey: key)
   }
 
   public static func set(_ value: [StoredType]?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value as? AnyObject else { return defaults.removeObject(forKey: key) }
+    guard let value = value else { return defaults.removeObject(forKey: key) }
     defaults.set(value, forKey: key)
   }
 }
@@ -133,12 +133,12 @@ extension PalauDefaultable where StoredType: RawRepresentable {
   }
 
   public static func set(_ value: StoredType?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value?.rawValue as? AnyObject else { return defaults.removeObject(forKey: key) }
+    guard let value = value?.rawValue else { return defaults.removeObject(forKey: key) }
     defaults.set(value, forKey: key)
   }
 
   public static func set(_ value: [StoredType]?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value?.map({ $0.rawValue }) as? AnyObject else { return defaults.removeObject(forKey: key) }
+    guard let value = value?.map({ $0.rawValue }) else { return defaults.removeObject(forKey: key) }
     defaults.set(value, forKey: key)
   }
 }
@@ -166,13 +166,13 @@ extension PalauDefaultable where StoredType: NSCoding {
   }
 
   public static func set(_ value: StoredType?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value as? AnyObject else { return defaults.removeObject(forKey: key) }
+    guard let value = value else { return defaults.removeObject(forKey: key) }
     let data = NSKeyedArchiver.archivedData(withRootObject: value)
     defaults.set(data, forKey: key)
   }
 
   public static func set(_ value: [StoredType]?, forKey key: String, in defaults: NSUD) -> Void {
-    guard let value = value?.flatMap({ $0 as AnyObject }) else { return defaults.removeObject(forKey: key) }
+    guard let value = value?.flatMap({ $0 }) else { return defaults.removeObject(forKey: key) }
     let data = NSKeyedArchiver.archivedData(withRootObject: value)
     defaults.set(data, forKey: key)
   }
@@ -181,19 +181,6 @@ extension PalauDefaultable where StoredType: NSCoding {
 // -------------------------------------------------------------------------------------------------
 // MARK: - Implementations
 // -------------------------------------------------------------------------------------------------
-
-//
-/*
- TODO Swift 3:
-
- Swift 3 will probably give us extensions on generic types.
- This will make it easier for Array and Dictionary, Set
- Maybe like
-
- extension CollectionType<Element>: PalauDefaultable {
-  public typealias StoredType = CollectionType<Element>
- }
-*/
 
 /// Make Bool PalauDefaultable
 extension Bool: PalauDefaultable {
