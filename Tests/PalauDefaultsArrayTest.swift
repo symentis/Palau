@@ -282,10 +282,6 @@ class PalauArrayTests: PalauTestCase {
 // MARK: - PalauDefaults
 // -------------------------------------------------------------------------------------------------
 
-//typealias PalauDefaultsArrayEntry<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauList<T>>>
-//typealias PalauDefaultsArrayEntryEnsured<T: PalauDefaultable> = PalauEntry<PalauEnsured<PalauList<T>>>
-
-
 extension PalauDefaults {
 
   // This is working

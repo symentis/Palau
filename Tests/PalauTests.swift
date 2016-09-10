@@ -204,7 +204,6 @@ class PalauTests: PalauTestCase {
 
   func testStringArrayValue() {
     // We can't use the checkValue method here until we get Swift 3
-    // TODO Swift 3: Array/Dictionary: PalauDefaultable where Element: PalauDefaultable
     PalauDefaults.stringArrayValue.value = nil
     assert(PalauDefaults.stringArrayValue.value == nil)
     PalauDefaults.stringArrayValue.value = ["a", "b"]
@@ -213,7 +212,6 @@ class PalauTests: PalauTestCase {
 
   func testStringMapValue() {
     // We can't use the checkValue method here until we get Swift 3
-    // TODO Swift 3: Array/Dictionary: PalauDefaultable where Element: PalauDefaultable
     PalauDefaults.stringMapValue.value = nil
     assert(PalauDefaults.stringMapValue.value == nil)
     PalauDefaults.stringMapValue.value = ["a": "b", "b": "a"]
@@ -309,9 +307,6 @@ class PalauTests: PalauTestCase {
 // -------------------------------------------------------------------------------------------------
 // MARK: - PalauDefaults
 // -------------------------------------------------------------------------------------------------
-
-//typealias PalauDefaultsEntry<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauSingle<T>>>
-//typealias PalauDefaultsEntryEnsured<T: PalauDefaultable> = PalauEntry<PalauEnsured<PalauSingle<T>>>
 
 extension PalauDefaults {
 

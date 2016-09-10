@@ -82,13 +82,13 @@ public extension PalauCustomDefaultable {
   /// default implementation
   static func set(_ value: Self?, forKey key: String, in defaults: NSUD) -> Void {
     guard let value = value else { return defaults.set(nil, forKey: key) }
-    defaults.set(toIntermediate(value) as? AnyObject, forKey: key)
+    defaults.set(toIntermediate(value), forKey: key)
   }
 
   /// default implementation
   static func set(_ value: [Self]?, forKey key: String, in defaults: NSUD) -> Void {
     guard let value = value else { return defaults.set(nil, forKey: key) }
-    let v = value.flatMap { toIntermediate($0) as? AnyObject }
+    let v = value.flatMap(toIntermediate)
     defaults.set(v, forKey: key)
   }
 
