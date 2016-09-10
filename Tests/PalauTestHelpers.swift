@@ -55,7 +55,7 @@ class PalauTestCase: XCTestCase {
 
   func getFixtureFile(_ name: String, ext: String) -> String? {
     // lets get some files from the test bundle
-    let bundle = Bundle(for: self.dynamicType)
+    let bundle = Bundle(for: type(of: self))
     return bundle.path(forResource: name, ofType: ext)
   }
 
@@ -67,7 +67,7 @@ class PalauTestCase: XCTestCase {
 // -------------------------------------------------------------------------------------------------
 
 let lessThanTwo: ([Int]?) -> Bool = {
-  return $0?.count < 2
+  return ($0?.count)! < 2
 }
 
 let lessThan10: (Int?) -> Bool = {
@@ -102,7 +102,7 @@ extension Structy: PalauCustomDefaultable {
 
 
   public static func toIntermediate(_ s: Structy) -> [String: AnyObject] {
-    return ["1": s.tuple.0, "2": s.tuple.1]
+    return ["1": s.tuple.0 as AnyObject, "2": s.tuple.1 as AnyObject]
   }
 
   // swiftlint:disable conditional_binding_cascade

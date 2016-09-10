@@ -39,8 +39,8 @@ public protocol PalauStrategy {
 
   func resolve(_ value: QuantifierType.ReturnType?) -> ReturnType
 
-  init(for: QuantifierType.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType, didSet: ((ReturnType, ReturnType) -> ()))
-  init(for: QuantifierType.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType)
+  init(for: QuantifierType.Type, fallback: @escaping () -> ReturnType, ensure: @escaping (ReturnType) -> ReturnType, didSet: @escaping ((ReturnType, ReturnType) -> ()))
+  init(for: QuantifierType.Type, fallback: @escaping () -> ReturnType, ensure: @escaping (ReturnType) -> ReturnType)
 }
 
 // ----------------------------------------------------------------------------------------------------
@@ -57,13 +57,13 @@ public struct PalauOptional<T>: PalauStrategyOptional where T: PalauQuantifier {
   public let ensure: (ReturnType) -> ReturnType
   public let didSet: ((ReturnType, ReturnType) -> ())?
 
-  public init(for: T.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType) {
+  public init(for: T.Type, fallback: @escaping () -> ReturnType, ensure: @escaping (ReturnType) -> ReturnType) {
     self.fallback = fallback
     self.ensure = ensure
     self.didSet = nil
   }
 
-  public init(for: T.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType, didSet: ((ReturnType, ReturnType) -> ())) {
+  public init(for: T.Type, fallback: @escaping () -> ReturnType, ensure: @escaping (ReturnType) -> ReturnType, didSet:  @escaping ((ReturnType, ReturnType) -> ())) {
     self.fallback = fallback
     self.ensure = ensure
     self.didSet = didSet
@@ -88,13 +88,13 @@ public struct PalauEnsured<T>: PalauStrategyEnsured where T: PalauQuantifier {
   public let ensure: (ReturnType) -> ReturnType
   public let didSet: ((ReturnType, ReturnType) -> ())?
 
-  public init(for: T.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType) {
+  public init(for: T.Type, fallback: @escaping () -> ReturnType, ensure: @escaping (ReturnType) -> ReturnType) {
     self.fallback = fallback
     self.ensure = ensure
     self.didSet = nil
   }
 
-  public init(for: T.Type, fallback: () -> ReturnType, ensure: (ReturnType) -> ReturnType, didSet: ((ReturnType, ReturnType) -> ())) {
+  public init(for: T.Type, fallback: @escaping () -> ReturnType, ensure: @escaping (ReturnType) -> ReturnType, didSet: @escaping ((ReturnType, ReturnType) -> ())) {
     self.fallback = fallback
     self.ensure = ensure
     self.didSet = didSet

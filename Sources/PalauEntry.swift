@@ -54,8 +54,8 @@ public struct PalauEntry<Strategy>: PalauEntryBase
   public typealias EnsureFunction = (EntryType) -> EntryType
   public typealias DidSetFunction = (EntryType, EntryType) -> ()
 
-  public let key: String
   public let strategy: Strategy
+  public let key: String
   public let defaults: NSUD
 
   public func clear() {
@@ -75,7 +75,7 @@ public extension PalauEntry
   Strategy.QuantifierType.ReturnType == Strategy.QuantifierType.DefaultableType,
   Strategy.QuantifierType.DefaultableType == Strategy.QuantifierType.DefaultableType.StoredType {
 
-  public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, ensure: EnsureFunction = pure) {
+  public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, ensure: @escaping EnsureFunction = pure) {
     self.key = key
     self.defaults = defaults
     if let didSet = didSet {
@@ -85,18 +85,18 @@ public extension PalauEntry
     }
   }
 
-  public func ensure(when: (EntryType) -> Bool, use defaultValue: EntryType) -> PalauEntry {
+  public func ensure(when: @escaping (EntryType) -> Bool, use defaultValue: EntryType) -> PalauEntry {
     return PalauEntry(key: key, defaults: defaults, didSet: strategy.didSet) { value in
       let value = self.strategy.ensure(value)
       return when(value) ? defaultValue : value
     }
   }
 
-  public func didSet(_ callback: DidSetFunction) -> PalauEntry {
+  public func didSet(_ callback: @escaping DidSetFunction) -> PalauEntry {
     return PalauEntry(key: key, defaults: defaults, didSet: callback, ensure: strategy.ensure)
   }
 
-  public func withDidSet(_ changeValue: @noescape () -> Void) {
+  public func withDidSet(_ changeValue: () -> Void) {
     let callback: (() -> Void)?
     if let didSet = strategy.didSet {
       let old = value
@@ -131,7 +131,7 @@ public extension PalauEntry
   Strategy.QuantifierType.ReturnType == [Strategy.QuantifierType.DefaultableType],
   Strategy.QuantifierType.DefaultableType == Strategy.QuantifierType.DefaultableType.StoredType {
 
-  public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, ensure: EnsureFunction = pure) {
+  public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, ensure: @escaping EnsureFunction = pure) {
     self.key = key
     self.defaults = defaults
     if let didSet = didSet {
@@ -141,18 +141,18 @@ public extension PalauEntry
     }
   }
 
-  public func ensure(when: (EntryType) -> Bool, use defaultValue: EntryType) -> PalauEntry {
+  public func ensure(when: @escaping (EntryType) -> Bool, use defaultValue: EntryType) -> PalauEntry {
     return PalauEntry(key: key, defaults: defaults, didSet: strategy.didSet) { value in
       let value = self.strategy.ensure(value)
       return when(value) ? defaultValue : value
     }
   }
 
-  public func didSet(_ callback: DidSetFunction) -> PalauEntry {
+  public func didSet(_ callback: @escaping DidSetFunction) -> PalauEntry {
     return PalauEntry(key: key, defaults: defaults, didSet: callback, ensure: strategy.ensure)
   }
 
-  public func withDidSet(_ changeValue: @noescape () -> Void) {
+  public func withDidSet(_ changeValue: () -> Void) {
     let callback: (() -> Void)?
     if let didSet = strategy.didSet {
       let old = value
@@ -187,7 +187,7 @@ public extension PalauEntry
   Strategy.QuantifierType.ReturnType == Strategy.QuantifierType.DefaultableType,
   Strategy.QuantifierType.DefaultableType == Strategy.QuantifierType.DefaultableType.StoredType {
 
-  public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, fallback: @autoclosure(escaping) () -> EntryType, ensure: EnsureFunction = pure) {
+  public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, fallback: @autoclosure @escaping () -> EntryType, ensure: @escaping EnsureFunction = pure) {
     self.key = key
     self.defaults = defaults
     if let didSet = didSet {
@@ -197,18 +197,18 @@ public extension PalauEntry
     }
   }
 
-  public func ensure(when: (EntryType) -> Bool, use defaultValue: EntryType) -> PalauEntry {
+  public func ensure(when: @escaping (EntryType) -> Bool, use defaultValue: EntryType) -> PalauEntry {
     return PalauEntry(key: key, defaults: defaults, didSet: strategy.didSet, fallback: self.strategy.fallback()) { value in
       let value = self.strategy.ensure(value)
       return when(value) ? defaultValue : self.strategy.fallback()
     }
   }
 
-  public func didSet(_ callback: DidSetFunction) -> PalauEntry {
+  public func didSet(_ callback: @escaping DidSetFunction) -> PalauEntry {
     return PalauEntry(key: key, defaults: defaults, didSet: callback, fallback: self.strategy.fallback(), ensure: strategy.ensure)
   }
 
-  public func withDidSet(_ changeValue: @noescape () -> Void) {
+  public func withDidSet(_ changeValue: () -> Void) {
     let callback: (() -> Void)?
     if let didSet = strategy.didSet {
       let old = value
@@ -243,7 +243,7 @@ public extension PalauEntry
   Strategy.QuantifierType.ReturnType == [Strategy.QuantifierType.DefaultableType],
   Strategy.QuantifierType.DefaultableType == Strategy.QuantifierType.DefaultableType.StoredType {
 
-  public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, fallback: @autoclosure(escaping) () -> EntryType, ensure: EnsureFunction = pure) {
+  public init(key: String, defaults: UserDefaults, didSet: DidSetFunction? = nil, fallback: @autoclosure @escaping () -> EntryType, ensure: @escaping EnsureFunction = pure) {
     self.key = key
     self.defaults = defaults
     if let didSet = didSet {
@@ -253,7 +253,7 @@ public extension PalauEntry
     }
   }
 
-  public func ensure(when: (EntryType) -> Bool, use defaultValue: EntryType) -> PalauEntry {
+  public func ensure(when: @escaping (EntryType) -> Bool, use defaultValue: EntryType) -> PalauEntry {
     return PalauEntry(key: key, defaults: defaults, didSet: strategy.didSet, fallback: self.strategy.fallback()) { value in
       let value = self.strategy.ensure(value)
       return when(value) ? defaultValue : self.strategy.fallback()
@@ -261,11 +261,11 @@ public extension PalauEntry
   }
 
 
-  public func didSet(_ callback: DidSetFunction) -> PalauEntry {
+  public func didSet(_ callback: @escaping DidSetFunction) -> PalauEntry {
     return PalauEntry(key: key, defaults: defaults, didSet: callback, fallback: self.strategy.fallback(), ensure: strategy.ensure)
   }
 
-  public func withDidSet(_ changeValue: @noescape () -> Void) {
+  public func withDidSet(_ changeValue: () -> Void) {
     let callback: (() -> Void)?
     if let didSet = strategy.didSet {
       let old = value
@@ -320,7 +320,7 @@ public struct PalauDefaults {
       return PalauEntry(key:key, defaults:defaults)
   }
 
-  public static func value<T>(_ key: String, whenNil fallback: @autoclosure(escaping) () -> T) -> PalauDefaultsEntryEnsured<T>
+  public static func value<T>(_ key: String, whenNil fallback: @autoclosure @escaping () -> T) -> PalauDefaultsEntryEnsured<T>
     where T: PalauDefaultable, T.StoredType == T {
       return PalauEntry(key:key, defaults:defaults, fallback: fallback())
   }
@@ -330,7 +330,7 @@ public struct PalauDefaults {
       return PalauEntry(key:key, defaults:defaults)
   }
 
-  public static func value<T>(_ key: String, whenNil fallback: @autoclosure(escaping) () -> [T]) -> PalauDefaultsArrayEntryEnsured<T>
+  public static func value<T>(_ key: String, whenNil fallback: @autoclosure @escaping () -> [T]) -> PalauDefaultsArrayEntryEnsured<T>
     where T: PalauDefaultable, T.StoredType == T {
       return PalauEntry(key:key, defaults:defaults, fallback: fallback())
   }

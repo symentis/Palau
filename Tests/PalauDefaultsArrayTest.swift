@@ -184,24 +184,6 @@ class PalauArrayTests: PalauTestCase {
     PalauDefaults.nsArrayValues.checkValue(mutableArray)
   }
 
-  func testStringArrayValue() {
-    // We can't use the checkValue method here until we get Swift 3
-    // TODO Swift 3: Array/Dictionary: PalauDefaultable where Element: PalauDefaultable
-    PalauDefaults.stringArrayValues.value = nil
-    assert(PalauDefaults.stringArrayValues.value == nil)
-    PalauDefaults.stringArrayValues.value = [["a", "b"]]
-    assert(PalauDefaults.stringArrayValues.value! == [["a", "b"]])
-  }
-
-  func testStringMapValue() {
-    // We can't use the checkValue method here until we get Swift 3
-    // TODO Swift 3: Array/Dictionary: PalauDefaultable where Element: PalauDefaultable
-    PalauDefaults.stringMapValues.value = nil
-    assert(PalauDefaults.stringMapValues.value == nil)
-    PalauDefaults.stringMapValues.value = [["a": "b", "b": "a"]]
-    assert(PalauDefaults.stringMapValues.value! ==  [["a": "b", "b": "a"]])
-  }
-
   func testNSDictionaryValue() {
     let dictionary = [
       NSDictionary(dictionary: ["key": "value", Date(): NSNumber(value: 1)]),
@@ -300,8 +282,8 @@ class PalauArrayTests: PalauTestCase {
 // MARK: - PalauDefaults
 // -------------------------------------------------------------------------------------------------
 
-typealias PalauDefaultsArrayEntry<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauList<T>>>
-typealias PalauDefaultsArrayEntryEnsured<T: PalauDefaultable> = PalauEntry<PalauEnsured<PalauList<T>>>
+//typealias PalauDefaultsArrayEntry<T: PalauDefaultable> = PalauEntry<PalauOptional<PalauList<T>>>
+//typealias PalauDefaultsArrayEntryEnsured<T: PalauDefaultable> = PalauEntry<PalauEnsured<PalauList<T>>>
 
 
 extension PalauDefaults {
@@ -341,7 +323,7 @@ extension PalauDefaults {
       set { }
     }
 
-     static var whenNilledUIColorValues: PalauDefaultsArrayEntryEnsured<UIColor> {
+    static var whenNilledUIColorValues: PalauDefaultsArrayEntryEnsured<UIColor> {
       get { return value("whenNilledUIColorValues", whenNil: [UIColor.red]) }
       set { }
     }
@@ -377,18 +359,8 @@ extension PalauDefaults {
     set { }
   }
 
-  static var stringArrayValues: PalauDefaultsArrayEntry<[String]> {
-    get { return value("stringArrayValues") }
-    set { }
-  }
-
   static var nsArrayValues: PalauDefaultsArrayEntry<NSArray> {
     get { return value("nsArrayValues") }
-    set { }
-  }
-
-  static var stringMapValues: PalauDefaultsArrayEntry<[String: String]> {
-    get { return value("stringMapValues") }
     set { }
   }
 
