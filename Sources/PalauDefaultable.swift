@@ -182,19 +182,6 @@ extension PalauDefaultable where ValueType: NSCoding {
 // MARK: - Implementations
 // -------------------------------------------------------------------------------------------------
 
-//
-/*
- TODO Swift 3:
-
- Swift 3 will probably give us extensions on generic types.
- This will make it easier for Array and Dictionary, Set
- Maybe like
-
- extension CollectionType<Element>: PalauDefaultable {
-  public typealias ValueType = CollectionType<Element>
- }
-*/
-
 /// Make Bool PalauDefaultable
 extension Bool: PalauDefaultable {
   public typealias ValueType = Bool
