@@ -182,9 +182,6 @@ extension PalauDefaultable where ValueType: NSCoding {
 // MARK: - Implementations
 // -------------------------------------------------------------------------------------------------
 
-//
-
-
 /// Make Bool PalauDefaultable
 extension Bool: PalauDefaultable {
   public typealias ValueType = Bool
