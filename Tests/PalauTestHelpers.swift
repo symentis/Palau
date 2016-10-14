@@ -96,12 +96,12 @@ public struct Structy {
 // here we just map the two values to two keys named "1" and "2"
 extension Structy: PalauCustomDefaultable {
 
-  public static func toIntermediate(_ s: Structy) -> [String: AnyObject] {
-    return ["1": s.tuple.0 as AnyObject, "2": s.tuple.1 as AnyObject]
+  public static func toIntermediate(_ s: Structy) -> [String: Any] {
+    return ["1": s.tuple.0, "2": s.tuple.1]
   }
 
   // swiftlint:disable conditional_binding_cascade
-  public static func fromIntermediate(_ dict: [String: AnyObject]) -> Structy? {
+  public static func fromIntermediate(_ dict: [String: Any]) -> Structy? {
     guard let t1 = dict["1"] as? String, let t2 = dict["2"] as? String else { return nil }
     return Structy(tuple: (t1, t2))
   }
