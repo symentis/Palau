@@ -71,7 +71,6 @@ let lessThan10: (Int?) -> Bool = {
   return $0.map { $0 < 10 } ?? false
 }
 
-//swiftlint:disable type_name
 public enum TestEnum: Int {
   case caseA
   case caseB
