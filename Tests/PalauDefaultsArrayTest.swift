@@ -171,10 +171,10 @@ class PalauArrayTests: PalauTestCase {
     let justOverOneMillion: [Float] = [1_000_000.000_000_1]
     checkValue(PalauDefaults.floatValues, value: justOverOneMillion)
 
-    let fmin = [FLT_MIN]
+    let fmin = [Float.leastNonzeroMagnitude]
     checkValue(PalauDefaults.floatValues, value: fmin)
 
-    let fmax = [FLT_MAX]
+    let fmax = [Float.greatestFiniteMagnitude]
     checkValue(PalauDefaults.floatValues, value: fmax)
 
     let inf = [Float.infinity]
@@ -198,10 +198,10 @@ class PalauArrayTests: PalauTestCase {
     let justOverOneMillion = [1_000_000.000_000_1]
     checkValue(PalauDefaults.doubleValues, value: justOverOneMillion)
 
-    let dmin = [DBL_MIN]
+    let dmin = [Double.leastNonzeroMagnitude]
     checkValue(PalauDefaults.doubleValues, value: dmin)
 
-    let dmax = [DBL_MAX]
+    let dmax = [Double.greatestFiniteMagnitude]
     checkValue(PalauDefaults.doubleValues, value: dmax)
 
     let inf = [Double.infinity]

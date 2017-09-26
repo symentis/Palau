@@ -46,7 +46,7 @@ class PalauTests: PalauTestCase {
     // nil the entry
     entry.value = nil
     if printTest {
-      print(entry, "set to nil", entry.value)
+        print(entry, "set to nil", entry.value ?? "")
     }
     assert(entry.value == nil)
 
@@ -191,10 +191,10 @@ class PalauTests: PalauTestCase {
     let justOverOneMillion: Float = 1_000_000.000_000_1
     checkValue(PalauDefaults.floatValue, value: justOverOneMillion)
 
-    let fmin = FLT_MIN
+    let fmin = Float.leastNonzeroMagnitude
     checkValue(PalauDefaults.floatValue, value: fmin)
 
-    let fmax = FLT_MAX
+    let fmax = Float.greatestFiniteMagnitude
     checkValue(PalauDefaults.floatValue, value: fmax)
 
     let inf = Float.infinity
@@ -218,10 +218,10 @@ class PalauTests: PalauTestCase {
     let justOverOneMillion = 1_000_000.000_000_1
     checkValue(PalauDefaults.doubleValue, value: justOverOneMillion)
 
-    let dmin = DBL_MIN
+    let dmin = Double.leastNonzeroMagnitude
     checkValue(PalauDefaults.doubleValue, value: dmin)
 
-    let dmax = DBL_MAX
+    let dmax = Double.greatestFiniteMagnitude
     checkValue(PalauDefaults.doubleValue, value: dmax)
 
     let inf = Double.infinity
