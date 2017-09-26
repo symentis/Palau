@@ -1,0 +1,32 @@
+default_platform :ios
+
+platform :ios do
+  desc "Test Lane"
+  lane :testLane do
+	xcbuild(
+	  project: "Palau.xcodeproj",
+	  scheme: "Palau macOS",
+	  clean: true
+	)
+
+	xcbuild(
+	  project: "Palau.xcodeproj",
+	  scheme: "Palau watchOS",
+	  clean: true
+	)
+
+	scan(
+	  project: "Palau.xcodeproj",
+	  scheme: "Palau iOS",
+	  clean: true,
+	  device: "iPhone X"
+	)
+
+	scan(
+	  project: "Palau.xcodeproj",
+	  scheme: "Palau tvOS",
+	  clean: true,
+	  device: "Apple TV 4K"
+	)
+  end
+end
