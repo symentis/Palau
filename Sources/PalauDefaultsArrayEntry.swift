@@ -25,28 +25,27 @@
 
 import Foundation
 
-/// A PalauDefaultsEntry
+/// A PalauDefaultsArrayEntry
 ///
-/// This entry takes care of single values like
+/// This entry takes care of list of values like
 /// ```
-/// public static var intValue: PalauDefaultsEntry<Int>
-///   get { return value("intValue") }
+/// public static var intValues: PalauDefaultsArrayEntry<Int>
+///   get { return value("intValues") }
 ///   set { }
 /// }
 /// ```
-/// The value of the PalauDefaultsEntry is always an optional e.g.
+/// The value of the PalauDefaultsArrayEntry is always an optional list e.g.
 /// ```
-/// // val is of type Int?
-/// let val = PalauDefaults.intValue.value
+/// // val is of type [Int]?
+/// let values = PalauDefaults.intValues.value
 /// ```
-public struct PalauDefaultsEntry<T: PalauDefaultable>: PalauEntry where T.ValueType == T {
+public struct PalauDefaultsArrayEntry<T: PalauDefaultable>: PalauEntry where T.ValueType == T {
 
   public typealias ValueType = T
-  public typealias ReturnType = T
-
+  public typealias ReturnType = [T]
   /// for convenience
-  public typealias PalauDidSetFunction = (_ newValue: ReturnType?, _ oldValue: ReturnType?) -> Void
-  public typealias PalauEnsureFunction = (ReturnType?) -> ReturnType?
+  public typealias PalauDidSetArrayFunction = (_ newValue: ReturnType?, _ oldValue: ReturnType?) -> Void
+  public typealias PalauEnsureArrayFunction = (ReturnType?) -> ReturnType?
 
   /// The key of the entry
   public let key: String
@@ -55,25 +54,19 @@ public struct PalauDefaultsEntry<T: PalauDefaultable>: PalauEntry where T.ValueT
   public let defaults: NSUD
 
   /// A function to change the incoming and outgoing value
-  public let ensure: PalauEnsureFunction
+  public let ensure: PalauEnsureArrayFunction
 
   /// A function as callback after set
-  public let didSet: PalauDidSetFunction?
+  public let didSet: PalauDidSetArrayFunction?
 
   /// a initializer
-  public init(key: String, defaults: UserDefaults, didSet: ((T?, T?) -> Void)? = nil, ensure: @escaping (T?) -> T?) {
+
+ public init(key: String, defaults: UserDefaults, didSet: (([T]?, [T]?) -> Void)? = nil, ensure: @escaping ([T]?) -> [T]?) {
     self.key = key
     self.defaults = defaults
     self.ensure = ensure
     self.didSet = didSet
   }
-
-//  public init(key: String, defaults: UserDefaults, ensure: @escaping (T?) -> T?) {
-//    self.key = key
-//    self.defaults = defaults
-//    self.ensure = ensure
-//    self.didSet = nil
-//  }
 
   /// The value
   /// use this property to get the Optional<ReturnType>
@@ -84,9 +77,8 @@ public struct PalauDefaultsEntry<T: PalauDefaultable>: PalauEntry where T.ValueT
     }
     set {
       withDidSet {
-        ValueType.set(ensure(newValue), forKey: key, in: defaults)
+        ValueType.set(self.ensure(newValue), forKey: self.key, in: self.defaults)
       }
     }
   }
-
 }

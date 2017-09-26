@@ -51,8 +51,6 @@
 - [x] NSDictionary
 - [x] NSDate
 - [x] NSData
-- [x] NSURL
-- [x] NSIndexPath
 - [x] UIColor
 
 ## Requirements

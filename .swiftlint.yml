@@ -8,7 +8,7 @@ disabled_rules: # rule identifiers to exclude from running
   - valid_docs
   - closing_brace
 
-variable_name:
+identifier_name:
   min_length: 1
 
 type_name:

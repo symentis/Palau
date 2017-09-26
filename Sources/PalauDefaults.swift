@@ -30,24 +30,24 @@ import Foundation
 /// PalauDefaults wrap the NSUserDefaults
 /// The easiest usage is:
 /// - extension on PalauDefaults with:
-/// ````
+/// ```
 ///   public static var name: PalauDefaultsEntry<String> {
 ///   get { return value("name") }
 ///   set { }
 /// }
-/// ````
+/// ```
 public struct PalauDefaults {
 
   /// The underlying defaults
   public static var defaults: NSUD {
-    return NSUD.standardUserDefaults()
+    return NSUD.standard
   }
 
   /// Pure - will always return the provided value
   /// used ase base ensure function
   /// - parameter value: T
   /// - returns: T
-  public static func pure<T>(value: T) -> T {
+  public static func pure<T>(_ value: T) -> T {
     return value
   }
 
@@ -55,14 +55,21 @@ public struct PalauDefaults {
   /// used by whenNil method
   /// - parameter value: T?
   /// - returns: Bool
-  public static func isEmpty<T>(value: T?) -> Bool {
+  public static func isEmpty<T>(_ value: T?) -> Bool {
     return value == nil
   }
 
   /// Generate a PalauDefaultsEntry of Type T for provided key
   /// - parameter key: String, name of the entry
   /// - returns: DefaultValue
-  public static func value<T>(key: String) -> PalauDefaultsEntry<T> {
+  public static func value<T>(_ key: String) -> PalauDefaultsEntry<T> {
     return PalauDefaultsEntry(key:key, defaults:defaults, ensure: pure)
+  }
+
+  /// Generate a PalauDefaultsEntry of Type T for provided key
+  /// - parameter key: String, name of the entry
+  /// - returns: DefaultValue
+  public static func value<T>(_ key: String) -> PalauDefaultsArrayEntry<T> {
+    return PalauDefaultsArrayEntry(key:key, defaults:defaults, ensure: pure)
   }
 }
