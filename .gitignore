@@ -62,5 +62,7 @@ Carthage/Build
 
 fastlane/report.xml
 fastlane/screenshots
+fastlane/test_output
+fastlane/README.md
 
 .DS_Store
