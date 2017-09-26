@@ -124,7 +124,7 @@ extension PalauEntry {
   /// }
   /// ```
   public func ensure(when whenFunc: @escaping (ReturnType?) -> Bool,
-                          use defaultValue: ReturnType) -> Self {
+                     use defaultValue: ReturnType) -> Self {
 //    if let didSet = didSet {
 //      return Self(key: key, defaults: defaults, didSet: didSet) {
 //        let vx = self.ensure($0)

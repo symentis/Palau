@@ -101,7 +101,6 @@ class PalauArrayTests: PalauTestCase {
     checkValue(PalauDefaults.nsStringValues, value: strings.map(NSString.init(string:)),
                printTest: false)
 
-
     // test a html file
     let htmlString = try String(contentsOfFile: getFixtureFile("example", ext:"html")!)
     // test a crazy UTF-8 example
@@ -198,7 +197,6 @@ class PalauArrayTests: PalauTestCase {
 
     let justOverOneMillion = [1_000_000.000_000_1]
     checkValue(PalauDefaults.doubleValues, value: justOverOneMillion)
-
 
     let dmin = [DBL_MIN]
     checkValue(PalauDefaults.doubleValues, value: dmin)

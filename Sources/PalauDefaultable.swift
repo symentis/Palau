@@ -74,16 +74,15 @@ public protocol PalauDefaultable {
   /// - param key: The key used in the NSUserDefaults
   /// - param defaults: The NSUserDefaults
   /// - returns: Void
-  static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) -> Void
+  static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD)
 
   /// Static function to set an optional ValueType in the provided NSUserDefaults with the key
   /// - param value: The optional value to be stored
   /// - param key: The key used in the NSUserDefaults
   /// - param defaults: The NSUserDefaults
   /// - returns: Void
-  static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) -> Void
+  static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD)
 }
-
 
 // -------------------------------------------------------------------------------------------------
 // MARK: - Extension Default
@@ -102,12 +101,12 @@ extension PalauDefaultable {
     return defaults.object(forKey: key) as? [ValueType]
   }
 
-  public static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) -> Void {
+  public static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) {
     guard let value = value else { return defaults.removeObject(forKey: key) }
     defaults.set(value as AnyObject, forKey: key)
   }
 
-  public static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) -> Void {
+  public static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) {
     guard let value = value else { return defaults.removeObject(forKey: key) }
     defaults.set(value as AnyObject, forKey: key)
   }
@@ -132,12 +131,12 @@ extension PalauDefaultable where ValueType: RawRepresentable {
     return val.flatMap { ValueType(rawValue: $0) }
   }
 
-  public static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) -> Void {
+  public static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) {
     guard let value = value?.rawValue else { return defaults.removeObject(forKey: key) }
     defaults.set(value as AnyObject, forKey: key)
   }
 
-  public static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) -> Void {
+  public static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) {
     guard let value = value?.map({ $0.rawValue }) else { return defaults.removeObject(forKey: key) }
     defaults.set(value as AnyObject, forKey: key)
   }
@@ -165,13 +164,13 @@ extension PalauDefaultable where ValueType: NSCoding {
     return value
   }
 
-  public static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) -> Void {
+  public static func set(_ value: ValueType?, forKey key: String, in defaults: NSUD) {
     guard let value = value else { return defaults.removeObject(forKey: key) }
     let data = NSKeyedArchiver.archivedData(withRootObject: value as AnyObject)
     defaults.set(data, forKey: key)
   }
 
-  public static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) -> Void {
+  public static func set(_ value: [ValueType]?, forKey key: String, in defaults: NSUD) {
     guard let value = value?.flatMap({ $0 as AnyObject }) else { return defaults.removeObject(forKey: key) }
     let data = NSKeyedArchiver.archivedData(withRootObject: value)
     defaults.set(data, forKey: key)

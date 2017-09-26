@@ -25,7 +25,6 @@
 
 import Foundation
 
-
 /// A PalauDefaultsArrayEntry
 ///
 /// This entry takes care of list of values like

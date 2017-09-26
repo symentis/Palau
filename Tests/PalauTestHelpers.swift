@@ -51,7 +51,6 @@ class PalauTestCase: XCTestCase {
     }
   }
 
-
   func getFixtureFile(_ name: String, ext: String) -> String? {
     // lets get some files from the test bundle
     let bundle = Bundle(for: type(of: self))

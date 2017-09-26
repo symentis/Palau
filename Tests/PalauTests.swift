@@ -218,7 +218,6 @@ class PalauTests: PalauTestCase {
     let justOverOneMillion = 1_000_000.000_000_1
     checkValue(PalauDefaults.doubleValue, value: justOverOneMillion)
 
-
     let dmin = DBL_MIN
     checkValue(PalauDefaults.doubleValue, value: dmin)
 
@@ -326,7 +325,6 @@ class PalauTests: PalauTestCase {
 
     // start with nil
     PalauDefaults.enumValueWithDidSet.value = nil
-
 
     // bind the first didSet closure
 

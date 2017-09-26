@@ -25,7 +25,6 @@
 
 import Foundation
 
-
 /// A PalauDefaultsEntry
 ///
 /// This entry takes care of single values like
